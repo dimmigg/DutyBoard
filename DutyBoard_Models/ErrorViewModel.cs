@@ -1,6 +1,6 @@
 using System;
 
-namespace DutyBoard.Models
+namespace DutyBoard_Models
 {
     public class ErrorViewModel
     {
