@@ -4,9 +4,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace DutyBoard_DataAccess.Repository
 {
-    public class DaysOfWeekRepository : Repository<DaysOfWeek>, IDaysOfWeekRepository
+    public class MappingRepository : Repository<MappingModel>, IMappingRepository
     {
-        public DaysOfWeekRepository(IConfiguration configuration) : base(configuration)
+        public MappingRepository(IConfiguration configuration) : base(configuration)
         {
         }
 

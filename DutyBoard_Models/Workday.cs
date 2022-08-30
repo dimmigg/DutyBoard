@@ -16,8 +16,8 @@ namespace DutyBoard_Models
         public Employee Employee { get; set; }
 
         public int RosterId { get; set; }
-
-        //public Roster Roster { get; set; }
+        [NotMapped]
+        public Roster Roster { get; set; }
 
         public bool IsAlways { get; set; } = false;
 

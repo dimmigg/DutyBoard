@@ -2,8 +2,7 @@
 
 namespace DutyBoard_DataAccess.Repository.IRepository
 {
-    public interface IHolidayRepository : IRepository<Holiday>
+    public interface IWorkdayRepository : IRepository<Workday>
     {
-        void Upsert(Holiday entity);
     }
 }

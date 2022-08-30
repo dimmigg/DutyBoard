@@ -22,7 +22,7 @@ namespace DutyBoard_DataAccess.Repository
             {
                 foreach (var ros in rosters)
                 {
-                    ros.DaysOfWeek = _daysRepo.FirstOrDefault(x => x.DayOfWeekId == ros.DaysOfWeekId);
+                    ros.DaysOfWeek = _daysRepo.FirstOrDefault(x => x.DayOfWeekId == ros.Days    OfWeekId);
                 }
             }
             return rosters;
@@ -35,12 +35,12 @@ namespace DutyBoard_DataAccess.Repository
             return ros;
         }
 
-        public void Upsert(Roster entity)
-        {
-            if (entity.RosterId == 0)
-                Add(entity);
-            else
-                Update(entity);
-        }
+        //public void Upsert(Roster entity)
+        //{
+        //    if (entity.RosterId == 0)
+        //        Add(entity);
+        //    else
+        //        Update(entity);
+        //}
     }
 }

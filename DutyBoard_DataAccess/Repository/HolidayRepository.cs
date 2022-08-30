@@ -35,12 +35,12 @@ namespace DutyBoard_DataAccess.Repository
             return day;
         }
 
-        public void Upsert(Holiday entity)
-        {
-            if (entity.HolidayId == 0)
-                Add(entity);
-            else
-                Update(entity);
-        }
+        //public void Upsert(Holiday entity)
+        //{
+        //    if (entity.HolidayId == 0)
+        //        Add(entity);
+        //    else
+        //        Update(entity);
+        //}
     }
 }

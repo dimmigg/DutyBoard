@@ -10,12 +10,12 @@ namespace DutyBoard_DataAccess.Repository
         {
         }
 
-        public void Upsert(Employee entity)
-        {
-            if(entity.EmployeeId == 0)
-                Add(entity);
-            else
-                Update(entity);
-        }
+        //public void Upsert(Employee entity)
+        //{
+        //    if(entity.EmployeeId == 0)
+        //        Add(entity);
+        //    else
+        //        Update(entity);
+        //}
     }
 }
