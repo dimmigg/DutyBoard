@@ -22,7 +22,7 @@ namespace DutyBoard_DataAccess.Repository
             {
                 foreach (var ros in rosters)
                 {
-                    ros.DaysOfWeek = _daysRepo.FirstOrDefault(x => x.DayOfWeekId == ros.Days    OfWeekId);
+                    ros.DaysOfWeek = _daysRepo.FirstOrDefault(x => x.DayOfWeekId == ros.DaysOfWeekId);
                 }
             }
             return rosters;
