@@ -1,0 +1,7 @@
+﻿@*@using DutyManager.Models
+@model Workday
+@{
+    var list = ViewBag.DayOfWeekId == -1 ? Roster.GetAllRoster() : Roster.GetAllRoster().Where(c => c.DayOfWeekId == ViewBag.DayOfWeekId);
+    Model.Roster = new SelectList(list, "RosterId", "RosterName");
+}
+@Html.DropDownListFor(x => x.RosterId, Model.Roster, new { @class = "form-select", @id = "roster" })*@

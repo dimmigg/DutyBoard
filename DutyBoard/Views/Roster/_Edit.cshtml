@@ -1,0 +1,59 @@
+﻿@using DutyBoard_Models.ViewModels
+@model RosterVM
+@using (Html.BeginForm())
+{
+    <form method="post" enctype="multipart/form-data">
+        <input asp-for="Roster.RosterId" hidden />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="border p-3 bg-3">
+            <div asp-validation-summary="ModelOnly"></div>
+            <div class="row form-group py-1">
+                <div class="col-sm-5 text-start">
+                    <label asp-for="Roster.DaysOfWeekId" class="col-form-label"></label>
+                </div>
+                <div class="col-sm-7">
+                    <select asp-for="Roster.DaysOfWeekId" asp-items="@Model.DaysOfWeeks" class="form-select">
+                        
+                    </select>
+                    <span asp-validation-for="Roster.DaysOfWeekId" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row form-group py-1">
+                <div class="col-sm-5 text-start">
+                    <label asp-for="Roster.StartTime" class="col-form-label"></label>
+                </div>
+                <div class="col-sm-7">
+                    <input asp-for="Roster.StartTime" class="form-control" type="time" aria-describedby="StartTime-error" aria-invalid="false" />
+                    <span asp-validation-for="Roster.StartTime" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row form-group py-1">
+                <div class="col-sm-5 text-start">
+                    <label asp-for="Roster.DurationOfDuty" class="col-form-label"></label>
+                </div>
+                <div class="col-sm-7">
+                    <input asp-for="Roster.DurationOfDuty" class="form-control" />
+                    <span asp-validation-for="Roster.DurationOfDuty" class="text-danger"></span>
+                </div>
+            </div>
+            <fieldset>
+                <div class="container text-center pt-3 ">
+                    <div class="row form-group">
+                        <div class="col-sm-4 offset-8">
+                            @if (Model.Roster.RosterId != 0)
+                            {
+                                <input asp-action="Edit" type="submit" class="btn btn-info w-100" value="Изменить" />
+                            }
+                            else
+                            {
+                                <input asp-action="Edit" type="submit" class="btn btn-primary w-100" value="Создать" />
+                            }
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+        </div>
+    </form>
+}

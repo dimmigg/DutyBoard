@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DutyBoard_Models.ViewModels
 {
-    internal class RosterVM
+    public class RosterVM
     {
+        public Roster Roster { get; set; }
+        public IEnumerable<SelectListItem> DaysOfWeeks { get; set; }
     }
 }

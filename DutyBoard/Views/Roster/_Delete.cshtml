@@ -1,0 +1,26 @@
+﻿@using DutyBoard_Models
+@model Roster
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group m-3">
+        @*@Html.EditorFor(model => model.RosterId, new { @class = "visually-hidden" })*@
+        <input asp-for="RosterId" hidden />
+        <div class="row">
+            <div class="col">
+                <h5>
+                    Вы действительно хоте удалить дежурство<br /><b>@Model.DaysOfWeek.DayOfWeekName</b>:
+                    
+                    @Html.DisplayFor(model => model.StartTime) - @Html.DisplayFor(model => model.DurationOfDuty) часов?
+                </h5>
+            </div>
+        </div>
+
+        <fieldset>
+            <div class="form-group col-md-12 mb-0 pe-0 text-end">
+                <input asp-action="Del" class="btn btn-danger" type="submit" value="Удалить" />
+            </div>
+        </fieldset>
+    </div>
+}
