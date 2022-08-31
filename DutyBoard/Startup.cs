@@ -31,6 +31,9 @@ namespace DutyBoard
             services.AddScoped<IDaysOfWeekRepository, DaysOfWeekRepository>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             services.AddScoped<IHolidayRepository, HolidayRepository>();
+            services.AddScoped<IWorkdayRepository, WorkdayRepository>();
+            services.AddScoped<IMappingRepository, MappingRepository>();
+            services.AddScoped<IRosterRepository, RosterRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

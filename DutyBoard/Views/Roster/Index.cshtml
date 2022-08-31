@@ -1,7 +1,114 @@
-﻿
+﻿@model IEnumerable<Roster>
+
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Параметры";
 }
 
-<h1>Index</h1>
+<ul class="list-group col-4">
+    <li class="list-group-item list-group-item-info text-center p-0 pt-2"><h5 class="p-0">Дежурства</h5></li>
+    @foreach (var item in Model)
+    {
+        @if (item.DaysOfWeekId == 6 || item.DaysOfWeekId == 7)
+        {
+            <li class="list-group-item pb-0 list-group-item-warning">
+                <div class="row">
+                    <div class="col-8 text-start">
+                        <h5 class="mb-0">@item.DaysOfWeek.DayOfWeekName</h5>
+                        <small class="text-muted">с @item.StartTime.ToString(@"hh\:mm"), @item.DurationOfDuty часов</small>
+                    </div>
+                    <div class="col-4 text-end">
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <h4 class="m-2">
+                                <a href="#" title="Изменить" id=@item.RosterId.ToString() data-bs-toggle="modal" data-bs-target="#modal" onClick="RosterEdit(this)"><i class="fa-regular fa-pen-to-square text-secondary"></i></a>
+                            </h4>
+                            <h4 class="py-2">
+                                <a href="#" title="Удалить" id=@item.RosterId.ToString() data-bs-toggle="modal" data-bs-target="#modal" onClick="RosterDelete(this)"><i class="fa-regular fa-trash-can text-danger"></i></a>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        }
+        else
+        {   
+        <li class="list-group-item pb-0">
+            <div class="row">
+                    <div class="col-8 text-start">
+                    <h5 class="mb-0">@item.DaysOfWeek.DayOfWeekName</h5>
+                    <small class="text-muted">с @item.StartTime.ToString(@"hh\:mm"), @item.DurationOfDuty часов</small>
+                </div>
+                <div class="col-4 text-end">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <h4 class="m-2">
+                            <a href="#" title="Изменить" id=@item.RosterId.ToString() data-bs-toggle="modal" data-bs-target="#modal" onClick="RosterEdit(this)"><i class="fa-regular fa-pen-to-square text-secondary"></i></a>
+                        </h4>
+                        <h4 class="py-2">
+                            <a href="#" title="Удалить" id=@item.RosterId.ToString() data-bs-toggle="modal" data-bs-target="#modal" onClick="RosterDelete(this)"><i class="fa-regular fa-trash-can text-danger"></i></a>
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </li>
+        }
 
+    }
+    <a href="#" title="Добавить" id="-1" data-bs-toggle="modal" data-bs-target="#modal" onClick="RosterEdit(this)" class="list-group-item list-group-item-success text-center"><i class="fa-solid fa-plus"></i> Добавить</a>
+</ul>
+@*
+<div class="scroll-table">
+    <table class="table table-sm mt-2 mb-0">
+        <thead class="table-info border">
+            <tr>
+                <th>День недели</th>
+                <th>Начало дежурства</th>
+                <th>Длительность дежурства</th>
+                <th width="6%"><a href="#" title="Добавить" id="-1" data-bs-toggle="modal" data-bs-target="#modal" onClick="RosterEdit(this)"><i class="fa-solid fa-circle-plus"></i></a></th>
+            </tr>
+        </thead>
+    </table>
+    <div class="table border mt-0 scroll-table-body">
+        <table class="table table-striped">
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr id="Edit">
+                        <td>@item.DaysOfWeek.DayOfWeekName</td>
+                        <td>@item.StartTime.ToString(@"hh\:mm")</td>
+                        <td>@item.DurationOfDuty часов</td>
+                        <td width="3%"><a href="#" title="Изменить" id=@item.RosterId.ToString() data-bs-toggle="modal" data-bs-target="#modal" onClick="RosterEdit(this)"><i class="fa-regular fa-pen-to-square text-secondary"></i></a></td>
+                        <td width="3%"><a href="#" title="Удалить" id=@item.RosterId.ToString() data-bs-toggle="modal" data-bs-target="#modal" onClick="RosterDelete(this)"><i class="fa-regular fa-trash-can text-danger"></i></a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>*@
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id="edit-content"></div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+    {
+    <script>
+        $(document).ready(function () {
+            $('#navbarRoster').addClass('active');
+        });
+
+        function RosterEdit(obj) {
+            let url = '@Url.Action("RosterEditById", "Home")';
+            let id = obj.id;
+            $('#edit-content').load(url, { Id: id });
+        }
+
+        function RosterDelete(obj) {
+            let url = '@Url.Action("RosterDeleteById", "Home")';
+            let id = obj.id;
+            $('#edit-content').load(url, { Id: id });
+        }
+    </script>
+}
