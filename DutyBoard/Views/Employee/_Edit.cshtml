@@ -1,40 +1,39 @@
-﻿@model RosterVM
+﻿@model Employee
 <form method="post">
-    <input asp-for="Roster.RosterId" hidden />
+    <input asp-for="EmployeeId" hidden />
     <div class="modal-content rounded-3 shadow p-3 bg-3 ">
         <div asp-validation-summary="ModelOnly"></div>
         <div class="row form-group py-1">
             <div class="col-sm-5 text-start">
-                <label asp-for="Roster.DaysOfWeekId" class="col-form-label"></label>
+                <label asp-for="FullName" class="col-form-label"></label>
             </div>
             <div class="col-sm-7">
-                <select asp-for="Roster.DaysOfWeekId" asp-items="@Model.DaysOfWeeks" class="form-select">
-                </select>
-                <span asp-validation-for="Roster.DaysOfWeekId" class="text-danger"></span>
+                <input asp-for="FullName" class="form-control" placeholder="Пётр Иванов" data-val="true" data-val-required="Введи имя!" />
+                <span asp-validation-for="FullName" class="text-danger field-validation-valid"></span>
             </div>
         </div>
         <div class="row form-group py-1">
             <div class="col-sm-5 text-start">
-                <label asp-for="Roster.StartTime" class="col-form-label"></label>
+                <label asp-for="LoginName" class="col-form-label"></label>
             </div>
             <div class="col-sm-7">
-                <input asp-for="Roster.StartTime" class="form-control" type="time" aria-describedby="StartTime-error" aria-invalid="false" />
-                <span asp-validation-for="Roster.StartTime" class="text-danger"></span>
+                <input asp-for="LoginName" class="form-control" placeholder="ivanov_pa" data-val="true" data-val-required="Введи логин!" />
+                <span asp-validation-for="LoginName" class="text-danger"></span>
             </div>
         </div>
         <div class="row form-group py-1">
             <div class="col-sm-5 text-start">
-                <label asp-for="Roster.DurationOfDuty" class="col-form-label"></label>
+                <label asp-for="Phone" class="col-form-label"></label>
             </div>
-            <div class="col-sm-7">
-                <input asp-for="Roster.DurationOfDuty" class="form-control" />
-                <span asp-validation-for="Roster.DurationOfDuty" class="text-danger"></span>
+            <div class="col-sm-7 ">
+                <input asp-for="Phone" class="form-control" placeholder="+7(999)999-99-99">
             </div>
         </div>
+
         <div class="container text-center pt-3 ">
             <div class="row form-group">
                 <div class="col-sm-4 offset-8">
-                    @if (Model.Roster.RosterId != 0)
+                    @if (Model.EmployeeId != 0)
                     {
                         <input asp-action="Edit" type="submit" class="btn btn-warning w-100" value="Изменить" />
                     }
@@ -47,4 +46,11 @@
         </div>
     </div>
 </form>
+
 <partial name="_ValidationScriptsPartial" />
+<script src="~/lib/jquery/dist/jquery.inputmask.js"></script>
+<script>
+    $("#Phone").inputmask({
+        mask: "+7(999)999-99-99"
+    });
+</script>

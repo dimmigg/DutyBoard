@@ -2,7 +2,7 @@
 
 namespace DutyBoard_DataAccess.Repository.IRepository
 {
-    public interface IMappingRepository : IRepository<MappingModel>
+    public interface IMappingRepository : IRepository<Mapping>
     {
     }
 }

@@ -1,23 +1,25 @@
-﻿using Dapper.Contrib.Extensions;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DutyBoard_Models
 {
     public class Employee
     {
-        [Key]
+        [Dapper.Contrib.Extensions.Key]
         public int EmployeeId { get; set; }
-
+        [Display(Name = "Имя")]
+        [StringLength(20, ErrorMessage = "Имя не должно превышать 50 симовлов!")]
         public string FullName { get; set; }
-
+        
+        [Display(Name = "Логин")]
+        [StringLength(20, ErrorMessage = "Логин не должен превышать 20 симовлов!")]
         public string LoginName { get; set; }
 
+        [Display(Name = "Телефон")]
+        [StringLength(20, ErrorMessage = "Телефон не должен превышать 20 симовлов!")]
         public string Phone { get; set; }
 
         [NotMapped]
         public int CountDuty { get; set; } = 0;
-
-        [NotMapped]
-        public string ShortName => $"{FullName.Split()[0]} {FullName.Split()[1][0]}.";
     }
 }

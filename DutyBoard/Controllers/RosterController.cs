@@ -1,9 +1,9 @@
 ﻿using DutyBoard_DataAccess.Repository.IRepository;
 using DutyBoard_Models;
 using DutyBoard_Models.ViewModels;
+using DutyBoard_Utility;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
 using System.Linq;
 
 namespace DutyBoard.Controllers
@@ -27,12 +27,13 @@ namespace DutyBoard.Controllers
             return View(_rostRepo.GetAll());
         }
 
-
         public IActionResult DeleteById(int Id) => PartialView("_Delete", _rostRepo.FirstOrDefault(x => x.RosterId == Id));
-        
+
+        [HttpPost]
         public IActionResult Del()
         {
             _rostRepo.Remove(_rostRepo.FirstOrDefault(x => x.RosterId == Roster.RosterId)); ;
+            TempData[WC.Success] = "Дежурство удалено";
             return Redirect(nameof(Index));
         }
         public IActionResult EditById(int Id)
@@ -57,26 +58,13 @@ namespace DutyBoard.Controllers
         [HttpPost]
         public IActionResult Edit()
         {
-            //RosterVM rosterVM = new RosterVM()
-            //{
-            //    Roster = ros,
-            //    DaysOfWeeks = _dayRepo.GetAll().Select(x => new SelectListItem
-            //    {
-            //        Text = x.DayOfWeekName,
-            //        Value = x.DayOfWeekId.ToString()
-            //    })
-            //};
             if (ModelState.IsValid)
             {
                 _rostRepo.Upsert(RosterVM.Roster);
+                TempData[WC.Success] = RosterVM.Roster.RosterId == 0 ? "Дежурство добавлено" : "Дежурство изменено";
                 return Redirect(nameof(Index));
             }
             return PartialView("_Edit", RosterVM);
-        }
-
-        public IActionResult Add()
-        {
-            return PartialView("_Add");
         }
     }
 }

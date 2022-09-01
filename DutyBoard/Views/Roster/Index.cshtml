@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Roster>
-
 @{
     ViewData["Title"] = "Параметры";
+    var color = "";
 }
 
 <ul class="list-group col-4">
@@ -10,65 +10,44 @@
     {
         @if (item.DaysOfWeekId == 6 || item.DaysOfWeekId == 7)
         {
-            <li class="list-group-item pb-0 list-group-item-warning">
-                <div class="row">
-                    <div class="col-8 text-start">
-                        <h5 class="mb-0">@item.DaysOfWeek.DayOfWeekName</h5>
-                        <small class="text-muted">с @item.StartTime.ToString(@"hh\:mm"), @item.DurationOfDuty часов</small>
-                    </div>
-                    <div class="col-4 text-end">
-                        <div class="btn-group" role="group" aria-label="Basic example">
-                            <h4 class="m-2">
-                                <a href="#" title="Изменить" id=@item.RosterId.ToString() data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this)"><i class="fa-regular fa-pen-to-square text-secondary"></i></a>
-                            </h4>
-                            <h4 class="py-2">
-                                <a href="#" title="Удалить" id=@item.RosterId.ToString() data-bs-toggle="modal" data-bs-target="#modal" onClick="Delete(this)"><i class="fa-regular fa-trash-can text-danger"></i></a>
-                            </h4>
-                        </div>
-                    </div>
-                </div>
-            </li>
+            color = "list-group-item-warning";
         }
         else
-        {   
-        <li class="list-group-item pb-0">
-            <div class="row">
-                    <div class="col-8 text-start">
-                    <h5 class="mb-0">@item.DaysOfWeek.DayOfWeekName</h5>
-                    <small class="text-muted">с @item.StartTime.ToString(@"hh\:mm"), @item.DurationOfDuty часов</small>
-                </div>
-                <div class="col-4 text-end">
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                        <h4 class="m-2">
-                            <a href="#" title="Изменить" id=@item.RosterId.ToString() data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this)"><i class="fa-regular fa-pen-to-square text-secondary"></i></a>
-                        </h4>
-                        <h4 class="py-2">
-                            <a href="#" title="Удалить" id=@item.RosterId.ToString() data-bs-toggle="modal" data-bs-target="#modal" onClick="Delete(this)"><i class="fa-regular fa-trash-can text-danger"></i></a>
-                        </h4>
-                    </div>
-                </div>
-            </div>
-        </li>
+        {
+            color = "";
         }
 
-    }
-    <a href="#" title="Добавить" id="0" data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this)" class="list-group-item list-group-item-success text-center"><i class="fa-solid fa-plus"></i> Добавить</a>
-</ul>
-    <!-- Modal -->
-    <div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div id="edit-content"></div>
+        <li class="list-group-item list-group-item-action pb-0 @color">
+            <div class="row">
+                <a href="#" class="col text-start" id=@item.RosterId.ToString() data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this)" style="text-decoration: none;">
+                    <h5 class="mb-0">@item.DaysOfWeek.DayOfWeekName</h5>
+                    <small class="text-muted">с @item.StartTime.ToString(@"hh\:mm"), @item.DurationOfDuty часов</small>
+                </a>
+                <object class="col-1 text-center">
+                    <a aria-label="Basic example" href="#" title="Удалить" id=@item.RosterId.ToString() data-bs-toggle="modal" data-bs-target="#modal" onClick="Delete(this)">
+                        <h4 class="py-2">
+                            <i class="fa-regular fa-trash-can text-danger"></i>
+                        </h4>
+                    </a>
+                </object>
             </div>
+        </li>
+    }
+    <a href="#" title="Добавить" id="0" data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this)" class="list-group-item list-group-item-action list-group-item-success text-center"><i class="fa-solid fa-plus"></i> Добавить</a>
+</ul>
+<!-- Modal -->
+<div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="edit-content"></div>
         </div>
     </div>
+</div>
 
-@section Scripts
-    {
-    @{
+@section Scripts{
+@*    @{
         <partial name="_ValidationScriptsPartial" />
-    }
-    @*<script src="~js/pages/Roster.js"></script>*@
+    }*@
     <script>
         function Edit(obj) {
             let url = '@Url.Action("EditById", "Roster")';
@@ -81,7 +60,5 @@
             let id = obj.id;
             $('#edit-content').load(url, { Id: id });
         }
-        
-    </script>       
-
+    </script>
 }

@@ -1,11 +1,11 @@
-﻿@model Roster
+﻿@model Employee
 
 <form method="post" asp-action="Del">
     <div class="modal-content rounded-3 shadow">
-        <input asp-for="RosterId" hidden />
+        <input asp-for="EmployeeId" hidden />
         <div class="modal-body p-4 text-center">
-            <h5 class="mb-1">Вы действительно хоте удалить дежурство?</h5>
-            <p class="mb-0" style="font-size:16px"><b>@Model.DaysOfWeek.DayOfWeekName</b>, @Model.StartTime - @Model.DurationOfDuty часов.</p>
+            <h5 class="mb-1">Вы действительно хоте удалить сотрудника</h5>
+            <p class="mb-0 text-dark" style="font-size:20px"><b>@Model.FullName</b>?</p>
         </div>
         <div class="modal-footer flex-nowrap p-0">
             <button type="submit" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 border-end"><b>Да, удалить</b></button>

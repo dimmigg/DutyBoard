@@ -3,7 +3,7 @@ using System;
 
 namespace DutyBoard_Models
 {
-    public class MappingModel
+    public class Mapping
     {
         [Key]
         public int EmployeeId { get; set; }

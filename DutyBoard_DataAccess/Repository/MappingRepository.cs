@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace DutyBoard_DataAccess.Repository
 {
-    public class MappingRepository : Repository<MappingModel>, IMappingRepository
+    public class MappingRepository : Repository<Mapping>, IMappingRepository
     {
         public MappingRepository(IConfiguration configuration) : base(configuration)
         {

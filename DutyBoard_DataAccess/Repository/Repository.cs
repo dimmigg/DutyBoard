@@ -15,7 +15,6 @@ namespace DutyBoard_DataAccess.Repository
     public abstract class Repository<T> : IRepository<T> where T : class
     {
         public string Name = typeof(T).Name;
-        private int id;
         private readonly string _server;
         private readonly string _db;
 
