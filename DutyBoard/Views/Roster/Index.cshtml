@@ -4,7 +4,7 @@
     var color = "";
 }
 
-<ul class="list-group col-4">
+<ul class="list-group col col-lg-4">
     <li class="list-group-item list-group-item-info text-center p-0 pt-2"><h5 class="p-0">Дежурства</h5></li>
     @foreach (var item in Model)
     {
@@ -23,17 +23,21 @@
                     <h5 class="mb-0">@item.DaysOfWeek.DayOfWeekName</h5>
                     <small class="text-muted">с @item.StartTime.ToString(@"hh\:mm"), @item.DurationOfDuty часов</small>
                 </a>
-                <object class="col-1 text-center">
+                <div class="col-1 col-sm-2 text-end">
                     <a aria-label="Basic example" href="#" title="Удалить" id=@item.RosterId.ToString() data-bs-toggle="modal" data-bs-target="#modal" onClick="Delete(this)">
                         <h4 class="py-2">
                             <i class="fa-regular fa-trash-can text-danger"></i>
                         </h4>
                     </a>
-                </object>
+                </div>
             </div>
         </li>
     }
-    <a href="#" title="Добавить" id="0" data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this)" class="list-group-item list-group-item-action list-group-item-success text-center"><i class="fa-solid fa-plus"></i> Добавить</a>
+    <li class="list-group-item list-group-item-action list-group-item-success text-center">
+        <div class="row">
+            <a href="#" title="Добавить" id="0" data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this)" style="text-decoration: none;"><i class="fa-solid fa-plus"></i> Добавить</a>
+        </div>
+    </li>
 </ul>
 <!-- Modal -->
 <div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">

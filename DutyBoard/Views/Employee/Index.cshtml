@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Сотрудники";
 }
-<ul class="list-group col-4">
+<ul class="list-group col col-lg-4">
     <li class="list-group-item list-group-item-info text-center p-0 pt-2"><h5 class="p-0">Сотрудники</h5></li>
     @foreach (var item in Model)
     {
@@ -11,17 +11,17 @@
                 <a href="#" class="col text-start" id=@item.EmployeeId.ToString() data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this)" style="text-decoration: none;">
                     <div class="row">
                         <div class="col-8">
-                            <h5 class="mb-0 fs-5">@item.FullName</h5>
+                            <h5 class="mb-0">@item.FullName</h5>
                             <p class="text-muted mb-0">@item.LoginName</p>
                         </div>
-                        <div class="col-4 align-items-center text-reset mt-2">
+                        <div class="col-4 align-items-center text-muted mt-2">
                             @item.Phone
                         </div>
                     </div>
                     
                     
                 </a>
-                <div class="col-1 text-center">
+                <div class="col-1 col-sm-2 text-end">
                     <a aria-label="Basic example" href="#" title="Удалить" id=@item.EmployeeId.ToString() data-bs-toggle="modal" data-bs-target="#modal" onClick="Delete(this)">
                         <h4 class="py-2">
                             <i class="fa-regular fa-trash-can text-danger"></i>
@@ -31,7 +31,11 @@
             </div>
         </li>
     }
-    <a href="#" title="Добавить" id="0" data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this)" class="list-group-item list-group-item-action list-group-item-success text-center"><i class="fa-solid fa-plus"></i> Добавить</a>
+    <li class="list-group-item list-group-item-action list-group-item-success text-center">
+        <div class="row">
+            <a href="#" title="Добавить" id="0" data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this)" style="text-decoration: none;"><i class="fa-solid fa-plus"></i> Добавить</a>
+        </div>
+    </li>
 </ul>
 <!-- Modal -->
 <div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">
