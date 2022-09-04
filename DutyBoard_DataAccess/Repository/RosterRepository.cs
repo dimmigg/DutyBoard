@@ -31,6 +31,8 @@ namespace DutyBoard_DataAccess.Repository
         public new Roster FirstOrDefault(Func<Roster, bool> filter = null)
         {
             var ros = base.FirstOrDefault(filter);
+            if (ros == null)
+                return new Roster();
             ros.DaysOfWeek = _daysRepo.FirstOrDefault(x => x.DayOfWeekId == ros.DaysOfWeekId);
             return ros;
         }

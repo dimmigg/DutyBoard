@@ -1,0 +1,136 @@
+﻿@model WorkdayVM
+@{
+    var dayOfWeek = ((int)Model.Roster.DaysOfWeek.DayOfWeekId) == 0 ? 7 : ((int)Model.Roster.DaysOfWeek.DayOfWeekId);
+}
+<form method="post">
+    <input asp-for="Workday.WorkdayId" hidden />
+    <input asp-for="Workday.Roster.DurationOfDuty" hidden />
+    <div class="modal-content rounded-3 shadow p-3 bg-3 ">
+        <div asp-validation-summary="ModelOnly"></div>
+        <div class="row form-group py-1">
+            <div class="row offset-5">
+                <div class="col-2" id="day">
+                    <div class="row">
+                        <div class="col-1">
+                            <i class="fas fa-circle text-warning f-10 m-r-10" title="День"></i>
+                        </div>
+
+                        <div class="col-1 ps-2">
+                            <label>День</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-1">
+                    <div class="form-check form-switch">
+                        <input asp-for="Workday.IsAlways" class="form-check-input " type="checkbox" role="switch" id="switchcheck" onchange="changeIsAlways(this)">
+                    </div>
+                </div>
+
+                <div class="col-2 ps-4" id="always">
+                    <div class="row">
+                        <div class="col-1">
+                            <i class="fas fa-circle text-success f-10 m-r-10" title="День"></i>
+                        </div>
+
+                        <div class="col-1 ps-2">
+                            <label>Постоянно</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row form-group py-1">
+            <div class="col-sm-5 text-start">
+                <label asp-for="Workday.EmployeeId" class="col-form-label"></label>
+            </div>
+            <div class="col-sm-7">
+                <select asp-for="Workday.EmployeeId" asp-items="@Model.Employees" class="form-select">
+                </select>
+                <span asp-validation-for="Workday.EmployeeId" class="text-danger"></span>
+            </div>
+        </div>
+
+
+
+        <div class="row form-group py-1" id="datepicker" hidden=@Model.Workday.IsAlways>
+            <div class="col-sm-5 text-start">
+                <label asp-for="Workday.DateWork" class="col-form-label"></label>
+            </div>
+            <div class="col-sm-7">
+                <input asp-for="Workday.DateWork" class="form-control " type="date" aria-describedby="StartTime-error" aria-invalid="false" onChange="getrosterbyid(this)" />
+                <span asp-validation-for="Workday.DateWork" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row form-group py-1">
+            <div class="col-sm-5 text-start">
+                <label asp-for="Workday.RosterId" class="col-form-label"></label>
+            </div>
+            <partial name="_Rosters" model=Model id="rosters" />
+        </div>
+
+        <div class="container text-center pt-3 ">
+            <div class="row form-group">
+                <div class="col text-end">
+                    @if (Model.Workday.WorkdayId != 0)
+                    {
+                        <input asp-action="Edit" type="submit" class="btn btn-warning" value="Изменить" />
+                    }
+                    else
+                    {
+                        <input asp-action="Edit" type="submit" class="btn btn-primary" value="Создать" />
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<partial name="_ValidationScriptsPartial" />
+
+<script>
+    function WorkdayEdit(obj) {
+        let url = '@Url.Action("EditById", "Workday")';
+        let id = obj.id;
+        $('#edit-content').load(url, { Id: id },
+            function () {
+                changeIsAlways()
+            });
+    }
+
+    function WorkdayDelete(obj) {
+        let url = '@Url.Action("DeleteById", "Workday")';
+        let id = obj.id;
+        $('#edit-content').load(url, { Id: id });
+    }
+
+    function changeIsAlways(obj) {
+        $('#datepicker').prop("hidden", $(obj).is(":checked"));
+        if ($(obj).is(":checked")) {
+            $('#day').addClass('opacity-25');
+            $('#day').removeClass('opacity-100');
+            $('#always').addClass('opacity-100');
+            $('#always').removeClass('opacity-25');
+        }
+        else {
+            $('#day').addClass('opacity-100');
+            $('#day').removeClass('opacity-25');
+            $('#always').addClass('opacity-25');
+            $('#always').removeClass('opacity-100');
+        }
+        getrosterbyid('#Workday_DateWork');
+    }
+
+    function getrosterbyid(obj) {
+        let d = $('#switchcheck').is(":checked") ? -1 : new Date($(obj).val()).getDay();
+        var id = d == 0 ? 7 : d;
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("GetRosterByDateId", "Workday")/' + id,
+            success: function (data) {
+                // заменяем содержимое присланным частичным представлением
+                $('#rosters').replaceWith(data);
+            }
+        });
+    }
+</script>

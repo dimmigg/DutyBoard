@@ -2,10 +2,12 @@
 using DutyBoard_Models;
 using DutyBoard_Models.ViewModels;
 using DutyBoard_Utility;
+using DutyBoard_Utility.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace DutyBoard.Controllers
 {
@@ -34,7 +36,7 @@ namespace DutyBoard.Controllers
                 Employee = _empRepo.FirstOrDefault(e => e.EmployeeId == x.EmployeeId),
                 Roster = _rostRepo.FirstOrDefault(r => r.RosterId == x.RosterId)
             });
-            
+
             return View(Workdays);
         }
 
@@ -54,22 +56,30 @@ namespace DutyBoard.Controllers
                 workday = new Workday();
             else
                 workday = _workdayRepo.FirstOrDefault(x => x.WorkdayId == Id);
-            WorkdayVM workdayVM = new WorkdayVM()
+            WorkdayVM workdayVM = new WorkdayVM();
+
+            workdayVM.Workday = workday;
+            workdayVM.Employee = _empRepo.FirstOrDefault(e => e.EmployeeId == workday.EmployeeId);
+            workdayVM.Roster = _rostRepo.FirstOrDefault(e => e.RosterId == workday.RosterId);
+            workdayVM.Employees = _empRepo.GetAll().Select(x => new SelectListItem
             {
-                Workday = workday,
-                Employee = _empRepo.FirstOrDefault(e => e.EmployeeId == Workday.EmployeeId),
-                Roster = _rostRepo.FirstOrDefault(e => e.RosterId == Workday.RosterId),
-                Employees = _empRepo.GetAll().Select(x => new SelectListItem
+                Text = x.FullName,
+                Value = x.EmployeeId.ToString()
+            });
+            if (workday.IsAlways)
+                workdayVM.Rosters = _rostRepo.GetAll().Select(x => new SelectListItem
                 {
-                    Text = x.FullName,
-                    Value = x.EmployeeId.ToString()
-                }),
-                Rosters = _rostRepo.GetAll().Select(x => new SelectListItem
-                {
-                    Text = x.DaysOfWeek.DayOfWeekName + x.StartTime.ToString(),
+                    Text = x.DaysOfWeek.DayOfWeekName + " - " + x.StartTime.ToString(),
                     Value = x.RosterId.ToString()
-                })
-            };
+                });
+            else
+            {
+                workdayVM.Rosters = _rostRepo.GetAll(x => x.DaysOfWeekId == workday.DateWork.GetDayOfWeek()).Select(x => new SelectListItem
+                {
+                    Text = x.DaysOfWeek.DayOfWeekName + " - " + x.StartTime.ToString(),
+                    Value = x.RosterId.ToString()
+                });
+            }
             return PartialView("_Edit", workdayVM);
         }
 
@@ -83,6 +93,27 @@ namespace DutyBoard.Controllers
                 return Redirect(nameof(Index));
             }
             return PartialView("_Edit", Workday);
+        }
+
+        public IActionResult GetRosterByDateId(int id)
+        {
+            WorkdayVM workdayVM = new WorkdayVM();
+
+            if (id == -1)
+                workdayVM.Rosters = _rostRepo.GetAll().Select(x => new SelectListItem
+                {
+                    Text = x.DaysOfWeek.DayOfWeekName + " - " + x.StartTime.ToString(),
+                    Value = x.RosterId.ToString()
+                });
+            else
+            {
+                workdayVM.Rosters = _rostRepo.GetAll(x => x.DaysOfWeekId == id).Select(x => new SelectListItem
+                {
+                    Text = x.DaysOfWeek.DayOfWeekName + " - " + x.StartTime.ToString(),
+                    Value = x.RosterId.ToString()
+                });
+            }
+            return PartialView("_Rosters", workdayVM);
         }
     }
 }

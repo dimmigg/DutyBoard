@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -7,20 +8,27 @@ namespace DutyBoard_Models
 { 
     public class Workday
     {
-        [Key]
-        public int WorkdayId { get; set; }
+        public Workday()
+        {
+            Employee = new Employee();
+            Roster = new Roster();
+        }
+        [Dapper.Contrib.Extensions.Key]
 
+        public int WorkdayId { get; set; }
+        [Display(Name = "Сотрудник")]
         public int EmployeeId { get; set; }
 
         [NotMapped]
         public Employee Employee { get; set; }
-
+        [Display(Name = "Дежурство")]
         public int RosterId { get; set; }
         [NotMapped]
+        [HiddenInput(DisplayValue = false)]
         public Roster Roster { get; set; }
-
+        [Display(Name = "Постоянно")]
         public bool IsAlways { get; set; } = false;
-
+        [Display(Name = "День")]
         public DateTime DateWork { get; set; } = DateTime.Today;
 
     }

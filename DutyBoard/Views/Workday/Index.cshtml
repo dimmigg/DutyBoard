@@ -65,17 +65,19 @@
 @section Scripts{
     <script>
         function Edit(obj) {
-            let url = '@Url.Action("EditById", "Roster")';
+            let url = '@Url.Action("EditById", "Workday")';
             let id = obj.id;
             $('#edit-content').load(url, { Id: id });
         }
 
         function Delete(obj) {
-            let url = '@Url.Action("DeleteById", "Roster")';
+            let url = '@Url.Action("DeleteById", "Workday")';
             let id = obj.id;
             $('#edit-content').load(url, { Id: id });
         }
     </script>
+
+
 }
 
 
