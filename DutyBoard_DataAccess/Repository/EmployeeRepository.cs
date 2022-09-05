@@ -9,13 +9,5 @@ namespace DutyBoard_DataAccess.Repository
         public EmployeeRepository(IConfiguration configuration) : base(configuration)
         {
         }
-
-        //public void Upsert(Employee entity)
-        //{
-        //    if(entity.EmployeeId == 0)
-        //        Add(entity);
-        //    else
-        //        Update(entity);
-        //}
     }
 }

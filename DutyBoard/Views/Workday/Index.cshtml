@@ -5,7 +5,7 @@
 
 <ul class="list-group col col-lg-4">
     <li class="list-group-item list-group-item-info text-center p-0 pt-2"><h5 class="p-0">Дежурства</h5></li>
-    @foreach (var item in Model)
+    @foreach (var item in Model.OrderBy(x => x.Workday.IsAlways).ThenBy(x => x.Workday.DateWork).ThenBy(x => x.Workday.Roster.RosterId))
     {
         string day;
         string color;
@@ -36,10 +36,10 @@
                 <div class="col-2 text-start py-2">
                     <i class="fas fa-circle @color f-10 m-r-10" title=@title></i>
                 </div>
-                <div class="col-1  text-end">
-                    <a aria-label="Basic example" href="#" title="Удалить" id=@item.Workday.WorkdayId.ToString() data-bs-toggle="modal" data-bs-target="#modal" onClick="Delete(this)">
+                <div class="col-1  text-end ">
+                    <a href="#" title="Удалить" id=@item.Workday.WorkdayId.ToString() data-bs-toggle="modal" data-bs-target="#modal" onClick="Delete(this)">
                         <h4 class="py-2">
-                            <i class="fa-regular fa-trash-can text-danger"></i>
+                            <i class="fa-regular fa-trash-can del"></i>
                         </h4>
                     </a>
                 </div>
@@ -80,8 +80,6 @@
             $('#edit-content').load(url, { Id: id });
         }
     </script>
-
-
 }
 
 

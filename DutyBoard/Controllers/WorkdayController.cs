@@ -19,7 +19,6 @@ namespace DutyBoard.Controllers
         private readonly IWorkdayRepository _workdayRepo;
         [BindProperty]
         public WorkdayVM WorkdayVM { get; set; }
-        public WorkdayListVM WorkdayListVM { get; set; }
         [BindProperty]
         public Workday Workday { get; set; }
         public WorkdayController(IRosterRepository rostRepo, IEmployeeRepository empRepo, IWorkdayRepository workdayRepo)

@@ -1,7 +1,64 @@
-﻿
+﻿@model IEnumerable<HolidayVM>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Отпуска";
 }
 
-<h1>Index</h1>
+<ul class="list-group col col-lg-4">
+    <li class="list-group-item list-group-item-info text-center p-0 pt-2"><h5 class="p-0">Отпуска</h5></li>
+    @foreach (var item in Model.OrderBy(x => x.Holiday.DateStart).ThenBy(x => x.Holiday.DateFinish).ThenBy(x => x.Employee.FullName))
+    {
+        <li class="list-group-item list-group-item-action pb-0 ">
+            <div class="row">
 
+                <div class="col-11">
+                    <a href="#" class="col text-start" id=@item.Holiday.HolidayId.ToString() title="Изменить" data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this)" style="text-decoration: none;">
+
+                        <h5 class="mb-0">@item.Employee.FullName</h5>
+                        <p class="text-muted mb-0">@item.Holiday.DateStart.ToString(@"dd.MM.yyyy") - @item.Holiday.DateFinish.ToString(@"dd.MM.yyyy")</p>
+                    </a>
+                </div>
+                <div class="col-1  text-end ">
+                    <a href="#" title="Удалить" id=@item.Holiday.HolidayId.ToString() data-bs-toggle="modal" data-bs-target="#modal" onClick="Delete(this)">
+                        <h4 class="py-2">
+                            <i class="fa-regular fa-trash-can del"></i>
+                        </h4>
+                    </a>
+                </div>
+            </div>
+        </li>
+    }
+    <li class="list-group-item list-group-item-action list-group-item-success text-center p-0">
+        <div class="row">
+            <a href="#" class="p-2" title="Добавить" id="0" data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this)" style="text-decoration: none;">
+                <h5 class="text-success mb-1 mt-1">
+                    <i class="fa-solid fa-plus"></i> Добавить
+                </h5>
+            </a>
+        </div>
+    </li>
+</ul>
+
+<!-- Modal -->
+<div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="edit-content"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        function Edit(obj) {
+            let url = '@Url.Action("EditById", "Holiday")';
+            let id = obj.id;
+            $('#edit-content').load(url, { Id: id });
+        }
+
+        function Delete(obj) {
+            let url = '@Url.Action("DeleteById", "Holiday")';
+            let id = obj.id;
+            $('#edit-content').load(url, { Id: id });
+        }
+    </script>
+}

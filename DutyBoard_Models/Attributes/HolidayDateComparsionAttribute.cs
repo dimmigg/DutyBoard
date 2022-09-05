@@ -9,7 +9,7 @@ namespace DutyBoard_Models.Attributes
         {
             if (value is Holiday day)
             {
-                if (day.DateStart >= day.DateFinish)
+                if (day.DateStart > day.DateFinish)
                 {
                     ErrorMessage = "Дата начала отпуска должна быть меньше даты окончания.";
                     return false;

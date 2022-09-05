@@ -19,7 +19,7 @@ namespace DutyBoard_Models
 
         public DateTime DateStart { get; set; } = DateTime.Today;
 
-        public DateTime DateFinish { get; set; } = DateTime.Today;
+        public DateTime DateFinish { get; set; } = DateTime.Today.AddHours(23).AddMinutes(59);
 
     }
 }

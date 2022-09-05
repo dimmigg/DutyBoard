@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
-using System.Text;
 
 namespace DutyBoard_Models.ViewModels
 {
-    internal class HolidayVM
+    public class HolidayVM
     {
+        public Holiday Holiday { get; set; }
+        public Employee Employee { get; set; }
+        public IEnumerable<SelectListItem> Employees { get; set; }
     }
 }

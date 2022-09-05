@@ -1,0 +1,15 @@
+﻿@model HolidayVM
+<form method="post" asp-action="Del">
+    <div class="modal-content rounded-3 shadow">
+        <input asp-for="Holiday.HolidayId" hidden />
+        <div class="modal-body p-4 text-center">
+            <h5 class="mb-1">Вы действительно хотите удалить отпуск?</h5>
+            <p class="mb-0" style="font-size:16px"><b>@Model.Employee.FullName</b></p>
+            <p class="mb-0" style="font-size:14px">@Model.Holiday.DateStart.ToString(@"dd.MM.yyyy") - @Model.Holiday.DateFinish.ToString(@"dd.MM.yyyy")</p>
+        </div>
+        <div class="modal-footer flex-nowrap p-0">
+            <button type="submit" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 border-end"><b>Да, удалить</b></button>
+            <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0" data-bs-dismiss="modal">Не удалять</button>
+        </div>
+    </div>
+</form>
