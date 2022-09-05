@@ -6970,7 +6970,7 @@ pre[class*=language-]:after, pre[class*=language-]:before {
 /**  =====================
       Form Componant css start
 ==========================  **/
-.custom-select,
+/*.custom-select,
 .form-control {
   background: #f4f7fa;
   padding: 10px 20px;
@@ -6993,7 +6993,7 @@ pre[class*=language-]:after, pre[class*=language-]:before {
 .custom-select::-webkit-input-placeholder,
 .form-control::-webkit-input-placeholder {
   color: #aaaeb3;
-}
+}*/
 
 /* input group start */
 .input-group {

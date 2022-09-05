@@ -1,11 +1,4 @@
 ﻿@model WorkdayVM
-@*@{
-    IEnumerable<SelectListItem> rosters;
-    if(Model.Workday.IsAlways)
-        rosters = Model.Rosters;
-    else
-        rosters = Model.Rosters.Where(r => r.Value == Model.Workday.WorkdayId.ToString());
-}*@
 <div class="col-sm-7" id="rosters">
     <select asp-for="Workday.RosterId" asp-items="@Model.Rosters" class="form-select ">
     </select>

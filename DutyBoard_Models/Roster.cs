@@ -13,7 +13,7 @@ namespace DutyBoard_Models
         [Dapper.Contrib.Extensions.Key]
         public int RosterId { get; set; }
         [Display(Name = "День недели")]
-        [Required(ErrorMessage = "Выбрери день недели!")]
+        [Required(ErrorMessage = "Выбери день недели!")]
         public int DaysOfWeekId { get; set; } = 1;
 
         [NotMapped]
@@ -27,8 +27,5 @@ namespace DutyBoard_Models
 
         [NotMapped]
         public TimeSpan EndTime => StartTime.Add(TimeSpan.FromHours(DurationOfDuty));
-
-        //[NotMapped]
-        //public string RosterName => $"{DaysOfWeek.DayOfWeekName}: {StartTime:hh\\:mm} - {EndTime:hh\\:mm}";
     }
 }

@@ -21,6 +21,7 @@ namespace DutyBoard_Models
 
         [NotMapped]
         public Employee Employee { get; set; }
+        [Required(ErrorMessage = "Выбери дежурство!")]
         [Display(Name = "Дежурство")]
         public int RosterId { get; set; }
         [NotMapped]
@@ -28,6 +29,7 @@ namespace DutyBoard_Models
         public Roster Roster { get; set; }
         [Display(Name = "Постоянно")]
         public bool IsAlways { get; set; } = false;
+        [Required(ErrorMessage = "Выбери день!")]
         [Display(Name = "День")]
         public DateTime DateWork { get; set; } = DateTime.Today;
 
