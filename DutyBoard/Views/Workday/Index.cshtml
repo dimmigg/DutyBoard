@@ -3,8 +3,19 @@
     ViewData["Title"] = "Дежурства";
 }
 
-<ul class="list-group col col-lg-4">
-    <li class="list-group-item list-group-item-info text-center p-0 pt-2"><h5 class="p-0">Дежурства</h5></li>
+<ul class="list-group col col-xl-4 col-lg-6">
+    <li>
+        <div class="row">
+            <div class="col ms-2">
+                <h4 class="text-start">Дежурства</h4>
+            </div>
+            <div class="col text-end me-3">
+                <a href="#" class="add" title="Добавить" id="0" data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this)" style="text-decoration: none;">
+                    <i class="fa-solid fa-plus fa-2xl"></i>
+                </a>
+            </div>
+        </div>
+    </li>
     @foreach (var item in Model.OrderBy(x => x.Workday.IsAlways).ThenBy(x => x.Workday.DateWork).ThenBy(x => x.Workday.Roster.RosterId))
     {
         string day;
@@ -23,21 +34,21 @@
             title = "День";
         }
 
-        <li class="list-group-item list-group-item-action pb-0 ">
+        <li>
             <div class="row">
 
                 <div class="col-9">
                     <a href="#" class="col text-start" id=@item.Workday.WorkdayId.ToString() title="Изменить" data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this)" style="text-decoration: none;">
 
                         <h5 class="mb-0">@item.Employee.FullName</h5>
-                        <p class="text-muted mb-0">@day, @item.Roster.StartTime.ToString(@"hh\:mm") - @item.Roster.EndTime.ToString(@"hh\:mm") </p>
+                        <p class=" mb-0">@day, @item.Roster.StartTime.ToString(@"hh\:mm") - @item.Roster.EndTime.ToString(@"hh\:mm") </p>
                     </a>
                 </div>
                 <div class="col-2 text-start py-2">
                     <i class="fas fa-circle @color f-10 m-r-10" title=@title></i>
                 </div>
                 <div class="col-1  text-end ">
-                    <a href="#" title="Удалить" id=@item.Workday.WorkdayId.ToString() data-bs-toggle="modal" data-bs-target="#modal" onClick="Delete(this)">
+                    <a href="#" class="del" title="Удалить" id=@item.Workday.WorkdayId.ToString() data-bs-toggle="modal" data-bs-target="#modal" onClick="Delete(this)">
                         <h4 class="py-2">
                             <i class="fa-regular fa-trash-can del"></i>
                         </h4>
@@ -46,15 +57,6 @@
             </div>
         </li>
     }
-    <li class="list-group-item list-group-item-action list-group-item-success text-center p-0">
-        <div class="row">
-            <a href="#" class="p-2" title="Добавить" id="0" data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this)" style="text-decoration: none;">
-                <h5 class="text-success mb-1 mt-1">
-                    <i class="fa-solid fa-plus"></i> Добавить
-                </h5>
-            </a>
-        </div>
-    </li>
 </ul>
 
 <!-- Modal -->
@@ -69,13 +71,13 @@
 @section Scripts{
     <script>
         function Edit(obj) {
-            let url = '@Url.Action("EditById", "Workday")';
+            let url = '@Url.Action("EditById")';
             let id = obj.id;
             $('#edit-content').load(url, { Id: id });
         }
 
         function Delete(obj) {
-            let url = '@Url.Action("DeleteById", "Workday")';
+            let url = '@Url.Action("DeleteById")';
             let id = obj.id;
             $('#edit-content').load(url, { Id: id });
         }

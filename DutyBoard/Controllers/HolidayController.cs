@@ -56,7 +56,17 @@ namespace DutyBoard.Controllers
                 TempData[WC.Success] = Holiday.HolidayId == 0 ? "Отпуск добавлен" : "Отпуск изменен";
                 return Redirect(nameof(Index));
             }
-            return PartialView("_Edit", Holiday);
+            HolidayVM holidayVM = new HolidayVM
+            {
+                Holiday = Holiday,
+                Employee = _empRepo.FirstOrDefault(e => e.EmployeeId == Holiday.EmployeeId),
+                Employees = _empRepo.GetAll().Select(x => new SelectListItem
+                {
+                    Text = x.FullName,
+                    Value = x.EmployeeId.ToString()
+                })
+            };
+            return PartialView("_Edit", holidayVM);
         }
 
         private HolidayVM getVM(int Id)

@@ -4,138 +4,66 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
-    
+
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="~/css/dashboard.css" />
+    <link rel="stylesheet" href="~/ " />
     <link rel="stylesheet" href="~/css/Style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
-    <!-- fontawesome icon -->
-    <link rel="stylesheet" href="~/css/assets/fontawesome-all.min.css">
-    <!-- animation css -->
-    <link rel="stylesheet" href="~/css/assets/animate.min.css">
-    <!-- vendor css -->
-    <link rel="stylesheet" href="~/css/assets/style.css">
-@*
-    <link rel="stylesheet" href="~/css/assets/bootstrap-material-datetimepicker.css">
-    <!-- Bootstrap datetimepicker css -->
-    <link rel="stylesheet" href="~/css/assets/bootstrap-datepicker3.min.css">
-    <link rel="stylesheet" href="~/css/assets/materialdesignicons.min.css">*@
+
 </head>
 <body>
-
-    <nav class="pcoded-navbar">
-        <div class="navbar-wrapper">
-            <div class="navbar-brand header-logo">
-                <a asp-controller="Home" asp-action="Index" class="b-brand" style="text-decoration: none;">
-                    <span class="b-title">Дежурства</span>
+    <div class="navigation">
+        <ul>
+            <li>
+                <a asp-controller="Home" asp-action="Index">
+                    <span class="icon"><i class="fa-solid fa-house"></i></span>
                 </a>
-                <a class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a>
-            </div>
-            <div class="navbar-content scroll-div">
-                <ul class="nav pcoded-inner-navbar">
-                    <li class="nav-item" id="Home">
-                        <a asp-controller="Home" asp-action="Index" class="nav-link">
-                            <span class="pcoded-micon">
-                                <i class="fa-solid fa-house feather"></i>
-                            </span>
-                            <span class="pcoded-mtext">
-                                Главная
-                            </span>
-                        </a>
-                    </li>
-                    <li class="nav-item" id="Employee">
-                        <a asp-controller="Employee" asp-action="Index" class="nav-link">
-                            <span class="pcoded-micon">
-                                <i class="fa-solid fa-users me-2 feather" width="16"></i>
-                            </span>
-                            <span class="pcoded-mtext">
-                                Сотрудники
-                            </span>
-                        </a>
-                    </li>
-                    <li class="nav-item" id="Workday">
-                        <a asp-area="" asp-controller="Workday" asp-action="Index" class="nav-link">
-                            <span class="pcoded-micon">
-                                <i class="fa-solid fa-house-laptop me-2 feather"></i>
-                            </span>
-                            <span class="pcoded-mtext">
-                                Дежурства
-                            </span>
-                        </a>
-                    </li>
-                    <li class="nav-item" id="Holiday">
-                        <a asp-area="" asp-controller="Holiday" asp-action="Index" class="nav-link">
-                            <span class="pcoded-micon">
-                                <i class="fa-solid fa-umbrella-beach me-2 feather"></i>
-                            </span>
-                            <span class="pcoded-mtext">
-                                Отпуска
-                            </span>
-                        </a>
-                    </li>
-                    <li class="nav-item" id="Roster">
-                        <a asp-area="" asp-controller="Roster" asp-action="Index" class="nav-link">
-                            <span class="pcoded-micon">
-                                <i class="fa-solid fa-screwdriver-wrench me-2 feather"></i>
-                            </span>
-                            <span class="pcoded-mtext">
-                                Параметры
-                            </span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+            </li>
+            <li id="Workday">
+                <a asp-controller="Workday" asp-action="Index">
+                    <span class="icon"><i class="fa-solid fa-house-laptop"></i></span>
+                    <span class="title">Дежурства</span>
+                </a>
+            </li>
+            <li id="Holiday">
+                <a asp-controller="Holiday" asp-action="Index">
+                    <span class="icon"><i class="fa-solid fa-umbrella-beach"></i></span>
+                    <span class="title">Отпуска</span>
+                </a>
+            </li>
+            <li id="Employee">
+                <a asp-controller="Employee" asp-action="Index">
+                    <span class="icon"><i class="fa-solid fa-users" width="16"></i></span>
+                    <span class="title">Сотрудники</span>
+                </a>
+            </li>
+            <li id="Roster">
+                <a asp-controller="Roster" asp-action="Index">
+                    <span class="icon"><i class="fa-solid fa-screwdriver-wrench"></i></span>
+                    <span class="title">Параметры</span>
+                </a>
+            </li>
+        </ul>
+        <div class="toggle"></div>
+    </div>
 
-    <section class="pcoded-main-container">
-        <div class="pcoded-wrapper">
-            <div class="pcoded-content">
-                <div class="main-body">
-                    <div class="page-wrapper">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h5>@ViewData["Title"]</h5>
+    <div class="main">
+        @RenderBody()
+    </div>
 
-                                    </div>
-                                    <div class="card-block text-center">
-                                        <div class="row">
-                                            <partial name="_Notifications" />
-                                            @RenderBody()
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                                    <div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+    <partial name="_Notifications" />
 
-                                </main>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-@*    <script src="~/lib/inputmask/js/jquery.inputmask.min.js"></script>
-    <script src="~/lib/inputmask/js/inputmask.min.js"></script>
-    <script src="~/lib/inputmask/js/autoNumeric.js"></script>*@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/beb727a5bd.js" crossorigin="anonymous"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/js/dashboard.js" asp-append-version="true"></script>
-    <script src="~/js/assets/vendor-all.min.js"></script>
-    <script src="~/js/assets/pcoded.min.js"></script>
     <script src="~/js/Layout.js"></script>
-@*    <script src="~js/assets/bootstrap-material-datetimepicker.js"></script>
-    <script src="~js/assets/form-picker-custom.js"></script>
-    <script src="http://momentjs.com/downloads/moment-with-locales.min.js"></script>*@
+    @*<script src="~/js/page/Roster.js"></script>*@
+
+
+
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>
