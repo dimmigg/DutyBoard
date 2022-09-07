@@ -7,8 +7,8 @@ namespace DutyBoard_Utility.Calculate
 {
     public class Calculate
     {
-        public DateTime Start { get; set; } = DateTime.Today.AddDays(2);
-        public DateTime Finish { get; set; } = DateTime.Today.AddDays(32);
+        public DateTime Start { get; set; } = new DateTime(2022, 9, 1);
+        public DateTime Finish { get; set; } = new DateTime(2022, 11, 30);
         private IEnumerable<Roster> _allRoster;
         private IEnumerable<Employee> _allEmployees;
         private IEnumerable<Holiday> _allHolidays;
@@ -108,7 +108,7 @@ namespace DutyBoard_Utility.Calculate
         {
             var currNode = _dailyDuties.Head;
             if (_dailyDuties.Head == null) return;
-            while (currNode.Next != null)
+            while (currNode != null)
             {
                 if (currNode.Data.DateStart.GetDayOfWeek() == 1)
                     ResetCountDay(currNode.Data.DateStart);

@@ -6,6 +6,7 @@ using DutyBoard_Utility.Calculate;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -49,6 +50,14 @@ namespace DutyBoard.Controllers
                     Value = x.EmployeeId.ToString()
                 })
             };
+            var employees = vm.Employees.Select(x => x.Text).Distinct().ToArray();
+            var arrDuty = new int[employees.Count()];
+            for (int i = 0; i < employees.Count(); i++)
+            {
+                arrDuty[i] = vm.MainTable.Count(x => x.Employee.FullName == employees[i]);
+            }
+            ViewBag.ArrEmployee =  JsonConvert.SerializeObject(employees);
+            ViewBag.CountsDuty =  JsonConvert.SerializeObject(arrDuty);
             return View(vm);
         }
 
@@ -66,10 +75,24 @@ namespace DutyBoard.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Privacy()
+        public int[] EditMapping(string mapp, string emp)
         {
-            return View();
+            _mappRepo.Update(mapp, emp);          
+            var employees = _empRepo.GetAll().Select(x => x.FullName).Distinct().ToArray();
+            var arrDuty = new int[employees.Count()];
+            var data = _mappRepo.GetAll();
+            for (int i = 0; i < employees.Count(); i++)
+            {
+                arrDuty[i] = data.Count(x => x.Employee.FullName == employees[i]);
+            }
+            //ViewBag.ArrEmployee = JsonConvert.SerializeObject(employees);
+            //ViewBag.CountsDuty = JsonConvert.SerializeObject(arrDuty);
+            //TempData[WC.Success] = "Дежурство изменено";
+            return arrDuty;
         }
+
+
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

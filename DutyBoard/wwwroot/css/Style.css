@@ -364,8 +364,8 @@ tr.holiday {
 .mainPage .statistics {
     position: relative;
     width: 100%;
+    /*height: 100%;*/
     padding: 20px;
-    height: 40vh;
     background: var(--white);
     box-shadow: 0 7px 25px rgba(0,0,0,0.08);
     border-radius: 20px;

@@ -1,9 +1,5 @@
-﻿@using DutyBoard_Utility
-
-@if (TempData[WC.Success] != null)
-{
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+﻿@if (TempData[WC.Success] != null)
+{    
     <script type="text/javascript">
         toastr["success"]('@TempData[WC.Success]');
     </script>
@@ -11,8 +7,6 @@
 
 @if (TempData[WC.Error] != null)
 {
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script type="text/javascript">
         toastr.error('@TempData[WC.Error]');
     </script>

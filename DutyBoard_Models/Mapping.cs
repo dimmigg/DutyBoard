@@ -25,6 +25,7 @@ namespace DutyBoard_Models
         [NotMapped]
         public Roster Roster { get; set; }
         public DateTime DateStart { get; set; }
-        public DateTime DateEnd => DateStart.AddHours(Roster.DurationOfDuty);
+        [NotMapped]
+        public DateTime DateEnd => DateStart.AddHours(Roster != null ? Roster.DurationOfDuty : 0);
     }
 }

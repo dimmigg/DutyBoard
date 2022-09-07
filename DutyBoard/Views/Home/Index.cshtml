@@ -35,7 +35,7 @@
                                 <td><span class="dayOfWeek">@item.Roster.DaysOfWeek.DayOfWeekName</span></td>
                                 <td>@item.DateStart.ToString("dd.MM.yyyy HH:mm") - @item.DateEnd.ToString("dd.MM.yyyy HH:mm")</td>
                                 <td>
-                                    <select asp-for="@item.EmployeeId" asp-items="@Model.Employees" class="form-select-sm @day">
+                                    <select asp-for="@item.EmployeeId" asp-items="@Model.Employees" class="form-select-sm @day" onchange = "selectChanged(this)" id = "@item.MappingId.ToString()">
                                     </select>
                                 </td>
                             </tr>
@@ -47,63 +47,11 @@
     </div>
     <div class="statistics">
         <div class="cardHeader">
-            <h2>Вторая таблица</h2>
+            <h2>Статистика по дежурствам</h2>
         </div>
-        <table>
-            <thead>
-                <tr>
-                    <td>День недели</td>
-                    <td>Период</td>
-                    <td>Дежурный</td>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
+        <canvas id="myChart"></canvas>
     </div>
 
-
-
-
-
-    @*
-    <ul class="list-group">
-    <li>
-    <div class="row">
-    <div class="col ms-2">
-    <h4 class="text-start">Список дежурств</h4>
-    </div>
-
-    </div>
-    </li>
-    @foreach (var item in Model.MainTable)
-    {
-    @if (item.Roster.DaysOfWeekId == 6 || item.Roster.DaysOfWeekId == 7)
-    {
-    we = "weekend";
-    }
-    else
-    {
-    we = "";
-    }
-
-    <li class=@we>
-    <div class="row">
-    <div class="col-1 text-start" id=@item.RosterId.ToString() data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this)" style="text-decoration: none;">
-    <h5 class="mb-0">@item.DateStart.ToString("ddd").ToUpper()</h5>
-
-    </div>
-    <div class="col text-start">
-    <span class="mb-0">@item.DateStart.ToString("dd.MM.yyyy HH:mm") - @item.DateEnd.ToString("dd.MM.yyyy HH:mm")</span>
-    </div>
-    <div class="col text-end">
-    <select asp-for="@item.EmployeeId" asp-items="@Model.Employees" class="form-select">
-    </select>
-    </div>
-    </div>
-    </li>
-    }
-    </ul>*@
 </div>
 <!-- Modal -->
 <div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">
@@ -113,3 +61,49 @@
         </div>
     </div>
 </div>
+@section Scripts{
+    <script src="~/js/statistic.js"></script>
+    <script>
+        
+        $(document).ready(function () {
+            getStatistic();
+        });
+        let myChart;
+        function selectChanged(value) {
+            //alert(myChart.data.datasets[0].data)
+            let url = '@Url.Action("EditMapping")?mapp=' + value.id + '&emp=' + value.value;
+            $.ajax({
+                type: 'GET',
+                url: url,
+                success: function (data) {
+                    //alert(data)
+                    for (let i = 0; i < data.length; i++) { // выведет 0, затем 1, затем 2
+                        //alert(myChart.data.datasets[0].data[i])
+                        //alert(data[i])
+                        myChart.data.datasets[0].data[i] = data[i];
+                        myChart.update();
+                    }
+                }
+            });
+
+            
+            //$.get(url);
+            //setTimeout(function () {
+            //    //myChart.destroy();
+            //    myChart.data.datasets[0].data = @Html.Raw(ViewBag.CountsDuty);
+            //    alert(myChart.data.datasets[0].data)
+            //}, 500);
+            
+            
+            //toastr["success"]('@TempData[WC.Success]');
+        };
+
+        function getStatistic()
+        {
+            var employees = @Html.Raw(ViewBag.ArrEmployee);
+            var counts = @Html.Raw(ViewBag.CountsDuty);
+            myChart = fillStatistic(employees, counts);
+        }
+    </script>
+    )
+}

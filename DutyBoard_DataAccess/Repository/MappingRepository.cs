@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System;
+using Dapper;
+using DutyBoard_DataAccess.Extensions;
 
 namespace DutyBoard_DataAccess.Repository
 {
@@ -38,6 +40,17 @@ namespace DutyBoard_DataAccess.Repository
             map.Employee = _empRepo.FirstOrDefault(x => x.EmployeeId == map.EmployeeId);
             map.Roster = _rostRepo.FirstOrDefault(x => x.RosterId == map.RosterId);
             return map;
+        }
+
+        public void Update(string mapp, string emp)
+        {
+            using (var connect = GetConnection())
+            {
+                DynamicParameters dp = new DynamicParameters();
+                dp.Add("@MappId", mapp);
+                dp.Add("@EmployeeId", emp);
+                connect.ExecuteProcedure<string>("tool.uspDutyBoardEditMapping", dp);
+            }
         }
     }
 }
