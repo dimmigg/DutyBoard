@@ -9,6 +9,7 @@ function isEmpty(str) {
     return false;
 }
 
+//Menu toggle
 let navigation = document.querySelector('.navigation');
 let toggle = document.querySelector('.toggle');
 let main = document.querySelector('.main');
