@@ -2,13 +2,16 @@
 using Dapper.Contrib.Extensions;
 using DutyBoard_DataAccess.Extensions;
 using DutyBoard_DataAccess.Repository.IRepository;
+using DutyBoard_Utility.Extensions;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
+using static Dapper.SqlMapper;
 
 namespace DutyBoard_DataAccess.Repository
 {
@@ -18,14 +21,19 @@ namespace DutyBoard_DataAccess.Repository
         private readonly string _server;
         private readonly string _db;
 
-        internal SqlConnection GetConnection()
+        internal string GetConnectionString()
         {
-            return new SqlConnection(new SqlConnectionStringBuilder()
+            return new SqlConnectionStringBuilder()
             {
                 DataSource = _server,
                 IntegratedSecurity = true,
                 InitialCatalog = _db
-            }.ConnectionString);
+            }.ConnectionString;
+        }
+
+        internal SqlConnection GetConnection()
+        {
+            return new SqlConnection(GetConnectionString());
         }
 
         public Repository(IConfiguration configuration)
@@ -105,6 +113,14 @@ namespace DutyBoard_DataAccess.Repository
             }
         }
 
+        public void ClearTable(string table)
+        {
+            using (var connect = GetConnection())
+            {
+                connect.Execute($"truncate table {table}");
+            }
+        }
+
         public void Upsert(T entity)
         {
             var prop = typeof(T).GetProperties().Where(p => p.GetCustomAttributes<KeyAttribute>().Any()).FirstOrDefault();
@@ -113,6 +129,29 @@ namespace DutyBoard_DataAccess.Repository
                 Add(entity);
             else
                 Update(entity);
+        }
+
+        public void InsertData(IEnumerable<T> data)
+        {
+            if (!data.Any()) return;
+
+            using (SqlBulkCopy bulkCopy = new SqlBulkCopy(GetConnectionString()))
+            {
+                bulkCopy.DestinationTableName = $"tool.tDutyBoard{Name}";
+                foreach (var descriptor in typeof(T).GetProperties().Where(p => !p.GetCustomAttributes<NotMappedAttribute>().Any()))
+                {
+                    bulkCopy.ColumnMappings.Add(descriptor.Name, descriptor.Name);
+                }
+                try
+                {
+                    ClearTable($"tool.tDutyBoard{Name}");
+                    bulkCopy.WriteToServer(data.AsTable());
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+            }
         }
     }
 }

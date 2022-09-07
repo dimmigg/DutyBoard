@@ -1,8 +1,51 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model HomeVM
+@{
+    ViewData["Title"] = "Доска дежурств";
+    string we;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<ul class="list-group col col-xl-6 col-lg-8">
+    <li>
+        <div class="row">
+            <div class="col ms-2">
+                <h4 class="text-start">Список дежурств</h4>
+            </div>
+
+        </div>
+    </li>
+    @foreach (var item in Model.MainTable)
+    {
+        @if (item.Roster.DaysOfWeekId == 6 || item.Roster.DaysOfWeekId == 7)
+        {
+            we = "weekend";
+        }
+        else
+        {
+            we = "";
+        }
+
+        <li class=@we>
+            <div class="row">
+                <div class="col-1 text-start" id=@item.RosterId.ToString() data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this)" style="text-decoration: none;">
+                    <h5 class="mb-0">@item.DateStart.ToString("ddd").ToUpper()</h5>
+                    
+                </div>
+                <div class="col text-start">
+                    <span class="mb-0">@item.DateStart.ToString("dd.MM.yyyy HH:mm") - @item.DateEnd.ToString("dd.MM.yyyy HH:mm")</span>
+                </div>
+                <div class="col text-end">
+                    <select asp-for="@item.EmployeeId" asp-items="@Model.Employees" class="form-select">
+                    </select>
+                </div>
+            </div>
+        </li>
+    }
+</ul>
+<!-- Modal -->
+<div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="edit-content"></div>
+        </div>
+    </div>
 </div>

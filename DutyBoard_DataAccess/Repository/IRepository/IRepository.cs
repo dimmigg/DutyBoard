@@ -13,6 +13,8 @@ namespace DutyBoard_DataAccess.Repository.IRepository
         void Update(T entity);
         void Remove(T entity);
         void RemoveRange(IEnumerable<T> entity);
+        void ClearTable(string table);
         void Upsert(T entity);
+        void InsertData(IEnumerable<T> data);
     }
 }

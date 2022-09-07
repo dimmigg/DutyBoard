@@ -25,13 +25,14 @@ namespace DutyBoard_Models
         [Display(Name = "Дежурство")]
         public int RosterId { get; set; }
         [NotMapped]
-        [HiddenInput(DisplayValue = false)]
         public Roster Roster { get; set; }
         [Display(Name = "Постоянно")]
         public bool IsAlways { get; set; } = false;
         [Required(ErrorMessage = "Выбери день!")]
         [Display(Name = "День")]
         public DateTime DateWork { get; set; } = DateTime.Today;
+        [NotMapped]
+        public DateTime StartDateWork => (DateWork + Roster.StartTime);
 
     }
 }
