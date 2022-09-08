@@ -13,6 +13,6 @@ namespace DutyBoard_Models.ViewModels
 
         public string ArrEmployee { get; set; }
         public string CountsDuty { get; set; }
-        public string Name { get; set; } = JsonConvert.SerializeObject("HELLOOO!!");
+        public string Statistics { get; set; } 
     }
 }

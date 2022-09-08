@@ -32,10 +32,10 @@
                                 day = "workday";
                             }
                             <tr class="@day">
-                                <td><span class="dayOfWeek">@item.Roster.DaysOfWeek.DayOfWeekName</span></td>
+                                <td>@item.Roster.DaysOfWeek.DayOfWeekName</td>
                                 <td>@item.DateStart.ToString("dd.MM.yyyy HH:mm") - @item.DateEnd.ToString("dd.MM.yyyy HH:mm")</td>
                                 <td>
-                                    <select asp-for="@item.EmployeeId" asp-items="@Model.Employees" class="form-select-sm @day" onchange = "selectChanged(this)" id = "@item.MappingId.ToString()">
+                                    <select asp-for="@item.EmployeeId" asp-items="@Model.Employees" class="form-select-sm @day" onchange="selectChanged(this)" id="@item.MappingId.ToString()">
                                     </select>
                                 </td>
                             </tr>
@@ -45,12 +45,33 @@
             </div>
         </div>
     </div>
-    <div class="statistics">
-        <div class="cardHeader">
-            <h2>Статистика по дежурствам</h2>
+    <div class="cards">
+        <div class="statistics">
+            <div class="cardHeader">
+                <h2>Статистика всего</h2>
+            </div>
+            <canvas id="polarArea"></canvas>
         </div>
-        <canvas id="myChart"></canvas>
+        <div class="card">
+            <div class="cardHeader">
+                <h2>Дежурства</h2>
+            </div>
+        </div>
     </div>
+    <div class="cards">
+        <div class="statistics">
+            <div class="cardHeader">
+                <h2>Статистика по дням</h2>
+            </div>
+            <canvas id="bar"></canvas>
+        </div>
+        <div class="card">
+            <div class="cardHeader">
+                <h2>Отпуска</h2>
+            </div>
+        </div>
+    </div>
+
 
 </div>
 <!-- Modal -->
@@ -64,45 +85,37 @@
 @section Scripts{
     <script src="~/js/statistic.js"></script>
     <script>
-        
+
         $(document).ready(function () {
             getStatistic();
         });
-        let myChart;
+        let chart;
+        let bar;
         function selectChanged(value) {
-            //alert(myChart.data.datasets[0].data)
             let url = '@Url.Action("EditMapping")?mapp=' + value.id + '&emp=' + value.value;
             $.ajax({
                 type: 'GET',
                 url: url,
+
                 success: function (data) {
-                    //alert(data)
-                    for (let i = 0; i < data.length; i++) { // выведет 0, затем 1, затем 2
-                        //alert(myChart.data.datasets[0].data[i])
-                        //alert(data[i])
-                        myChart.data.datasets[0].data[i] = data[i];
-                        myChart.update();
+                    data = JSON.parse(data)
+                    
+                    for (let i = 0; i < data.AllCounts.length; i++) {
+                        chart.data.datasets[0].data[i] = data.AllCounts[i];
+                        chart.update();
+                        bar.data.datasets[0].data[i] = data.WorkdayCounts[i];
+                        bar.data.datasets[1].data[i] = data.HolidayCounts[i];
+                        bar.update();
                     }
                 }
             });
-
-            
-            //$.get(url);
-            //setTimeout(function () {
-            //    //myChart.destroy();
-            //    myChart.data.datasets[0].data = @Html.Raw(ViewBag.CountsDuty);
-            //    alert(myChart.data.datasets[0].data)
-            //}, 500);
-            
-            
-            //toastr["success"]('@TempData[WC.Success]');
+            toastr["success"]('Дежурство изменено');
         };
 
-        function getStatistic()
-        {
-            var employees = @Html.Raw(ViewBag.ArrEmployee);
-            var counts = @Html.Raw(ViewBag.CountsDuty);
-            myChart = fillStatistic(employees, counts);
+        function getStatistic() {
+            var stat = @Html.Raw(Model.Statistics);
+            chart = fillPolarArea(stat.Employees, stat.AllCounts);
+            bar = fillBar(stat.Employees, stat.WorkdayCounts, stat.HolidayCounts);
         }
     </script>
     )

@@ -8,7 +8,7 @@ namespace DutyBoard_Utility.Calculate
     public class Calculate
     {
         public DateTime Start { get; set; } = new DateTime(2022, 9, 1);
-        public DateTime Finish { get; set; } = new DateTime(2022, 11, 30);
+        public DateTime Finish { get; set; } = new DateTime(2022, 9, 30);
         private IEnumerable<Roster> _allRoster;
         private IEnumerable<Employee> _allEmployees;
         private IEnumerable<Holiday> _allHolidays;

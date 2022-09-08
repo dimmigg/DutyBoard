@@ -30,16 +30,17 @@ body {
 
 .navigation {
     position: fixed;
-    width: 300px;
+    width: 70px;
     height: 100%;
     background: var(--blue);
     border-left: 10px solid var(--blue);
     transition: 0.5s;
-    overflow: hidden;
+    overflow-x: hidden;
+    z-index:999;
 }
 
-    .navigation.active {
-        width: 80px;
+    .navigation:hover {
+        width: 300px;
     }
 
     .navigation ul {
@@ -177,17 +178,12 @@ body {
 /* main */
 .main {
     position: absolute;
-    width: calc(100% - 300px);
-    left: 300px;
+    width: calc(100% - 70px);
+    left: 70px;
     min-height: 100vh;
     background: var(--white);
     transition: 0.5s;
 }
-
-    .main.active {
-        width: calc(100% - 80px);
-        left: 80px;
-    }
 
 .topbar {
     width: 100%;
@@ -270,8 +266,8 @@ body {
     width: 100%;
     padding: 10px 20px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 30px;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    grid-gap: 20px;
     margin-top: 10px;
 }
 
@@ -334,7 +330,7 @@ body {
             text-align: end;
         }
 
-        .mainPage .mainTable table tr td:nth-child(2) {
+        .mainPage .mainTable table tbody tr td:nth-child(2) {
             text-align: center;
         }
 
@@ -364,14 +360,12 @@ tr.holiday {
 .mainPage .statistics {
     position: relative;
     width: 100%;
-    /*height: 100%;*/
+    height: auto;
     padding: 20px;
     background: var(--white);
     box-shadow: 0 7px 25px rgba(0,0,0,0.08);
     border-radius: 20px;
 }
-
-
 
 .list-group {
     border-radius: 20px;

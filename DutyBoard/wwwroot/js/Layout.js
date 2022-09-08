@@ -10,10 +10,10 @@ function isEmpty(str) {
 }
 
 //Menu toggle
-let navigation = document.querySelector('.navigation');
-let toggle = document.querySelector('.toggle');
-let main = document.querySelector('.main');
-toggle.onclick = function () {
-    navigation.classList.toggle('active');
-    main.classList.toggle('active');
-}
+//let navigation = document.querySelector('.navigation');
+//let toggle = document.querySelector('.toggle');
+//let main = document.querySelector('.main');
+//toggle.onclick = function () {
+//    navigation.classList.toggle('active');
+//    main.classList.toggle('active');
+//}

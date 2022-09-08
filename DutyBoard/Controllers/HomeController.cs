@@ -50,14 +50,24 @@ namespace DutyBoard.Controllers
                     Value = x.EmployeeId.ToString()
                 })
             };
-            var employees = vm.Employees.Select(x => x.Text).Distinct().ToArray();
+            var employees = vm.Employees.Select(x => x.Text).Distinct().OrderBy(x => x).ToArray();
             var arrDuty = new int[employees.Count()];
+            var arrDutyWork = new int[employees.Count()];
+            var arrDutyHoly = new int[employees.Count()];
             for (int i = 0; i < employees.Count(); i++)
             {
                 arrDuty[i] = vm.MainTable.Count(x => x.Employee.FullName == employees[i]);
+                arrDutyWork[i] = vm.MainTable.Count(x => x.Employee.FullName == employees[i] && (x.Roster.DaysOfWeekId != 7 && x.Roster.DaysOfWeekId != 6));
+                arrDutyHoly[i] = vm.MainTable.Count(x => x.Employee.FullName == employees[i] && (x.Roster.DaysOfWeekId == 7 || x.Roster.DaysOfWeekId == 6));
             }
-            ViewBag.ArrEmployee =  JsonConvert.SerializeObject(employees);
-            ViewBag.CountsDuty =  JsonConvert.SerializeObject(arrDuty);
+            vm.Statistics = JsonConvert.SerializeObject(new Statistics()
+            {
+                Employees = employees,
+                AllCounts = arrDuty,
+                WorkdayCounts = arrDutyWork,
+                HolidayCounts = arrDutyHoly
+            });
+
             return View(vm);
         }
 
@@ -75,20 +85,28 @@ namespace DutyBoard.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public int[] EditMapping(string mapp, string emp)
+        public string EditMapping(string mapp, string emp)
         {
             _mappRepo.Update(mapp, emp);          
-            var employees = _empRepo.GetAll().Select(x => x.FullName).Distinct().ToArray();
+            var employees = _empRepo.GetAll().Select(x => x.FullName).Distinct().OrderBy(x => x).ToArray();
             var arrDuty = new int[employees.Count()];
+            var arrDutyWork = new int[employees.Count()];
+            var arrDutyHoly = new int[employees.Count()];
             var data = _mappRepo.GetAll();
             for (int i = 0; i < employees.Count(); i++)
             {
                 arrDuty[i] = data.Count(x => x.Employee.FullName == employees[i]);
+                arrDutyWork[i] = data.Count(x => x.Employee.FullName == employees[i] && (x.Roster.DaysOfWeekId != 7 && x.Roster.DaysOfWeekId != 6) );
+                arrDutyHoly[i] = data.Count(x => x.Employee.FullName == employees[i] && (x.Roster.DaysOfWeekId == 7 || x.Roster.DaysOfWeekId == 6));
             }
-            //ViewBag.ArrEmployee = JsonConvert.SerializeObject(employees);
-            //ViewBag.CountsDuty = JsonConvert.SerializeObject(arrDuty);
-            //TempData[WC.Success] = "Дежурство изменено";
-            return arrDuty;
+            var st = new Statistics()
+            {
+                Employees = employees,
+                AllCounts = arrDuty,
+                WorkdayCounts = arrDutyWork,
+                HolidayCounts = arrDutyHoly
+            };
+            return JsonConvert.SerializeObject(st);
         }
 
 
