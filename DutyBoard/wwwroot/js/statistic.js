@@ -30,17 +30,17 @@
                 }
             },
             responsive: true,
-            scales: {
-                r: {
-                    pointLabels: {
-                        display: true,
-                        centerPointLabels: true,
-                        font: {
-                            size: 14,
-                        }
-                    }
-                }
-            }
+            //scales: {
+            //    r: {
+            //        pointLabels: {
+            //            display: true,
+            //            centerPointLabels: true,
+            //            font: {
+            //                size: 14,
+            //            }
+            //        }
+            //    }
+            //}
         }
     });
     return chart;
@@ -68,13 +68,20 @@ function fillBar(labelsArr, dataArrWork, dataArrHoli) {
 
         },
         options: {
+            indexAxis: 'y',
             responsive: true,
             scales: {
                 x: {
                     stacked: true,
                 },
                 y: {
-                    stacked: true
+                    stacked: true,
+                    ticks: {
+                        crossAlign: 'far',
+                    },
+                    font: {
+                        size: 4,
+                    }
                 }
             },
             plugins: {

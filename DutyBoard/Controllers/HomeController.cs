@@ -44,6 +44,17 @@ namespace DutyBoard.Controllers
             var vm = new HomeVM
             {
                 MainTable = _mappRepo.GetAll(),
+                Workdays = _workdayRepo.GetAll().Select(x => new WorkdayVM
+                {
+                    Workday = x,
+                    Employee = _empRepo.FirstOrDefault(e => e.EmployeeId == x.EmployeeId),
+                    Roster = _rostRepo.FirstOrDefault(r => r.RosterId == x.RosterId)
+                }),
+                Holidays = _holidayRepo.GetAll().Select(x => new HolidayVM
+                {
+                    Holiday = x,
+                    Employee = _empRepo.FirstOrDefault(e => e.EmployeeId == x.EmployeeId)
+                }),
                 Employees = _empRepo.GetAll().Select(x => new SelectListItem
                 {
                     Text = x.FullName,
@@ -87,7 +98,7 @@ namespace DutyBoard.Controllers
 
         public string EditMapping(string mapp, string emp)
         {
-            _mappRepo.Update(mapp, emp);          
+            _mappRepo.Update(mapp, emp);
             var employees = _empRepo.GetAll().Select(x => x.FullName).Distinct().OrderBy(x => x).ToArray();
             var arrDuty = new int[employees.Count()];
             var arrDutyWork = new int[employees.Count()];
@@ -96,7 +107,7 @@ namespace DutyBoard.Controllers
             for (int i = 0; i < employees.Count(); i++)
             {
                 arrDuty[i] = data.Count(x => x.Employee.FullName == employees[i]);
-                arrDutyWork[i] = data.Count(x => x.Employee.FullName == employees[i] && (x.Roster.DaysOfWeekId != 7 && x.Roster.DaysOfWeekId != 6) );
+                arrDutyWork[i] = data.Count(x => x.Employee.FullName == employees[i] && (x.Roster.DaysOfWeekId != 7 && x.Roster.DaysOfWeekId != 6));
                 arrDutyHoly[i] = data.Count(x => x.Employee.FullName == employees[i] && (x.Roster.DaysOfWeekId == 7 || x.Roster.DaysOfWeekId == 6));
             }
             var st = new Statistics()
