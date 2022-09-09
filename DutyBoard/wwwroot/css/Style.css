@@ -254,21 +254,23 @@ body {
         display: flex;
         box-shadow: 0 7px 25px rgba(0,0,0,0.09);
         border: none;
-        min-height: 250px;
-        height: auto;
+        
     }
-
-
-
-/* MainPage */
-.mainPage {
-    position: relative;
-    width: 100%;
-    padding: 0 20px;
-    display: grid;
-    grid-template-columns: 1.5fr 1fr 1fr;
-    grid-gap: 20px;
-}
+        .cards .card .statistic.area {
+            min-height: 400px;
+        }
+        .cards .card .statistic.bar {
+            min-height: 200px;
+        }
+        /* MainPage */
+        .mainPage {
+            position: relative;
+            width: 100%;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
+            grid-gap: 20px;
+        }
 
     .mainPage .mainTable {
         position: relative;
@@ -538,19 +540,19 @@ tr.holiday {
 
 
 
-.scroll-table-body {
+.mainTable .scroll-table-body {
     height: 75vh;
-    /*height:95%;*/
+    overflow-x: auto;
+}
+
+.card .scroll-table-body {
+    margin-top: 10px;
+    min-height: 200px;
+    height: 330px;
     overflow-x: auto;
 }
 
 .scroll-table-body-always {
-    height: 35vh;
-    overflow-x: auto;
-    margin-bottom: 10px;
-}
-
-.scroll-table-body-days {
     height: 35vh;
     overflow-x: auto;
     margin-bottom: 10px;

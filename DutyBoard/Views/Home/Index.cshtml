@@ -50,7 +50,7 @@
             <div class="cardHeader">
                 <h2>Статистика всего</h2>
             </div>
-            <div class="statistic">
+            <div class="statistic area">
                 <canvas id="polarArea"></canvas>
             </div>
         </div>
@@ -58,7 +58,7 @@
             <div class="cardHeader">
                 <h2>Статистика по дням</h2>
             </div>
-            <div class="statistic">
+            <div class="statistic bar">
                 <canvas id="bar"></canvas>
             </div>
         </div>
@@ -69,45 +69,53 @@
             <div class="cardHeader">
                 <h2>Дежурства</h2>
             </div>
-            <table>
-                @foreach (var item in Model.Workdays.OrderBy(x => x.Workday.IsAlways).ThenBy(x => x.Workday.DateWork).ThenBy(x => x.Workday.Roster.RosterId))
-                {
-                    if (item.Workday.IsAlways)
-                    {
-                        day = item.Roster.DaysOfWeek.DayOfWeekName;
-                    }
-                    else
-                    {
-                        day = item.Workday.DateWork.ToLongDateString();
-                    }
-                    <tr>
-                        <td>
+            <div class="scroll-table">
+                <div class="scroll-table-body">
+                    <table>
+                        @foreach (var item in Model.Workdays.OrderBy(x => x.Workday.IsAlways).ThenBy(x => x.Workday.DateWork).ThenBy(x => x.Workday.Roster.RosterId))
+                        {
+                            if (item.Workday.IsAlways)
+                            {
+                                day = item.Roster.DaysOfWeek.DayOfWeekName;
+                            }
+                            else
+                            {
+                                day = item.Workday.DateWork.ToLongDateString();
+                            }
+                            <tr>
+                                <td>
 
-                            @item.Employee.FullName<br>
-                            <span>@day, @item.Roster.StartTime.ToString(@"hh\:mm") - @item.Roster.EndTime.ToString(@"hh\:mm")</span>
+                                    @item.Employee.FullName<br>
+                                    <span>@day, @item.Roster.StartTime.ToString(@"hh\:mm") - @item.Roster.EndTime.ToString(@"hh\:mm")</span>
 
-                        </td>
-                    </tr>
-                }
-            </table>
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
         </div>
         <div class="card">
             <div class="cardHeader">
                 <h2>Отпуска</h2>
             </div>
-            <table>
-                @foreach (var item in Model.Holidays.OrderBy(x => x.Holiday.DateStart).ThenBy(x => x.Holiday.DateFinish).ThenBy(x => x.Employee.FullName))
-                {
-                    <tr>
-                        <td>
+            <div class="scroll-table">
+                <div class="scroll-table-body">
+                    <table>
+                        @foreach (var item in Model.Holidays.OrderBy(x => x.Holiday.DateStart).ThenBy(x => x.Holiday.DateFinish).ThenBy(x => x.Employee.FullName))
+                        {
+                            <tr>
+                                <td>
 
-                            @item.Employee.FullName<br>
-                            <span>@item.Holiday.DateStart.ToString(@"dd.MM.yyyy") - @item.Holiday.DateFinish.ToString(@"dd.MM.yyyy")</span>
+                                    @item.Employee.FullName<br>
+                                    <span>@item.Holiday.DateStart.ToString(@"dd.MM.yyyy") - @item.Holiday.DateFinish.ToString(@"dd.MM.yyyy")</span>
 
-                        </td>
-                    </tr>
-                }
-            </table>
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 

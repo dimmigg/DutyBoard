@@ -30,17 +30,6 @@
                 }
             },
             responsive: true,
-            //scales: {
-            //    r: {
-            //        pointLabels: {
-            //            display: true,
-            //            centerPointLabels: true,
-            //            font: {
-            //                size: 14,
-            //            }
-            //        }
-            //    }
-            //}
         }
     });
 
@@ -83,7 +72,6 @@ function fillBar(labelsArr, dataArrWork, dataArrHoli) {
                 y: {
                     stacked: true,
                     ticks: {
-                        //display: false,
                         font: {
                             size: 12
                         }
@@ -98,13 +86,7 @@ function fillBar(labelsArr, dataArrWork, dataArrHoli) {
             plugins: {
                 legend: {
                     display: true,
-                    position: 'bottom',
-                    stackWeight: 10
-                    /*  labels: {*/
-                    // This more specific font property overrides the global property
-                    //font: {
-                    //size: 14
-                    //}
+                    position: 'bottom'
                 },
                 title: {
                     font: { size: 50 },
@@ -113,6 +95,5 @@ function fillBar(labelsArr, dataArrWork, dataArrHoli) {
             },
         }
     });
-    console.log(chart);
     return chart;
 }
