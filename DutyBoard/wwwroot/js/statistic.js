@@ -43,6 +43,7 @@
             //}
         }
     });
+
     return chart;
 }
 
@@ -73,24 +74,45 @@ function fillBar(labelsArr, dataArrWork, dataArrHoli) {
             scales: {
                 x: {
                     stacked: true,
+                    beginAtZero: false,
+                    grid:
+                    {
+                        display: false
+                    }
                 },
                 y: {
                     stacked: true,
                     ticks: {
-                        crossAlign: 'far',
+                        //display: false,
+                        font: {
+                            size: 12
+                        }
                     },
-                    font: {
-                        size: 4,
+                    grid:
+                    {
+                        display: false
                     }
-                }
+                },
+
             },
             plugins: {
                 legend: {
                     display: true,
                     position: 'bottom',
-                }
+                    stackWeight: 10
+                    /*  labels: {*/
+                    // This more specific font property overrides the global property
+                    //font: {
+                    //size: 14
+                    //}
+                },
+                title: {
+                    font: { size: 50 },
+                },
+
             },
-        },
+        }
     });
+    console.log(chart);
     return chart;
 }

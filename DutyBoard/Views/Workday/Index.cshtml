@@ -2,62 +2,63 @@
 @{
     ViewData["Title"] = "Дежурства";
 }
-
-<ul class="list-group col col-xl-4 col-lg-6">
-    <li>
-        <div class="row">
-            <div class="col ms-2">
-                <h4 class="text-start">Дежурства</h4>
-            </div>
-            <div class="col text-end me-3">
-                <a href="#" class="add" title="Добавить" id="0" data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this)" style="text-decoration: none;">
-                    <i class="fa-solid fa-plus fa-2xl"></i>
-                </a>
-            </div>
-        </div>
-    </li>
-    @foreach (var item in Model.OrderBy(x => x.Workday.IsAlways).ThenBy(x => x.Workday.DateWork).ThenBy(x => x.Workday.Roster.RosterId))
-    {
-        string day;
-        string color;
-        string title;
-        if (item.Workday.IsAlways)
-        {
-            day = item.Roster.DaysOfWeek.DayOfWeekName;
-            color = "text-success";
-            title = "Постоянно";
-        }
-        else
-        {
-            day = item.Workday.DateWork.ToLongDateString();
-            color = "text-warning";
-            title = "День";
-        }
-
+<div class="card col col-xl-4 col-lg-6 ms-3">
+    <ul class="list-group ">
         <li>
             <div class="row">
-
-                <div class="col-9">
-                    <a href="#" class="col text-start" id=@item.Workday.WorkdayId.ToString() title="Изменить" data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this)" style="text-decoration: none;">
-
-                        <h5 class="mb-0">@item.Employee.FullName</h5>
-                        <p class=" mb-0">@day, @item.Roster.StartTime.ToString(@"hh\:mm") - @item.Roster.EndTime.ToString(@"hh\:mm") </p>
-                    </a>
+                <div class="col">
+                    <h4 class="text-start">Дежурства</h4>
                 </div>
-                <div class="col-2 text-start py-2">
-                    <i class="fas fa-circle @color f-10 m-r-10" title=@title></i>
-                </div>
-                <div class="col-1  text-end ">
-                    <a href="#" class="del" title="Удалить" id=@item.Workday.WorkdayId.ToString() data-bs-toggle="modal" data-bs-target="#modal" onClick="Delete(this)">
-                        <h4 class="py-2">
-                            <i class="fa-regular fa-trash-can del"></i>
-                        </h4>
+                <div class="col text-end">
+                    <a href="#" class="add" title="Добавить" id="0" data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this)" style="text-decoration: none;">
+                        <i class="fa-solid fa-plus fa-2xl"></i>
                     </a>
                 </div>
             </div>
         </li>
-    }
-</ul>
+        @foreach (var item in Model.OrderBy(x => x.Workday.IsAlways).ThenBy(x => x.Workday.DateWork).ThenBy(x => x.Workday.Roster.RosterId))
+        {
+            string day;
+            string color;
+            string title;
+            if (item.Workday.IsAlways)
+            {
+                day = item.Roster.DaysOfWeek.DayOfWeekName;
+                color = "text-success";
+                title = "Постоянно";
+            }
+            else
+            {
+                day = item.Workday.DateWork.ToLongDateString();
+                color = "text-warning";
+                title = "День";
+            }
+
+            <li>
+                <div class="row">
+
+                    <div class="col-9">
+                        <a href="#" class="col text-start" id=@item.Workday.WorkdayId.ToString() title="Изменить" data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this)" style="text-decoration: none;">
+
+                            <h5 class="mb-0">@item.Employee.FullName</h5>
+                            <p class=" mb-0">@day, @item.Roster.StartTime.ToString(@"hh\:mm") - @item.Roster.EndTime.ToString(@"hh\:mm") </p>
+                        </a>
+                    </div>
+                    <div class="col-2 text-start py-2">
+                        <i class="fas fa-circle @color f-10 m-r-10" title=@title></i>
+                    </div>
+                    <div class="col-1  text-end ">
+                        <a href="#" class="del" title="Удалить" id=@item.Workday.WorkdayId.ToString() data-bs-toggle="modal" data-bs-target="#modal" onClick="Delete(this)">
+                            <h4 class="py-2">
+                                <i class="fa-regular fa-trash-can del"></i>
+                            </h4>
+                        </a>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
 
 <!-- Modal -->
 <div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">

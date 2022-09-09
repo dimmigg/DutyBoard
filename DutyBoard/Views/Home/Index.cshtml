@@ -50,15 +50,19 @@
             <div class="cardHeader">
                 <h2>Статистика всего</h2>
             </div>
-            <canvas id="polarArea"></canvas>
+            <div class="statistic">
+                <canvas id="polarArea"></canvas>
+            </div>
         </div>
         <div class="card">
             <div class="cardHeader">
                 <h2>Статистика по дням</h2>
             </div>
-            <canvas id="bar"></canvas>
+            <div class="statistic">
+                <canvas id="bar"></canvas>
+            </div>
         </div>
-        
+
     </div>
     <div class="cards">
         <div class="card">
@@ -91,30 +95,19 @@
             <div class="cardHeader">
                 <h2>Отпуска</h2>
             </div>
-            <ul class="list-group">
+            <table>
                 @foreach (var item in Model.Holidays.OrderBy(x => x.Holiday.DateStart).ThenBy(x => x.Holiday.DateFinish).ThenBy(x => x.Employee.FullName))
                 {
-                    <li>
-                        <div class="row">
+                    <tr>
+                        <td>
 
-                            <div class="col-11">
-                                <a href="#" class="col text-start" id=@item.Holiday.HolidayId.ToString() title="Изменить" data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this)" style="text-decoration: none;">
+                            @item.Employee.FullName<br>
+                            <span>@item.Holiday.DateStart.ToString(@"dd.MM.yyyy") - @item.Holiday.DateFinish.ToString(@"dd.MM.yyyy")</span>
 
-                                    <h5 class="mb-0">@item.Employee.FullName</h5>
-                                    <p class="mb-0">@item.Holiday.DateStart.ToString(@"dd.MM.yyyy") - @item.Holiday.DateFinish.ToString(@"dd.MM.yyyy")</p>
-                                </a>
-                            </div>
-                            <div class="col-1  text-end ">
-                                <a href="#" class="del" title="Удалить" id=@item.Holiday.HolidayId.ToString() data-bs-toggle="modal" data-bs-target="#modal" onClick="Delete(this)">
-                                    <h4 class="py-2">
-                                        <i class="fa-regular fa-trash-can del"></i>
-                                    </h4>
-                                </a>
-                            </div>
-                        </div>
-                    </li>
+                        </td>
+                    </tr>
                 }
-            </ul>
+            </table>
         </div>
     </div>
 
