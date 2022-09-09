@@ -73,7 +73,7 @@
                 <label asp-for="Workday.DateWork" class="col-form-label"></label>
             </div>
             <div class="col-sm-7">
-                <input asp-for="Workday.DateWork" class="form-control " type="date" aria-describedby="StartTime-error" aria-invalid="false" onChange="getrosterbyid(this)" />
+                <input asp-for="Workday.DateWork" class="form-control " type="text" id="date" aria-describedby="StartTime-error" aria-invalid="false" onChange="getrosterbyid(this)" />
                 <span asp-validation-for="Workday.DateWork" class="text-danger"></span>
             </div>
         </div>
@@ -103,40 +103,6 @@
 </form>
 <partial name="_ValidationScriptsPartial" />
 
-<script>
-    function changeIsAlways(obj) {
-        $('#datepicker').prop("hidden", $(obj).is(":checked"));
-        if ($(obj).is(":checked")) {
-            $('#day').addClass('opacity-25');
-            $('#day').removeClass('opacity-100');
-            $('#always').addClass('opacity-100');
-            $('#always').removeClass('opacity-25');
-            $('#Workday_DateWork').val(new Date().toDateInputValue());
-        }
-        else {
-            $('#day').addClass('opacity-100');
-            $('#day').removeClass('opacity-25');
-            $('#always').addClass('opacity-25');
-            $('#always').removeClass('opacity-100');
-        }
-        getrosterbyid('#Workday_DateWork');
-    }
-
-    Date.prototype.toDateInputValue = (function () {
-        var local = new Date(this);
-        local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
-        return local.toJSON().slice(0, 10);
-    });
-
-    function getrosterbyid(obj) {
-        let d = $('#switchcheck').is(":checked") ? -1 : new Date($(obj).val()).getDay();
-        var id = d == 0 ? 7 : d;
-        $.ajax({
-            type: 'GET',
-            url: '@Url.Action("GetRosterByDateId", "Workday")/' + id,
-            success: function (data) {
-                $('#rosters').replaceWith(data);
-            }
-        });
-    }
-</script>
+<script src="~/lib/jquery/dist/jquery.inputmask.js"></script>
+<script src="~/js/calendar.js"></script>
+<script src="~/js/pages/roster.js"></script>

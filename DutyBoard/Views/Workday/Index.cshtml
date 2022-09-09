@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Дежурства";
 }
+@*<input class="form-control ms-5" type="text" id="date" aria-describedby="StartTime-error" aria-invalid="false" onChange="getrosterbyid(this)" />*@
 <div class="card col col-xl-4 col-lg-6 ms-3">
     <ul class="list-group">
         <li>
@@ -10,7 +11,7 @@
                     <h4 class="text-start">Дежурства</h4>
                 </div>
                 <div class="col text-end">
-                    <a href="#" class="add" title="Добавить" id="0" data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this)" style="text-decoration: none;">
+                    <a href="#" class="add" title="Добавить" id="0" data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this, 'Workday')" style="text-decoration: none;">
                         <i class="fa-solid fa-plus fa-2xl"></i>
                     </a>
                 </div>
@@ -38,7 +39,7 @@
                 <div class="row">
 
                     <div class="col-9">
-                        <a href="#" class="col text-start" id=@item.Workday.WorkdayId.ToString() title="Изменить" data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this)" style="text-decoration: none;">
+                        <a href="#" class="col text-start" id=@item.Workday.WorkdayId.ToString() title="Изменить" data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this, 'Workday')" style="text-decoration: none;">
 
                             <h5 class="mb-0">@item.Employee.FullName</h5>
                             <p class=" mb-0">@day, @item.Roster.StartTime.ToString(@"hh\:mm") - @item.Roster.EndTime.ToString(@"hh\:mm") </p>
@@ -48,7 +49,7 @@
                         <i class="fas fa-circle @color f-10 m-r-10" title=@title></i>
                     </div>
                     <div class="col-1  text-end ">
-                        <a href="#" class="del" title="Удалить" id=@item.Workday.WorkdayId.ToString() data-bs-toggle="modal" data-bs-target="#modal" onClick="Delete(this)">
+                        <a href="#" class="del" title="Удалить" id=@item.Workday.WorkdayId.ToString() data-bs-toggle="modal" data-bs-target="#modal" onClick="Delete(this, 'Workday')">
                             <h4 class="py-2">
                                 <i class="fa-regular fa-trash-can del"></i>
                             </h4>
@@ -68,11 +69,13 @@
         </div>
     </div>
 </div>
-
+<script src="~/js/pages/edit.js"></script>
 @section Scripts{
-    <script>
+    @*<script src="~/js/pages/edit.js"></script>*@
+@*    <script>
         function Edit(obj) {
             let url = '@Url.Action("EditById")';
+            alert(url)
             let id = obj.id;
             $('#edit-content').load(url, { Id: id });
         }
@@ -82,7 +85,7 @@
             let id = obj.id;
             $('#edit-content').load(url, { Id: id });
         }
-    </script>
+    </script>*@
 }
 
 

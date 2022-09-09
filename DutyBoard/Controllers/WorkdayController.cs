@@ -64,11 +64,11 @@ namespace DutyBoard.Controllers
             return PartialView("_Edit", Workday);
         }
 
-        public IActionResult GetRosterByDateId(int id)
+        public IActionResult GetRosterByDate(string id)
         {
             WorkdayVM workdayVM = new WorkdayVM();
 
-            if (id == -1)
+            if (id == "-1")
                 workdayVM.Rosters = _rostRepo.GetAll().Select(x => new SelectListItem
                 {
                     Text = $"{x.DaysOfWeek.DayOfWeekName}: {x.StartTime:hh\\:mm} - {x.EndTime:hh\\:mm}",
@@ -76,11 +76,14 @@ namespace DutyBoard.Controllers
                 });
             else
             {
-                workdayVM.Rosters = _rostRepo.GetAll(x => x.DaysOfWeekId == id).Select(x => new SelectListItem
-                {
-                    Text = $"{x.DaysOfWeek.DayOfWeekName}: {x.StartTime:hh\\:mm} - {x.EndTime:hh\\:mm}",
-                    Value = x.RosterId.ToString()
-                });
+                if (DateTime.TryParse(id, out DateTime valDate))
+                    workdayVM.Rosters = _rostRepo.GetAll(x => x.DaysOfWeekId == valDate.GetDayOfWeek()).Select(x => new SelectListItem
+                    {
+                        Text = $"{x.DaysOfWeek.DayOfWeekName}: {x.StartTime:hh\\:mm} - {x.EndTime:hh\\:mm}",
+                        Value = x.RosterId.ToString()
+                    });
+                else
+                    return null;
             }
             return PartialView("_Rosters", workdayVM);
         }
