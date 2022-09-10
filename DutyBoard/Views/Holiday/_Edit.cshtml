@@ -24,7 +24,8 @@
                 <label asp-for="Holiday.DateStart" class="col-form-label"></label>
             </div>
             <div class="col-sm-7">
-                <input asp-for="Holiday.DateStart" class="form-control " type="date" aria-describedby="StartTime-error" aria-invalid="false" onChange="getrosterbyid(this)" />
+                <input asp-for="Holiday.DateStart" class="form-control " type="text" id="fromDate" aria-describedby="StartTime-error" aria-invalid="false" />
+                @*<input asp-for="Holiday.DateStart" class="form-control " type="date" aria-describedby="StartTime-error" aria-invalid="false"/>*@
                 <span asp-validation-for="Holiday.DateStart" class="text-danger"></span>
                 <span asp-validation-for="Holiday" class="text-danger"></span>
             </div>
@@ -35,7 +36,8 @@
                 <label asp-for="Holiday.DateFinish" class="col-form-label"></label>
             </div>
             <div class="col-sm-7">
-                <input asp-for="Holiday.DateFinish" class="form-control " type="date" aria-describedby="StartTime-error" aria-invalid="false" onChange="getrosterbyid(this)" />
+                <input asp-for="Holiday.DateFinish" class="form-control " type="text" id="toDate" aria-describedby="StartTime-error" aria-invalid="false" />
+                @*<input asp-for="Holiday.DateFinish" class="form-control " type="date" aria-describedby="StartTime-error" aria-invalid="false"/>*@
                 <span asp-validation-for="Holiday.DateFinish" class="text-danger"></span>
             </div>
         </div>
@@ -57,3 +59,5 @@
     </div>
 </form>
 <partial name="_ValidationScriptsPartial" />
+<script src="~/lib/jquery/dist/jquery.inputmask.js"></script>
+<script src="~/js/calendarRange.js"></script>

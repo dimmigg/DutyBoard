@@ -69,23 +69,9 @@
         </div>
     </div>
 </div>
-<script src="~/js/pages/edit.js"></script>
-@section Scripts{
-    @*<script src="~/js/pages/edit.js"></script>*@
-@*    <script>
-        function Edit(obj) {
-            let url = '@Url.Action("EditById")';
-            alert(url)
-            let id = obj.id;
-            $('#edit-content').load(url, { Id: id });
-        }
 
-        function Delete(obj) {
-            let url = '@Url.Action("DeleteById")';
-            let id = obj.id;
-            $('#edit-content').load(url, { Id: id });
-        }
-    </script>*@
+@section Scripts{
+    <script src="~/js/pages/edit.js"></script>
 }
 
 

@@ -38,6 +38,10 @@
     padding: 5px;
     border-radius: 50%;
 }
+    .ui-datepicker td.ui-datepicker-unselectable.ui-state-disabled {
+        color: var(--second);
+        cursor: default;
+    }
 
     .ui-datepicker td.ui-datepicker-today {
         background: var(--blue);

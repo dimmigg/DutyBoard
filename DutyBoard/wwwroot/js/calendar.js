@@ -21,9 +21,8 @@ $(function () {
             firstDay: 1,
             isRTL: false,
             showMonthAfterYear: false,
-            yearSuffix: ''
-        },
-        $.datepicker.regional["fr"]
+            yearSuffix: '',
+            showAnim: "slideDown"
+        }
     );
-    $("#date").datepicker("option", "showAnim", "slideDown");
 })

@@ -12,7 +12,7 @@
                     <h4 class="text-start">Параметры</h4>
                 </div>
                 <div class="col text-end">
-                    <a href="#" class="add" title="Добавить" id="0" data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this)" style="text-decoration: none;">
+                    <a href="#" class="add" title="Добавить" id="0" data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this, 'Roster')" style="text-decoration: none;">
                         <i class="fa-solid fa-plus fa-2xl"></i>
                     </a>
                 </div>
@@ -31,12 +31,12 @@
 
             <li class=@we>
                 <div class="row">
-                    <a href="#" class="col text-start" id=@item.RosterId.ToString() data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this)" style="text-decoration: none;">
+                    <a href="#" class="col text-start" id=@item.RosterId.ToString() data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this, 'Roster')" style="text-decoration: none;">
                         <h5 class="mb-0">@item.DaysOfWeek.DayOfWeekName</h5>
                         <small>с @item.StartTime.ToString(@"hh\:mm"), @item.DurationOfDuty часов</small>
                     </a>
                     <div class="col-1 col-sm-2 text-end">
-                        <a href="#" class="del" title="Удалить" id=@item.RosterId.ToString() data-bs-toggle="modal" data-bs-target="#modal" onClick="Delete(this)">
+                        <a href="#" class="del" title="Удалить" id=@item.RosterId.ToString() data-bs-toggle="modal" data-bs-target="#modal" onClick="Delete(this, 'Roster')">
                             <h4 class="py-2">
                                 <i class="fa-regular fa-trash-can"></i>
                             </h4>
@@ -57,17 +57,5 @@
 </div>
 
 @section Scripts{
-    <script>
-        function Edit(obj) {
-            let url = '@Url.Action("EditById")';
-            let id = obj.id;
-            $('#edit-content').load(url, { Id: id });
-        }
-
-        function Delete(obj) {
-            let url = '@Url.Action("DeleteById")';
-            let id = obj.id;
-            $('#edit-content').load(url, { Id: id });
-        }
-    </script>
+    <script src="~/js/pages/edit.js"></script>
 }
