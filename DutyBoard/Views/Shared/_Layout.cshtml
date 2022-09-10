@@ -7,12 +7,12 @@
 
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/Style.css" />
-    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
     @*<link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">*@
     <link rel="stylesheet" href="~/css/calendar.css" />
 
-    
+
     @*<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />*@
 </head>
 <body>
@@ -55,35 +55,43 @@
                     </a>
                 </li>
             </ul>
-            
+
         </div>
 
         <!-- main-->
         <div class="main">
             <div class="topbar">
                 @*<div class="toggle">
-                    <i class="fa-solid fa-bars"></i>
+                <i class="fa-solid fa-bars"></i>
                 </div>*@
-                <!-- search -->
-                <div class="search">
-                    <label>
-                        <input type="text" placeholder="Поиск..." />
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </label>
+                <!-- dates -->
+                <div class="calc">
+                    <div class="date">
+                        <label>
+                            <input type="text" placeholder="Дата с" id="fromDate" />
+                            <i class="fa-regular fa-calendar"></i>
+                        </label>
+                    </div>
+                    <div class="date">
+                        <label>
+                            <input type="text" placeholder="Дата по" id="toDate" />
+                            <i class="fa-regular fa-calendar"></i>
+                        </label>
+                    </div>
                 </div>
             </div>
             <!-- contents -->
             <div class="cards">
                 @RenderBody()
             </div>
-            
+
         </div>
     </div>
     <partial name="_Notifications" />
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <script src="https://kit.fontawesome.com/beb727a5bd.js" crossorigin="anonymous"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/Layout.js"></script>
@@ -92,7 +100,12 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 
+    <script src="~/lib/jquery/dist/jquery.inputmask.js"></script>
+    <script src="~/js/calendar.js"></script>
     @*<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>*@
+    <script>
+        getCalendarRange('#fromDate', '#toDate');
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

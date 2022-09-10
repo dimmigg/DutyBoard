@@ -21,7 +21,7 @@ namespace DutyBoard_Models
         [DataType(DataType.Time), Required(ErrorMessage = "Введи время!")]
         [Display(Name = "Начало дежурства")]
         public TimeSpan StartTime { get; set; }
-        [Display(Name = "Длительность дежурства")]
+        [Display(Name = "Длительность")]
         [Range(1, 24, ErrorMessage = "Введи больше 0 и меньше 24!"), Required(ErrorMessage = "Введи длительность!")]
         public int DurationOfDuty { get; set; } = 1;
 
