@@ -59,7 +59,8 @@ namespace DutyBoard.Controllers
                 {
                     Text = x.FullName,
                     Value = x.EmployeeId.ToString()
-                })
+                }),
+                CrossingOfDays = new List<string>()
             };
             var employees = vm.Employees.Select(x => x.Text).Distinct().OrderBy(x => x).ToArray();
             var arrDuty = new int[employees.Count()];
@@ -78,6 +79,8 @@ namespace DutyBoard.Controllers
                 WorkdayCounts = arrDutyWork,
                 HolidayCounts = arrDutyHoly
             });
+
+            
 
             return View(vm);
         }
@@ -134,6 +137,38 @@ namespace DutyBoard.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+
+        public IActionResult GetCrossingOfDays()
+        {
+            var holidays = _holidayRepo.GetAll().Select(x => new HolidayVM
+            {
+                Holiday = x,
+                Employee = _empRepo.FirstOrDefault(e => e.EmployeeId == x.EmployeeId)
+            });
+            var mainTable = _mappRepo.GetAll();
+            var vm = new List<CrossingOfDaysVM>();
+            foreach (var item in holidays)
+            {
+                var workdays = mainTable.Where(x => x.Employee.EmployeeId == item.Employee.EmployeeId);
+                foreach (var workday in workdays)
+                {
+                    if (workday.DateStart >= item.Holiday.DateStart && workday.DateStart <= item.Holiday.DateFinish)
+                    {
+                        var cross = new CrossingOfDaysVM()
+                        {
+                            FullName = workday.Employee.FullName,
+                            DateRoster = workday.DateStart,
+                            DateStart = item.Holiday.DateStart,
+                            DateFinish = item.Holiday.DateFinish
+                        };
+                        vm.Add(cross);
+                    }
+                }
+            }
+
+            return PartialView("_CrossingOfDays", vm);
         }
     }
 }

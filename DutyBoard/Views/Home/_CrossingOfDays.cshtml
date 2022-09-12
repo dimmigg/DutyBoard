@@ -1,0 +1,24 @@
+﻿@model IEnumerable<CrossingOfDaysVM>
+
+@if (Model.Any())
+{
+    <div class="card crossingOfDays">
+        <div class="cardHeader">
+            <h2><i class="fa-solid fa-triangle-exclamation"></i> Пересечения</h2>
+        </div>
+        <table>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.FullName, дежурство @item.DateRoster.ToString("dd.MM.yyyy HH:mm") <br>
+                        <span>Отпуск с @item.DateStart.ToString("dd.MM.yyyy") по @item.DateFinish.ToString("dd.MM.yyyy")</span>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    <script>
+        toastr["warning"]('Найдено пересечение');
+    </script>
+}

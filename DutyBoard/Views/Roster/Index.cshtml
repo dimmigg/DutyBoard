@@ -3,45 +3,46 @@
     ViewData["Title"] = "Параметры";
     var we = "";
 }
-
-<div class="card col col-xl-4 col-lg-6 ms-3">
-    <div class="cardHeader">
-        <h2>Параметры</h2>
-        <a href="#" class="add" title="Добавить" id="0" data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this, 'Roster')" style="text-decoration: none;">
-            <i class="fa-solid fa-plus fa-2xl"></i>
-        </a>
-    </div>
-    <div class="scroll-table">
-        <div class="scroll-table-body second">
-            <ul class="list-group">
-                @foreach (var item in Model)
-                {
-                    @if (item.DaysOfWeekId == 6 || item.DaysOfWeekId == 7)
+<div class="cards">
+    <div class="card col col-xl-4 col-lg-6 ms-3">
+        <div class="cardHeader">
+            <h2>Параметры</h2>
+            <a href="#" class="add" title="Добавить" id="0" data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this, 'Roster')" style="text-decoration: none;">
+                <i class="fa-solid fa-plus fa-2xl"></i>
+            </a>
+        </div>
+        <div class="scroll-table">
+            <div class="scroll-table-body second">
+                <ul class="list-group">
+                    @foreach (var item in Model)
                     {
-                        we = "weekend";
-                    }
-                    else
-                    {
-                        we = "";
-                    }
+                        @if (item.DaysOfWeekId == 6 || item.DaysOfWeekId == 7)
+                        {
+                            we = "weekend";
+                        }
+                        else
+                        {
+                            we = "";
+                        }
 
-                    <li class=@we>
-                        <div class="row">
-                            <a href="#" class="col text-start" id=@item.RosterId.ToString() data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this, 'Roster')" style="text-decoration: none;">
-                                <h5 class="mb-0">@item.DaysOfWeek.DayOfWeekName</h5>
-                                <small>с @item.StartTime.ToString(@"hh\:mm"), @item.DurationOfDuty часов</small>
-                            </a>
-                            <div class="col-1 col-sm-2 text-end">
-                                <a href="#" class="del" title="Удалить" id=@item.RosterId.ToString() data-bs-toggle="modal" data-bs-target="#modal" onClick="Delete(this, 'Roster')">
-                                    <h4 class="py-2">
-                                        <i class="fa-regular fa-trash-can"></i>
-                                    </h4>
+                        <li class=@we>
+                            <div class="row">
+                                <a href="#" class="col text-start" id=@item.RosterId.ToString() data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this, 'Roster')" style="text-decoration: none;">
+                                    <h5 class="mb-0">@item.DaysOfWeek.DayOfWeekName</h5>
+                                    <small>с @item.StartTime.ToString(@"hh\:mm"), @item.DurationOfDuty часов</small>
                                 </a>
+                                <div class="col-1 col-sm-2 text-end">
+                                    <a href="#" class="del" title="Удалить" id=@item.RosterId.ToString() data-bs-toggle="modal" data-bs-target="#modal" onClick="Delete(this, 'Roster')">
+                                        <h4 class="py-2">
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </h4>
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                    </li>
-                }
-            </ul>
+                        </li>
+                    }
+                </ul>
+            </div>
         </div>
     </div>
 </div>

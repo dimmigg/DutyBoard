@@ -3,39 +3,41 @@
     ViewData["Title"] = "Отпуска";
 }
 
-<div class="card col col-xl-4 col-lg-6 ms-3">
-    <div class="cardHeader">
-        <h2>Отпуска</h2>
-        <a href="#" class="add" title="Добавить" id="0" data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this, 'Holiday')" style="text-decoration: none;">
-            <i class="fa-solid fa-plus fa-2xl"></i>
-        </a>
-    </div>
-    <div class="scroll-table">
-        <div class="scroll-table-body second">
-            <ul class="list-group">
-                @foreach (var item in Model.OrderBy(x => x.Holiday.DateStart).ThenBy(x => x.Holiday.DateFinish).ThenBy(x => x.Employee.FullName))
-                {
-                    <li>
-                        <div class="row">
+<div class="cards ">
+    <div class="card col col-xl-4 col-lg-6 ms-3">
+        <div class="cardHeader">
+            <h2>Отпуска</h2>
+            <a href="#" class="add" title="Добавить" id="0" data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this, 'Holiday')" style="text-decoration: none;">
+                <i class="fa-solid fa-plus fa-2xl"></i>
+            </a>
+        </div>
+        <div class="scroll-table">
+            <div class="scroll-table-body second">
+                <ul class="list-group">
+                    @foreach (var item in Model.OrderBy(x => x.Holiday.DateStart).ThenBy(x => x.Holiday.DateFinish).ThenBy(x => x.Employee.FullName))
+                    {
+                        <li>
+                            <div class="row">
 
-                            <div class="col-11">
-                                <a href="#" class="col text-start" id=@item.Holiday.HolidayId.ToString() title="Изменить" data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this, 'Holiday')" style="text-decoration: none;">
+                                <div class="col-11">
+                                    <a href="#" class="col text-start" id=@item.Holiday.HolidayId.ToString() title="Изменить" data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this, 'Holiday')" style="text-decoration: none;">
 
-                                    <h5 class="mb-0">@item.Employee.FullName</h5>
-                                    <p class="mb-0">@item.Holiday.DateStart.ToString(@"dd.MM.yyyy") - @item.Holiday.DateFinish.ToString(@"dd.MM.yyyy")</p>
-                                </a>
+                                        <h5 class="mb-0">@item.Employee.FullName</h5>
+                                        <p class="mb-0">@item.Holiday.DateStart.ToString(@"dd.MM.yyyy") - @item.Holiday.DateFinish.ToString(@"dd.MM.yyyy")</p>
+                                    </a>
+                                </div>
+                                <div class="col-1  text-end ">
+                                    <a href="#" class="del" title="Удалить" id=@item.Holiday.HolidayId.ToString() data-bs-toggle="modal" data-bs-target="#modal" onClick="Delete(this, 'Holiday')">
+                                        <h4 class="py-2">
+                                            <i class="fa-regular fa-trash-can del"></i>
+                                        </h4>
+                                    </a>
+                                </div>
                             </div>
-                            <div class="col-1  text-end ">
-                                <a href="#" class="del" title="Удалить" id=@item.Holiday.HolidayId.ToString() data-bs-toggle="modal" data-bs-target="#modal" onClick="Delete(this, 'Holiday')">
-                                    <h4 class="py-2">
-                                        <i class="fa-regular fa-trash-can del"></i>
-                                    </h4>
-                                </a>
-                            </div>
-                        </div>
-                    </li>
-                }
-            </ul>
+                        </li>
+                    }
+                </ul>
+            </div>
         </div>
     </div>
 </div>

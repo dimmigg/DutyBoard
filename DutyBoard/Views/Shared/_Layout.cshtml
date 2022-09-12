@@ -65,7 +65,7 @@
                 <i class="fa-solid fa-bars"></i>
                 </div>*@
                 <!-- dates -->
-                <form asp-controller="Home" method="post" novalidate="novalidate">
+                <form  method="post" novalidate="novalidate">
                     <div class="calcPanel">
                         <ul>
                             <li style="--i:#fff; --j:#999;">
@@ -79,7 +79,7 @@
                             </li>
                             <li style="--i:#FDD835; --j:#999;">
                                 <span class="icon"><i class="fa-solid fa-calculator"></i></span>
-                                <span class="title"><input asp-action="Calc" type="submit" value="Расчет"></span>
+                                <span class="title"><input asp-action="Calc" asp-controller="Home" type="submit" value="Расчет"></span>
                             </li>
                             <li style="--i:#4CAF50; --j:#fff;">
                                 <span class="icon"><i class="fa-solid fa-file-excel"></i></span>
@@ -106,7 +106,7 @@
                 </div>*@
             </div>
             <!-- contents -->
-            <div class="cards">
+            <div class="contents">
                 @RenderBody()
             </div>
 

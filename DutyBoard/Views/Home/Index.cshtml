@@ -48,75 +48,93 @@
     <div class="cards">
         <div class="card">
             <div class="cardHeader">
-                <h2>Статистика всего</h2>
+                <h2>Статистика</h2>
+                <div class="statistic">
+                    <ul class="nav" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#all-tab-pane"><h3>Всего</h3></button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#day-tab-pane"><h3>По дням</h3></button>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div class="statistic area">
-                <canvas id="polarArea"></canvas>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="all-tab-pane" role="tabpanel" aria-labelledby="all-tab" tabindex="0">
+                    <div class="chart area">
+                        <canvas id="polarArea"></canvas>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="day-tab-pane" role="tabpanel">
+                    <div class="chart bar">
+                        <canvas id="bar"></canvas>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="card">
-            <div class="cardHeader">
-                <h2>Статистика по дням</h2>
-            </div>
-            <div class="statistic bar">
-                <canvas id="bar"></canvas>
-            </div>
-        </div>
-
+        <div id="crossingOfDays"></div>
     </div>
+
     <div class="cards">
-        <div class="card">
-            <div class="cardHeader">
-                <h2>Дежурства</h2>
-            </div>
-            <div class="scroll-table">
-                <div class="scroll-table-body">
-                    <table>
-                        @foreach (var item in Model.Workdays.OrderBy(x => x.Workday.IsAlways).ThenBy(x => x.Workday.DateWork).ThenBy(x => x.Workday.Roster.RosterId))
-                        {
-                            if (item.Workday.IsAlways)
+        @if (Model.Workdays.Any())
+        {
+            <div class="card">
+                <div class="cardHeader">
+                    <h2>Дежурства</h2>
+                </div>
+                <div class="scroll-table mainpage">
+                    <div class="scroll-table-body">
+                        <table>
+                            @foreach (var item in Model.Workdays.OrderBy(x => x.Workday.IsAlways).ThenBy(x => x.Workday.DateWork).ThenBy(x => x.Workday.Roster.RosterId))
                             {
-                                day = item.Roster.DaysOfWeek.DayOfWeekName;
-                            }
-                            else
-                            {
-                                day = item.Workday.DateWork.ToLongDateString();
-                            }
-                            <tr>
-                                <td>
+                                if (item.Workday.IsAlways)
+                                {
+                                    day = item.Roster.DaysOfWeek.DayOfWeekName;
+                                }
+                                else
+                                {
+                                    day = item.Workday.DateWork.ToLongDateString();
+                                }
+                                <tr>
+                                    <td>
 
-                                    @item.Employee.FullName<br>
-                                    <span>@day, @item.Roster.StartTime.ToString(@"hh\:mm") - @item.Roster.EndTime.ToString(@"hh\:mm")</span>
+                                        @item.Employee.FullName<br>
+                                        <span>@day, @item.Roster.StartTime.ToString(@"hh\:mm") - @item.Roster.EndTime.ToString(@"hh\:mm")</span>
 
-                                </td>
-                            </tr>
-                        }
-                    </table>
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="card">
-            <div class="cardHeader">
-                <h2>Отпуска</h2>
-            </div>
-            <div class="scroll-table">
-                <div class="scroll-table-body">
-                    <table>
-                        @foreach (var item in Model.Holidays.OrderBy(x => x.Holiday.DateStart).ThenBy(x => x.Holiday.DateFinish).ThenBy(x => x.Employee.FullName))
-                        {
-                            <tr>
-                                <td>
+        }
+        @if (Model.Holidays.Any())
+        {
+            <div class="card">
+                <div class="cardHeader">
+                    <h2>Отпуска</h2>
+                </div>
+                <div class="scroll-table mainpage">
+                    <div class="scroll-table-body">
+                        <table>
+                            @foreach (var item in Model.Holidays.OrderBy(x => x.Holiday.DateStart).ThenBy(x => x.Holiday.DateFinish).ThenBy(x => x.Employee.FullName))
+                            {
+                                <tr>
+                                    <td>
 
-                                    @item.Employee.FullName<br>
-                                    <span>@item.Holiday.DateStart.ToString(@"dd.MM.yyyy") - @item.Holiday.DateFinish.ToString(@"dd.MM.yyyy")</span>
+                                        @item.Employee.FullName<br>
+                                        <span>@item.Holiday.DateStart.ToString(@"dd.MM.yyyy") - @item.Holiday.DateFinish.ToString(@"dd.MM.yyyy")</span>
 
-                                </td>
-                            </tr>
-                        }
-                    </table>
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
+        }
     </div>
 
 
@@ -135,6 +153,7 @@
 
         $(document).ready(function () {
             getStatistic();
+            getCrossingOfDays();
         });
         let chart;
         let bar;
@@ -156,6 +175,7 @@
                     }
                 }
             });
+            getCrossingOfDays();
             toastr["success"]('Дежурство изменено');
         };
 
@@ -163,6 +183,12 @@
             var stat = @Html.Raw(Model.Statistics);
             chart = fillPolarArea(stat.Employees, stat.AllCounts);
             bar = fillBar(stat.Employees, stat.WorkdayCounts, stat.HolidayCounts);
+        }
+
+        function getCrossingOfDays() {
+            let url = '/Home/GetCrossingOfDays/';
+            $('#crossingOfDays').load(url);
+            
         }
     </script>
     )

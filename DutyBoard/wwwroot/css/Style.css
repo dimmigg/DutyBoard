@@ -284,11 +284,11 @@ body {
             margin-top: 2px;
         }
 
-        .calcPanel ul li .title {
-            color: var(--black2);
+        .calcPanel ul li .title
+        {
+            color: var(--black1);
             font-size: 1.1em;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
+            
             transform: scale(0);
             transition: 0.5s;
             transition-delay: 0s;
@@ -297,6 +297,8 @@ body {
             .calcPanel ul li .title input {
                 background: var(--i);
                 color: var(--j);
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
             }
         
         .calcPanel ul li:focus-within .title,
@@ -312,7 +314,7 @@ body {
         align-items: center;
     }
         .calcPanel ul:first-child li div.title span:first-child {
-            margin-left: 25px;
+            margin-left: 10px;
         }
 
     .calcPanel .title {
@@ -330,14 +332,37 @@ body {
             outline: none;
             border: none;
         }
+.statistic ul{
+    position: relative;
+    justify-content:flex-end;
+}
+    .statistic ul li button {
+        border: none;
+        background: var(--white);
+        color: var(--black2);
+        padding: 5px 10px 0 10px;
 
+        font-weight: 600;
+    }
+.statistic ul li button.active {
+    color: var(--blue);
+}
 /* contents */
+.contents {
+    position: relative;
+    width: 100%;
+    padding: 0px;
+    display: grid;
+    grid-gap: 20px;
+    align-self: start;
+}
 .cards {
     position: relative;
     width: 100%;
     padding: 0px;
     display: grid;
     grid-gap: 20px;
+    align-self: start;
 }
 
     .cards .card {
@@ -350,13 +375,21 @@ body {
         border: none;
     }
 
-        .cards .card .statistic.area {
+        .cards .card .chart.area {
             min-height: 400px;
         }
 
-        .cards .card .statistic.bar {
+        .cards .card .chart.bar {
             min-height: 200px;
         }
+
+/*.card.crossingOfDays {
+    background:var(--bs-danger);
+   */ 
+/*}*/
+    .card.crossingOfDays .cardHeader h2 {
+        color: var(--bs-danger);
+    }
 /* MainPage */
 .mainPage {
     position: relative;
@@ -370,11 +403,12 @@ body {
     .mainPage .mainTable {
         position: relative;
         display: grid;
-        min-height: 500px;
+        /*min-height: 500px;*/
         background: var(--white);
         padding: 20px;
         box-shadow: 0 7px 25px rgba(0,0,0,0.1);
         border-radius: 20px;
+        align-self: start;
     }
 
 .cardHeader {
@@ -411,7 +445,7 @@ body {
 }
 
 
-.mainPage .mainTable table tr:last-child {
+.mainPage table tr:last-child {
     border-bottom: none;
 }
 
@@ -468,12 +502,13 @@ tr.holiday {
     line-height: 1.2em;
 }
 
+
     .mainPage .card table tr td span {
         font-size: 14px;
         color: var(--black2);
     }
 
-.statistic {
+.chart {
     width: 98%;
 }
 
@@ -645,19 +680,26 @@ tr.holiday {
 
 
 .mainTable .scroll-table-body {
-    height: 75vh;
+    height: auto;
+    max-height: 80vh;
+    overflow-x: auto;
+}
+
+.card .scroll-table.mainpage {
+    max-height: 35vh;
     overflow-x: auto;
 }
 
 .card .scroll-table-body {
     margin-top: 10px;
-    min-height: 200px;
-    height: 330px;
+/*    min-height: 200px;
+    height: 330px;*/
     overflow-x: auto;
 }
 
     .card .scroll-table-body.second {
-        height: 80vh;
+        height:auto;
+        max-height: 80vh;
     }
 
 .scroll-table-body-always {
