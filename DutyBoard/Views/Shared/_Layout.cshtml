@@ -65,27 +65,29 @@
                 <i class="fa-solid fa-bars"></i>
                 </div>*@
                 <!-- dates -->
-                <div class="calcPanel">
-                    <ul>
-                        <li style="--i:#fff; --j:#999;">                
+                <form asp-controller="Home" method="post" novalidate="novalidate">
+                    <div class="calcPanel">
+                        <ul>
+                            <li style="--i:#fff; --j:#999;">
                                 <span class="icon"><i class="fa-regular fa-calendar text-primary"></i></span>
                                 <div class="title">
-                                <span>с</span>
-                                    <input type="text" placeholder="Дата с" id="fromDate" />
-                                <span>по</span>
-                                    <input type="text" placeholder="Дата по" id="toDate" />
+                                    <span>с</span>
+                                    <input type="text" placeholder="Дата с" id="fromDate" name="fromDate" />
+                                    <span>по</span>
+                                    <input type="text" placeholder="Дата по" id="toDate" name="toDate" />
                                 </div>
-                        </li>
-                        <li style="--i:#FDD835; --j:#999;">
-                            <span class="icon"><i class="fa-solid fa-calculator"></i></span>
-                            <span class="title">Расчет</span>
-                        </li>
-                        <li style="--i:#4CAF50; --j:#fff;">
-                            <span class="icon"><i class="fa-solid fa-file-excel"></i></span>
-                            <span class="title">Экспорт</span>
-                        </li>
-                    </ul>
-                </div>
+                            </li>
+                            <li style="--i:#FDD835; --j:#999;">
+                                <span class="icon"><i class="fa-solid fa-calculator"></i></span>
+                                <span class="title"><input asp-action="Calc" type="submit" value="Расчет"></span>
+                            </li>
+                            <li style="--i:#4CAF50; --j:#fff;">
+                                <span class="icon"><i class="fa-solid fa-file-excel"></i></span>
+                                <span class="title">Экспорт</span>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
 
 
                 @*<div class="calc">

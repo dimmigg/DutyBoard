@@ -294,12 +294,18 @@ body {
             transition-delay: 0s;
             text-align: center;
         }
+            .calcPanel ul li .title input {
+                background: var(--i);
+                color: var(--j);
+            }
+        
         .calcPanel ul li:focus-within .title,
-        .calcPanel ul li:hover .title {
+        .calcPanel ul li:hover .title,
+        .calcPanel ul li:hover .title input {
             position: relative;
             transform: scale(1);
             transition-delay: 0.1s;
-            color: var(--j);
+            /*color: var(--j);*/
         }
     .calcPanel ul:first-child li div.title {
         display: flex;

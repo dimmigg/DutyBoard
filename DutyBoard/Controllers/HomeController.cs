@@ -82,17 +82,24 @@ namespace DutyBoard.Controllers
             return View(vm);
         }
 
-
-        public IActionResult Calc()
+        [HttpPost]
+        public IActionResult Calc(string fromDate, string toDate)
         {
-            var calc = new Calculate(
-                _rostRepo.GetAll(),
-                _empRepo.GetAll(),
-                _holidayRepo.GetAll(),
-                _workdayRepo.GetAll()
-                );
-            var b = calc.StartCalculate();
-            _mappRepo.InsertData(b);
+            if (DateTime.TryParse(fromDate, out DateTime fDate) && DateTime.TryParse(toDate, out DateTime tDate))
+            {
+                var calc = new Calculate(
+                    _rostRepo.GetAll(),
+                    _empRepo.GetAll(),
+                    _holidayRepo.GetAll(),
+                    _workdayRepo.GetAll()
+                    )
+                {
+                    Start = fDate,
+                    Finish = tDate
+                };
+                var b = calc.StartCalculate();
+                _mappRepo.InsertData(b);
+            }
             return RedirectToAction(nameof(Index));
         }
 
