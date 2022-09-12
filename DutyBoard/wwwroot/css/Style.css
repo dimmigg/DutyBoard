@@ -189,7 +189,7 @@ body {
     width: 100%;
     height: 60px;
     display: flex;
-    justify-content:flex-end;
+    justify-content: end;
     align-items: center;
     padding: 0 20px;
 }
@@ -205,37 +205,124 @@ body {
     cursor: pointer;
 }
 
-/* search */
+/* topbar */
 .topbar .calc {
     display: flex;
     justify-content: left;
 }
-.topbar .date {
+
+.calcPanel ul {
     position: relative;
-    width: 180px;
-    padding: 0 5px;
+    display: flex;
+    padding-top: 10px;
+    gap: 10px;
 }
 
-    .topbar .date label {
+    .calcPanel ul li {
+        position: relative;
+        outline-style: none;
+        list-style: none;
+        width: 50px;
+        height: 50px;
+        background: var(--white);
+        border-radius: 50px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 16px 25px rgba(0, 0, 0, 0.1);
+        transition: 0.5s;
+    }
+        .calcPanel ul li:focus-within:first-child,
+        .calcPanel ul li:hover:first-child {
+            width: 320px;
+        }
+        .calcPanel ul li:focus-within,
+        .calcPanel ul li:hover {
+            width: 120px;
+        }
+            .calcPanel ul li:focus-within:before,
+            .calcPanel ul li:before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                border-radius: 60px;
+                opacity: 0;
+                transition: 0.5s;
+                background: var(--i);
+                color: var(--j)
+            }
+            .calcPanel ul li:focus-within:before,
+            .calcPanel ul li:hover:before {
+                opacity: 1;
+            }
+        .calcPanel ul li:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 60%;
+            transition: 0.5s;
+            z-index: -1;
+        }
+        .calcPanel ul li i {
+            color: var(--i);
+            font-size: 1.5em;
+            transition: 0.5s;
+            transition-delay: 0.25s;
+        }
+        .calcPanel ul li:focus-within i,
+        .calcPanel ul li:hover i {
+            transform: scale(0);
+            transition-delay: 0s;
+        }
+        .calcPanel ul li span {
+            position: absolute;
+        }
+        .calcPanel ul li div.title span {
+            position: relative;
+            margin-top: 2px;
+        }
+
+        .calcPanel ul li .title {
+            color: var(--black2);
+            font-size: 1.1em;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transform: scale(0);
+            transition: 0.5s;
+            transition-delay: 0s;
+            text-align: center;
+        }
+        .calcPanel ul li:focus-within .title,
+        .calcPanel ul li:hover .title {
+            position: relative;
+            transform: scale(1);
+            transition-delay: 0.1s;
+            color: var(--j);
+        }
+    .calcPanel ul:first-child li div.title {
+        display: flex;
+        align-items: center;
+    }
+        .calcPanel ul:first-child li div.title span:first-child {
+            margin-left: 25px;
+        }
+
+    .calcPanel .title {
         position: relative;
         width: 100%;
     }
-        .topbar .date label input {
+        
+        .calcPanel .title input {
             width: 100%;
             height: 40px;
             border-radius: 40px;
-            padding: 5px 20px;
-            padding-left: 35px;
+            padding: 5px;
+            padding-left: 10px;
             font-size: 18px;
             outline: none;
-            border: 1px solid var(--black2);
-        }
-
-        .topbar .date label i {
-            position: absolute;
-            top: 12px;
-            left: 10px;
-            font-size: 1em;
+            border: none;
         }
 
 /* contents */
@@ -244,7 +331,6 @@ body {
     width: 100%;
     padding: 0px;
     display: grid;
-    /*grid-template-columns: repeat(4, 1fr);*/
     grid-gap: 20px;
 }
 
@@ -294,10 +380,12 @@ body {
     .cardHeader a.add {
         padding: 10px;
     }
+
     .cardHeader h2 {
         font-weight: 600;
         color: var(--blue);
     }
+
     .cardHeader a.add:hover {
         color: #4caf50;
     }
