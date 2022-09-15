@@ -10,7 +10,6 @@ namespace DutyBoard_Models.ViewModels
         public IEnumerable<HolidayVM> Holidays { get; set; }
         public IEnumerable<SelectListItem> Employees { get; set; }
         public IList<string> CrossingOfDays { get; set; }
-
         public string ArrEmployee { get; set; }
         public string CountsDuty { get; set; }
         public string Statistics { get; set; } 

@@ -53,7 +53,7 @@ namespace DutyBoard_DataAccess.Repository
             }
             using (var connect = GetConnection())
             {
-                connect.ExecuteProcedure<string>($"tool.uspDutyBoardAdd{Name}", dp);
+                connect.ExecuteProcedure<object>($"tool.uspDutyBoardAdd{Name}", dp);
             }
         }
 
@@ -67,7 +67,7 @@ namespace DutyBoard_DataAccess.Repository
             }
             using (var connect = GetConnection())
             {
-                connect.ExecuteProcedure<string>($"tool.uspDutyBoardEdit{Name}", dp);
+                connect.ExecuteProcedure<object>($"tool.uspDutyBoardEdit{Name}", dp);
             }
         }
 
@@ -101,7 +101,7 @@ namespace DutyBoard_DataAccess.Repository
             }
             using (var connect = GetConnection())
             {
-                connect.ExecuteProcedure<string>($"tool.uspDutyBoardDel{Name}", dp);
+                connect.ExecuteProcedure<object>($"tool.uspDutyBoardDel{Name}", dp);
             }
         }
 

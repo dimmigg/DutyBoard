@@ -79,7 +79,7 @@
                             </li>
                             <li style="--i:#FDD835; --j:#999;">
                                 <span class="icon"><i class="fa-solid fa-calculator"></i></span>
-                                <span class="title"><input asp-action="Calc" asp-controller="Home" type="submit" value="Расчет"></span>
+                                <span class="title"><a href="#" type="submit" data-bs-toggle="modal" data-bs-target="#modal" onClick="Calc()">Расчет</a></span>
                             </li>
                             <li style="--i:#4CAF50; --j:#fff;">
                                 <span class="icon"><i class="fa-solid fa-file-excel"></i></span>
@@ -112,6 +112,13 @@
 
         </div>
     </div>
+    <div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content rounded-4 shadow">
+                <div id="edit-content"></div>
+            </div>
+        </div>
+    </div>
     <partial name="_Notifications" />
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -130,6 +137,12 @@
     @*<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>*@
     <script>
         getCalendarRange('#fromDate', '#toDate');
+        function Calc() {
+            let url = '/Home/ConfCalc/';
+            let fromDate = $('#fromDate').val();
+            let toDate = $('#toDate').val();
+            $('#edit-content').load(url, { fromDate: fromDate, toDate: toDate });
+        }
     </script>
     @RenderSection("Scripts", required: false)
 </body>

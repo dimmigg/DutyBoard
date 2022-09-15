@@ -131,6 +131,11 @@ body {
                 border-top-right-radius: 20px;
                 box-shadow: 7.5px -7.5px 0 7.5px #fff;
             }
+
+.modal-dialog{
+    width: 380px;
+    transition: bottom .75s ease-in-out;
+}
 /*
 .toggle {
     position: absolute;
@@ -271,7 +276,7 @@ body {
             transition: 0.5s;
             transition-delay: 0.25s;
         }
-        .calcPanel ul li:focus-within i,
+        .calcPanel ul li:focus-within:first-child i,
         .calcPanel ul li:hover i {
             transform: scale(0);
             transition-delay: 0s;
@@ -294,11 +299,13 @@ body {
             transition-delay: 0s;
             text-align: center;
         }
+            .calcPanel ul li .title a,
             .calcPanel ul li .title input {
                 background: var(--i);
                 color: var(--j);
                 text-transform: uppercase;
                 letter-spacing: 0.1em;
+                text-decoration: none;
             }
         
         .calcPanel ul li:focus-within .title,

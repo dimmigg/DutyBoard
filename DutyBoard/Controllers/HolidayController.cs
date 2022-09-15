@@ -34,7 +34,7 @@ namespace DutyBoard.Controllers
             return View(holidays);
         }
 
-        public IActionResult DeleteById(int Id) => PartialView("_Delete", getVM(Id));
+        public IActionResult DeleteById(int Id) => PartialView("_Delete", GetVM(Id));
 
 
         [HttpPost]
@@ -44,7 +44,7 @@ namespace DutyBoard.Controllers
             TempData[WC.Success] = "Отпуск удален";
             return Redirect(nameof(Index));
         }
-        public IActionResult EditById(int Id) => PartialView("_Edit", getVM(Id));
+        public IActionResult EditById(int Id) => PartialView("_Edit", GetVM(Id));
 
         [HttpPost]
         public IActionResult Edit()
@@ -69,7 +69,7 @@ namespace DutyBoard.Controllers
             return PartialView("_Edit", holidayVM);
         }
 
-        private HolidayVM getVM(int Id)
+        private HolidayVM GetVM(int Id)
         {
             Holiday holiday;
             if (Id == 0)

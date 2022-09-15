@@ -98,10 +98,8 @@
                                 }
                                 <tr>
                                     <td>
-
                                         @item.Employee.FullName<br>
                                         <span>@day, @item.Roster.StartTime.ToString(@"hh\:mm") - @item.Roster.EndTime.ToString(@"hh\:mm")</span>
-
                                     </td>
                                 </tr>
                             }
@@ -136,21 +134,11 @@
             </div>
         }
     </div>
-
-
 </div>
-<!-- Modal -->
-<div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div id="edit-content"></div>
-        </div>
-    </div>
-</div>
+
 @section Scripts{
     <script src="~/js/statistic.js"></script>
     <script>
-
         $(document).ready(function () {
             getStatistic();
             getCrossingOfDays();
@@ -188,7 +176,6 @@
         function getCrossingOfDays() {
             let url = '/Home/GetCrossingOfDays/';
             $('#crossingOfDays').load(url);
-            
         }
     </script>
     )

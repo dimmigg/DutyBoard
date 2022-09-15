@@ -39,6 +39,9 @@ namespace DutyBoard.Controllers
             _mappRepo = mappRepo;
         }
 
+        [BindProperty]
+        public ConfHomeVM ConfHomeVM { get; set; }
+
         public IActionResult Index()
         {
             var vm = new HomeVM
@@ -80,29 +83,43 @@ namespace DutyBoard.Controllers
                 HolidayCounts = arrDutyHoly
             });
 
-            
+
 
             return View(vm);
         }
-
         [HttpPost]
-        public IActionResult Calc(string fromDate, string toDate)
+        public IActionResult ConfCalc(string fromDate, string toDate)
         {
             if (DateTime.TryParse(fromDate, out DateTime fDate) && DateTime.TryParse(toDate, out DateTime tDate))
             {
-                var calc = new Calculate(
-                    _rostRepo.GetAll(),
-                    _empRepo.GetAll(),
-                    _holidayRepo.GetAll(),
-                    _workdayRepo.GetAll()
-                    )
+                var confVM = new ConfHomeVM()
                 {
-                    Start = fDate,
-                    Finish = tDate
+                    FromDate = fDate,
+                    ToDate = tDate
                 };
-                var b = calc.StartCalculate();
-                _mappRepo.InsertData(b);
+                return PartialView("_Confirmation", confVM);
             }
+            return null;
+        }
+
+
+        [HttpPost]
+        public IActionResult Calc()
+        {
+
+            var calc = new Calculate(
+                _rostRepo.GetAll(),
+                _empRepo.GetAll(),
+                _holidayRepo.GetAll(),
+                _workdayRepo.GetAll()
+                )
+            {
+                Start = ConfHomeVM.FromDate,
+                Finish = ConfHomeVM.ToDate
+            };
+            var b = calc.StartCalculate();
+            _mappRepo.InsertData(b);
+
             return RedirectToAction(nameof(Index));
         }
 
