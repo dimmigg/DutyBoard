@@ -19,7 +19,7 @@ namespace DutyBoard_Models
         [NotMapped]
         public DaysOfWeek DaysOfWeek { get; set; }
         [DataType(DataType.Time), Required(ErrorMessage = "Введи время!")]
-        [Display(Name = "Начало дежурства")]
+        [Display(Name = "Дежурство с")]
         public TimeSpan StartTime { get; set; }
         [Display(Name = "Длительность")]
         [Range(1, 24, ErrorMessage = "Введи больше 0 и меньше 24!"), Required(ErrorMessage = "Введи длительность!")]

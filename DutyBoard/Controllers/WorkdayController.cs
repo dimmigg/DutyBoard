@@ -71,7 +71,7 @@ namespace DutyBoard.Controllers
             if (id == "-1")
                 workdayVM.Rosters = _rostRepo.GetAll().Select(x => new SelectListItem
                 {
-                    Text = $"{x.DaysOfWeek.DayOfWeekName}: {x.StartTime:hh\\:mm} - {x.EndTime:hh\\:mm}",
+                    Text = $"{x.DaysOfWeek.DayOfWeekNameShort}: {x.StartTime:hh\\:mm} - {x.EndTime:hh\\:mm}",
                     Value = x.RosterId.ToString()
                 });
             else
@@ -79,7 +79,7 @@ namespace DutyBoard.Controllers
                 if (DateTime.TryParse(id, out DateTime valDate))
                     workdayVM.Rosters = _rostRepo.GetAll(x => x.DaysOfWeekId == valDate.GetDayOfWeek()).Select(x => new SelectListItem
                     {
-                        Text = $"{x.DaysOfWeek.DayOfWeekName}: {x.StartTime:hh\\:mm} - {x.EndTime:hh\\:mm}",
+                        Text = $"{x.DaysOfWeek.DayOfWeekNameShort}: {x.StartTime:hh\\:mm} - {x.EndTime:hh\\:mm}",
                         Value = x.RosterId.ToString()
                     });
                 else
@@ -109,14 +109,14 @@ namespace DutyBoard.Controllers
             if (workday.IsAlways)
                 workdayVM.Rosters = _rostRepo.GetAll().Select(x => new SelectListItem
                 {
-                    Text = $"{x.DaysOfWeek.DayOfWeekName}: {x.StartTime:hh\\:mm} - {x.EndTime:hh\\:mm}",
+                    Text = $"{x.DaysOfWeek.DayOfWeekNameShort}: {x.StartTime:hh\\:mm} - {x.EndTime:hh\\:mm}",
                     Value = x.RosterId.ToString()
                 });
             else
             {
                 workdayVM.Rosters = _rostRepo.GetAll(x => x.DaysOfWeekId == workday.DateWork.GetDayOfWeek()).Select(x => new SelectListItem
                 {
-                    Text = $"{x.DaysOfWeek.DayOfWeekName}: {x.StartTime:hh\\:mm} - {x.EndTime:hh\\:mm}",
+                    Text = $"{x.DaysOfWeek.DayOfWeekNameShort}: {x.StartTime:hh\\:mm} - {x.EndTime:hh\\:mm}",
                     Value = x.RosterId.ToString()
                 });
             }

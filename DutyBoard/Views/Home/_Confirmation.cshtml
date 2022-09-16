@@ -3,48 +3,10 @@
 <form method="post" novalidate="novalidate">
     <input name="fromDate" hidden value="@Model.FromDate" />
     <input name="toDate" hidden value="@Model.ToDate" />
-
-
-        <div class="modal-header border-bottom-0">
-            <h5 class="modal-title">Запуск расчета</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body py-0">
-        <p class="mb-0" style="font-size:16px">Вы действительно хоте запустить расчет с <b>@Model.FromDate.ToString("dd.MM.yyyy")</b> по <b>@Model.ToDate.ToString("dd.MM.yyyy")</b> ?</p>
-        </div>
-        <div class="modal-footer flex-column border-top-0">
-        @*<input asp-action="Calc" asp-controller="Home" type="submit" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 border-end" value="Да, запустить" />*@
-        <input asp-action="Calc" asp-controller="Home" type="submit" class="btn btn-lg btn-primary w-100 mx-0 mb-2" value="Да, запустить"/>
-            <button type="button" class="btn btn-lg btn-light w-100 mx-0" data-bs-dismiss="modal">Закрыть</button>
-        </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@*    <div class="modal-content rounded-3 shadow">
-        <div class="modal-body p-4 text-center">
-            <h5 class="mb-1">Вы действительно хоте запустить расчет</h5>
-            <p class="mb-0" style="font-size:16px">с <b>@Model.FromDate.ToString("dd.MM.yyyy")</b> по <b>@Model.ToDate.ToString("dd.MM.yyyy")</b> ?</p>
-        </div>
-        <div class="modal-footer flex-nowrap p-0">
-            <input asp-action="Calc" asp-controller="Home" type="submit" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 border-end" value="Да, запустить" />
-            <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0" data-bs-dismiss="modal">Не запускать</button>
-        </div>
-    </div>*@
+    <div class="modal-body py-2">
+        <p class="mb-0" style="font-size:16px">Вы действительно хоте запустить расчет <br/>с <b>@Model.FromDate.ToString("dd.MM.yyyy")</b> по <b>@Model.ToDate.ToString("dd.MM.yyyy")</b> ?</p>
+    </div>
+    <div class="modal-footer border-top-0 pt-0">
+        <input asp-action="Calc" asp-controller="Home" type="submit" class="btn btn-success " value="Запуск!" />
+    </div>
 </form>

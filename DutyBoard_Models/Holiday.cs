@@ -17,10 +17,10 @@ namespace DutyBoard_Models
         [NotMapped]
         public Employee Employee { get; set; }
         [Required(ErrorMessage = "Выбери день!")]
-        [Display(Name = "Начало отпуска")]
+        [Display(Name = "Начало")]
         public DateTime DateStart { get; set; } = DateTime.Today;
         [Required(ErrorMessage = "Выбери день!")]
-        [Display(Name = "Окончание отпуска")]
+        [Display(Name = "Окончание")]
         public DateTime DateFinish { get; set; } = DateTime.Today.AddHours(23).AddMinutes(59);
 
     }

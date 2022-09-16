@@ -8,6 +8,7 @@ namespace DutyBoard_Models
         [Key]
         public int DayOfWeekId { get; set; }
         public string DayOfWeekName { get; set; }
+        public string DayOfWeekNameShort { get; set; }
         [NotMapped]
         public virtual string Day { get; set; } = "0";
     }
