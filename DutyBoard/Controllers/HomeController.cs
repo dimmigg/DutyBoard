@@ -3,6 +3,9 @@ using DutyBoard_Models;
 using DutyBoard_Models.ViewModels;
 using DutyBoard_Utility;
 using DutyBoard_Utility.Calculate;
+using DutyBoard_Utility.Export;
+using DutyBoard_Utility.TempFile;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
@@ -10,6 +13,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -23,13 +27,17 @@ namespace DutyBoard.Controllers
         private readonly IWorkdayRepository _workdayRepo;
         private readonly IHolidayRepository _holidayRepo;
         private readonly IMappingRepository _mappRepo;
+        private readonly IExportRepository _expRepo;
+        private readonly string _path;
 
         public HomeController(ILogger<HomeController> logger,
+                              IWebHostEnvironment env,
                               IEmployeeRepository empRepo,
                               IHolidayRepository holidayRepo,
                               IRosterRepository rostRepo,
                               IWorkdayRepository workdayRepo,
-                              IMappingRepository mappRepo)
+                              IMappingRepository mappRepo,
+                              IExportRepository expRepo)
         {
             _logger = logger;
             _empRepo = empRepo;
@@ -37,6 +45,8 @@ namespace DutyBoard.Controllers
             _rostRepo = rostRepo;
             _workdayRepo = workdayRepo;
             _mappRepo = mappRepo;
+            _expRepo = expRepo;
+            _path = @$"{TempFileService.GetSharedPath(env.ContentRootPath)}\temp.xlsx";
         }
 
         [BindProperty]
@@ -186,6 +196,21 @@ namespace DutyBoard.Controllers
             }
 
             return PartialView("_CrossingOfDays", vm);
+        }
+
+        [HttpGet]
+        public IActionResult Export()
+        {
+            try
+            {
+                FileExport.WriteToExcel(_expRepo.GetAll(), _path);
+                return File(System.IO.File.ReadAllBytes(_path), "application/octet-stream", "дежурства.xlsx");
+            }
+            finally
+            {
+                System.IO.File.Delete(_path);
+            }
+
         }
     }
 }

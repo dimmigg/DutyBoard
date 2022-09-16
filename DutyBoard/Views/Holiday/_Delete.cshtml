@@ -2,8 +2,8 @@
 <form method="post" asp-action="Del">
     <div class="modal-content rounded-3 shadow">
         <input asp-for="Holiday.HolidayId" hidden />
-        <div class="modal-body p-4 text-center">
-            <h5 class="mb-1">Вы действительно хотите удалить отпуск?</h5>
+        <div class="modal-body p-2 text-center">
+            <h5 class="mb-1">Удалить отпуск?</h5>
             <p class="mb-0" style="font-size:16px"><b>@Model.Employee.FullName</b></p>
             <p class="mb-0" style="font-size:14px">@Model.Holiday.DateStart.ToString(@"dd.MM.yyyy") - @Model.Holiday.DateFinish.ToString(@"dd.MM.yyyy")</p>
         </div>

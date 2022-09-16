@@ -251,13 +251,14 @@ body {
             transition-delay: 0s;
             text-align: center;
         }
-            .calcPanel ul li .title a,
-            .calcPanel ul li .title input {
-                background: var(--i);
-                color: var(--j);
+            .calcPanel ul li .title a {
+                text-decoration: none;
                 text-transform: uppercase;
                 letter-spacing: 0.1em;
-                text-decoration: none;
+                color: var(--j);
+            }
+            .calcPanel ul li .title input {
+                background: var(--i);
             }
         
         .calcPanel ul li:focus-within .title,
