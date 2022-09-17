@@ -88,18 +88,18 @@ namespace DutyBoard_Utility.Calculate
             foreach (var item in _dailyDuties)
             {
                 var holiDayEmployees = GetHoliDayEmployees(item.DateStart, item.RosterId);
-                if (workdaysWithAlways.Any(x => x.RosterId == item.RosterId && !holiDayEmployees.Any(h => h == workdaysWithAlways.FirstOrDefault(w => w.RosterId == item.RosterId).EmployeeId)))
+                if (workdaysWithAlways.Any(x => x.RosterId == item.RosterId &&
+                    !holiDayEmployees.Any(h => h == workdaysWithAlways.FirstOrDefault(w => w.RosterId == item.RosterId).EmployeeId)))
                 {
                     item.EmployeeId = GetEmployeeHand(workdaysWithAlways.Where(x => x.RosterId == item.RosterId));
                     _allEmployees.First(x => x.EmployeeId == item.EmployeeId).CountDuty++;
                 }
 
-                if (!workdaysWithDay.Any(x => x.RosterId == item.RosterId && x.StartDateWork == item.DateStart))
-                    continue;
-
-                item.EmployeeId = GetEmployeeHand(workdaysWithDay.Where(x => x.RosterId == item.RosterId && x.StartDateWork == item.DateStart));
-                _allEmployees.First(x => x.EmployeeId == item.EmployeeId).CountDuty++;
-
+                if (workdaysWithDay.Any(x => x.RosterId == item.RosterId && x.StartDateWork == item.DateStart))
+                {
+                    item.EmployeeId = GetEmployeeHand(workdaysWithDay.Where(x => x.RosterId == item.RosterId && x.StartDateWork == item.DateStart));
+                    _allEmployees.First(x => x.EmployeeId == item.EmployeeId).CountDuty++;
+                }
             }
         }
 
@@ -115,7 +115,7 @@ namespace DutyBoard_Utility.Calculate
                 {
                     currNode.Data.EmployeeId = GetFreeEmployee(currNode);
                     if (currNode.Data.EmployeeId != 0)
-                        _allEmployees.FirstOrDefault(x => x.EmployeeId == currNode.Data.EmployeeId)!.CountDuty++;
+                        _allEmployees.FirstOrDefault(x => x.EmployeeId == currNode.Data.EmployeeId).CountDuty++;
                 }
                 currNode = currNode.Next;
             }

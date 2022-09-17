@@ -260,6 +260,9 @@ body {
             .calcPanel ul li .title input {
                 background: var(--i);
             }
+.calcPanel ul li .title span {
+    color: var(--j);
+}
         
         .calcPanel ul li:focus-within .title,
         .calcPanel ul li:hover .title,
@@ -273,7 +276,7 @@ body {
         align-items: center;
     }
         .calcPanel ul:first-child li div.title span:first-child {
-            margin-left: 10px;
+            margin-left: 25px;
         }
 
     .calcPanel .title {
@@ -505,4 +508,16 @@ tr.holiday {
     height: 35vh;
     overflow-x: auto;
     margin-bottom: 10px;
+}
+
+/* adaptive design */
+@media (max-width: 1200px) {
+    .contents .mainPage {
+        grid-template-columns: 1.5fr 1fr;
+    }
+}
+@media (max-width: 992px) {
+    .contents .mainPage {
+        grid-template-columns: 1fr;
+    }
 }
