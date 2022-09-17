@@ -12,6 +12,7 @@ using DutyBoard_Telegram.Commands;
 using DutyBoard_Telegram.Commands.Callback.Users;
 using DutyBoard_Telegram.Services;
 using DutyBoard_Utility;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace DutyBoard
 {
@@ -35,6 +36,7 @@ namespace DutyBoard
             services.AddScoped<IMappingRepository, MappingRepository>();
             services.AddScoped<IRosterRepository, RosterRepository>();
             services.AddScoped<IExportRepository, ExportRepository>();
+            services.AddScoped<ISiteUserRepository, SiteUserRepository>();
             services.AddScoped<ITelegramUserRepository, TelegramUserRepository>();
 
 
@@ -50,6 +52,13 @@ namespace DutyBoard
             services.AddScoped<BaseCommand, GetAnalyticCommand>();
             services.AddScoped<ITelegramUserService, TelegramUserService>();
             services.AddScoped<TelegramBot>();
+
+            // установка конфигурации подключения
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options => //CookieAuthenticationOptions
+                {
+                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,6 +80,7 @@ namespace DutyBoard
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             serviceProvider.GetRequiredService<TelegramBot>().GetBot().Wait();

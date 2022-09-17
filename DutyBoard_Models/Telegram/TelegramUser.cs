@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DutyBoard_Models
+namespace DutyBoard_Models.Telegram
 {
     public class TelegramUser
     {
@@ -16,7 +16,7 @@ namespace DutyBoard_Models
 
         [NotMapped]
         public bool IsAdmin => RoleId > 0;
-        
+
         public override string ToString() =>
             $"{(Username is null ? $"{FirstName}{LastName?.Insert(0, " ")}" : $"@{Username}")} ({ChatId})";
     }

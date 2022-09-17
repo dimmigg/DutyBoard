@@ -1,7 +1,7 @@
-﻿using DutyBoard_Models;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
+﻿using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
 using System.Collections.Generic;
 using System;
+using DutyBoard_Models.Models;
 
 namespace DutyBoard_DataAccess.Repository.IRepository
 {

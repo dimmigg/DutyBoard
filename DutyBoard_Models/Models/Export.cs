@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace DutyBoard_Models
+namespace DutyBoard_Models.Models
 {
     public class Export
     {

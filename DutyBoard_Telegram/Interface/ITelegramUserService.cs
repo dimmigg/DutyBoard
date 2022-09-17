@@ -1,4 +1,4 @@
-﻿using DutyBoard_Models;
+﻿using DutyBoard_Models.Telegram;
 using Telegram.Bot.Types;
 
 namespace DutyBoard_Telegram.Interface

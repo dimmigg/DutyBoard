@@ -1,4 +1,4 @@
-﻿namespace DutyBoard_Models
+﻿namespace DutyBoard_Models.Calc
 {
     public class Node<T>
     {

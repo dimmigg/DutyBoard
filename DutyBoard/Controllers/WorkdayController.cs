@@ -1,8 +1,9 @@
 ﻿using DutyBoard_DataAccess.Repository.IRepository;
-using DutyBoard_Models;
+using DutyBoard_Models.Models;
 using DutyBoard_Models.ViewModels;
 using DutyBoard_Utility;
 using DutyBoard_Utility.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -12,6 +13,7 @@ using System.Reflection;
 
 namespace DutyBoard.Controllers
 {
+    [Authorize]
     public class WorkdayController : Controller
     {
         private readonly IRosterRepository _rostRepo;

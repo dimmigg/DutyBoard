@@ -1,9 +1,9 @@
 ﻿using DutyBoard_Telegram.Interface;
 using System.Threading.Tasks;
-using DutyBoard_Models;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using DutyBoard_DataAccess.Repository.IRepository;
+using DutyBoard_Models.Telegram;
 
 namespace DutyBoard_Telegram.Services
 {

@@ -1,4 +1,4 @@
-﻿using DutyBoard_Models;
+﻿using DutyBoard_Models.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace DutyBoard_Models.Attributes

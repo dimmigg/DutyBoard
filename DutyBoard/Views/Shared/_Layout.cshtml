@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="~/css/Style.css" />
     <link rel="stylesheet" href="~/css/pages/home.css" />
     <link rel="stylesheet" href="~/css/pages/login.css" />
+    <link rel="stylesheet" href="~/css/pages/register.css" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
     <link rel="stylesheet" href="~/css/calendar.css" />
@@ -16,75 +17,84 @@
 </head>
 <body>
     <div class="box">
-        <div class="navigation">
-            <ul>
-                <li>
-                    <a asp-controller="Home" asp-action="Index">
-                        <span class="icon fa-rotate-by" style="display: inline-block; --fa-rotate-angle: -25deg;"><h4><i class="fa-solid fa-paw pt-2"></i></h4></span>
-                    </a>
-                </li>
-                <li id="Home">
-                    <a asp-controller="Home" asp-action="Index">
-                        <span class="icon"><i class="fa-solid fa-house"></i></span>
-                        <span class="title">Главная</span>
-                    </a>
-                </li>
-                <li id="Workday">
-                    <a asp-controller="Workday" asp-action="Index">
-                        <span class="icon"><i class="fa-solid fa-house-laptop"></i></span>
-                        <span class="title">Дежурства</span>
-                    </a>
-                </li>
-                <li id="Holiday">
-                    <a asp-controller="Holiday" asp-action="Index">
-                        <span class="icon"><i class="fa-solid fa-umbrella-beach"></i></span>
-                        <span class="title">Отпуска</span>
-                    </a>
-                </li>
-                <li id="Employee">
-                    <a asp-controller="Employee" asp-action="Index">
-                        <span class="icon"><i class="fa-solid fa-users" width="16"></i></span>
-                        <span class="title">Сотрудники</span>
-                    </a>
-                </li>
-                <li id="Roster">
-                    <a asp-controller="Roster" asp-action="Index">
-                        <span class="icon"><i class="fa-solid fa-screwdriver-wrench"></i></span>
-                        <span class="title">Параметры</span>
-                    </a>
-                </li>
-            </ul>
-
-        </div>
-
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div class="navigation">
+                <ul>
+                    <li>
+                        <a asp-controller="Home" asp-action="Index">
+                            <span class="icon fa-rotate-by" style="display: inline-block; --fa-rotate-angle: -25deg;"><h4><i class="fa-solid fa-paw pt-2"></i></h4></span>
+                        </a>
+                    </li>
+                    <li id="Home">
+                        <a asp-controller="Home" asp-action="Index">
+                            <span class="icon"><i class="fa-solid fa-house"></i></span>
+                            <span class="title">Главная</span>
+                        </a>
+                    </li>
+                    <li id="Workday">
+                        <a asp-controller="Workday" asp-action="Index">
+                            <span class="icon"><i class="fa-solid fa-house-laptop"></i></span>
+                            <span class="title">Дежурства</span>
+                        </a>
+                    </li>
+                    <li id="Holiday">
+                        <a asp-controller="Holiday" asp-action="Index">
+                            <span class="icon"><i class="fa-solid fa-umbrella-beach"></i></span>
+                            <span class="title">Отпуска</span>
+                        </a>
+                    </li>
+                    <li id="Employee">
+                        <a asp-controller="Employee" asp-action="Index">
+                            <span class="icon"><i class="fa-solid fa-users" width="16"></i></span>
+                            <span class="title">Сотрудники</span>
+                        </a>
+                    </li>
+                    <li id="Roster">
+                        <a asp-controller="Roster" asp-action="Index">
+                            <span class="icon"><i class="fa-solid fa-screwdriver-wrench"></i></span>
+                            <span class="title">Параметры</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Account" asp-action="Logout">
+                            <span class="icon"><i class="fa-solid fa-right-from-bracket fa-rotate-180"></i></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        }
         <!-- main-->
         <div class="main">
-            <div class="topbar">
-                <!-- dates -->
-                <form  method="post" novalidate="novalidate">
-                    <div class="calcPanel">
-                        <ul>
-                            <li style="--i:#fff; --j:#999;">
-                                <span class="icon"><i class="fa-regular fa-calendar text-primary"></i></span>
-                                <div class="title">
-                                    <span>с</span>
-                                    <input type="text" placeholder="Дата с" id="fromDate" name="fromDate" />
-                                    <span>по</span>
-                                    <input type="text" placeholder="Дата по" id="toDate" name="toDate" />
-                                </div>
-                            </li>
-                            <li style="--i:#FDD835; --j:#999;">
-                                <span class="icon"><i class="fa-solid fa-calculator"></i></span>
-                                <span class="title"><a href="#" type="submit" data-bs-toggle="modal" data-bs-target="#modal" onClick="Calc()">Расчет</a></span>
-                            </li>
-                            <li style="--i:#4CAF50; --j:#fff;">
-                                <span class="icon"><i class="fa-solid fa-file-excel"></i></span>
-                                <span class="title"><a asp-action="Export" asp-controller="Home" type="button">Экспорт</a></span>
-                            </li>
-                        </ul>
-                    </div>
-                </form>
-            </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="topbar">
+                    <!-- dates -->
+                    <form method="post" novalidate="novalidate">
+                        <div class="calcPanel">
+                            <ul>
+                                <li style="--i:#fff; --j:#999;">
+                                    <span class="icon"><i class="fa-regular fa-calendar text-primary"></i></span>
+                                    <div class="title">
+                                        <span>с</span>
+                                        <input type="text" placeholder="Дата с" id="fromDate" name="fromDate" />
+                                        <span>по</span>
+                                        <input type="text" placeholder="Дата по" id="toDate" name="toDate" />
+                                    </div>
+                                </li>
+                                <li style="--i:#FDD835; --j:#999;">
+                                    <span class="icon"><i class="fa-solid fa-calculator"></i></span>
+                                    <span class="title"><a href="#" type="submit" data-bs-toggle="modal" data-bs-target="#modal" onClick="Calc()">Расчет</a></span>
+                                </li>
+                                <li style="--i:#4CAF50; --j:#fff;">
+                                    <span class="icon"><i class="fa-solid fa-file-excel"></i></span>
+                                    <span class="title"><a asp-action="Export" asp-controller="Home" type="button">Экспорт</a></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+            }
             <!-- contents -->
             <div class="contents">
                 @RenderBody()

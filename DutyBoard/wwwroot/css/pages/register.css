@@ -1,35 +1,35 @@
-﻿.login {
+﻿.register {
     display: flex;
     position: relative;
     justify-content: center;
     top: 50%;
-    /*margin-top: -0.625em;*/
+    margin-top: -2.625em;
     margin-left: -70px;
 }
 
-.login-box {
+.register-box {
     position: relative;
     width: 380px;
-    height: 420px;
+    height: 500px;
     background: #fff;
     border-radius: 20px;
     overflow: hidden;
 }
 
-    .login-box:before {
+    .register-box:before {
         content: '';
         position: absolute;
         top: -50%;
         left: -50%;
         width: 380px;
-        height: 420px;
+        height: 500px;
         background: linear-gradient(0deg, transparent, var(--blue), var(--blue));
         transform-origin: bottom right;
         animation: animate 6s linear infinite;
         animation-delay: -3s;
     }
 
-.login-box:after {
+.register-box:after {
     content: '';
     position: absolute;
     top: -50%;
@@ -50,7 +50,7 @@
     }
 }
 
-.login-box form {
+.register-box form {
     position: absolute;
     inset: 2px;
     border-radius: 20px;
@@ -60,19 +60,19 @@
     display: flex;
     flex-direction: column;
 }
-.login-box form h2 {
+.register-box form h2 {
     color: dodgerblue;
     font-weight: 500;
     text-align: center;
     letter-spacing: 0.1em;
 
 }
-.login-box form .inputBox {
+.register-box form .inputBox {
     position: relative;
     width: 300px;
     margin-top: 35px;
 }
-    .login-box form .inputBox input {
+    .register-box form .inputBox input {
         position: relative;
         width: 100%;
         padding: 20px 10px 10px;
@@ -85,7 +85,7 @@
         z-index: 10;
     }
 
-    .login-box form .inputBox span {
+    .register-box form .inputBox span {
         position: absolute;
         left: 0;
         padding: 20px 0px 10px;
@@ -96,14 +96,14 @@
         transition: 0.5s;
     }
 
-    .login-box form .inputBox input:valid ~ span,
-    .login-box form .inputBox input:focus ~ span {
+    .register-box form .inputBox input:valid ~ span,
+    .register-box form .inputBox input:focus ~ span {
         color: var(--blue);
         transform: translateX(0px) translateY(-34px);
         font-size: 0.85em;
     }
 
-    .login-box form .inputBox i {
+    .register-box form .inputBox i {
         position: absolute;
         left: 0;
         bottom: 0;
@@ -114,36 +114,46 @@
         transition: 0.5s;
         pointer-events: none;
     }
-.login-box form .inputBox input:valid ~ i,
-.login-box form .inputBox input:focus ~ i {
+.register-box form .inputBox input:valid ~ i,
+.register-box form .inputBox input:focus ~ i {
     height: 44px;
 }
 
-.login-box form .links {
+.register-box form .links {
     display: flex;
     justify-content: space-between;
 }
 
-.login-box form .links a {
+.register-box form .links a {
     margin: 10px 0;
     font-size: 0.85em;
     color: #8f8f8f;
     text-decoration: none;
 }
-    .login-box form .links a:hover,
-    .login-box form .links a:nth-child(2) {
+    .register-box form .links a:hover,
+    .register-box form .links a:nth-child(2) {
         color: var(--blue);
     }
-
-.login-box form input[type="submit"] {
-    border: none;
-    outline: none;
-    background: var(--blue);
-    padding: 11px 25px;
-    width: 100px;
-    margin-top: 10px;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    color: aliceblue;
+.register-box form .footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 15px;
+}
+    .register-box form .footer a,
+    .register-box form input[type="submit"] {
+        border: none;
+        outline: none;
+        background: var(--blue);
+        padding: 11px 25px;
+        width: 100%;
+        margin-top: 35px;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        color: aliceblue;
+        text-decoration: none;
+        text-align: center;
+    }
+.register-box form .footer a {
+    background: #8f8f8f;
 }

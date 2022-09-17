@@ -3,7 +3,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using DutyBoard_DataAccess.Extensions;
 using DutyBoard_DataAccess.Repository.IRepository;
-using DutyBoard_Models;
+using DutyBoard_Models.Models;
 using Microsoft.Extensions.Configuration;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
 

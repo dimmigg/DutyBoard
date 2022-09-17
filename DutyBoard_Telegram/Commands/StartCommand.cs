@@ -2,11 +2,11 @@
 using DutyBoard_Telegram.Interface;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using DutyBoard_Models;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
+using DutyBoard_Models.Telegram;
 
 namespace DutyBoard_Telegram.Commands
 {

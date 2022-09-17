@@ -1,4 +1,5 @@
-﻿using DutyBoard_Models;
+﻿using DutyBoard_Models.Calc;
+using DutyBoard_Models.Models;
 using DutyBoard_Utility.Extensions;
 using System;
 using System.Collections.Generic;
