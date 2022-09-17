@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DutyBoard_Models
+﻿namespace DutyBoard_Models
 {
     public class Statistics
     {

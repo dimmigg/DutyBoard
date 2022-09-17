@@ -79,7 +79,7 @@ namespace DutyBoard.Controllers
             var arrDuty = new int[employees.Count()];
             var arrDutyWork = new int[employees.Count()];
             var arrDutyHoly = new int[employees.Count()];
-            for (int i = 0; i < employees.Count(); i++)
+            for (var i = 0; i < employees.Count(); i++)
             {
                 arrDuty[i] = vm.MainTable.Count(x => x.Employee?.FullName == employees[i]);
                 arrDutyWork[i] = vm.MainTable.Count(x => x.Employee?.FullName == employees[i] && (x.Roster.DaysOfWeekId != 7 && x.Roster.DaysOfWeekId != 6));
@@ -93,23 +93,19 @@ namespace DutyBoard.Controllers
                 HolidayCounts = arrDutyHoly
             });
 
-
-
             return View(vm);
         }
         [HttpPost]
         public IActionResult ConfCalc(string fromDate, string toDate)
         {
-            if (DateTime.TryParse(fromDate, out DateTime fDate) && DateTime.TryParse(toDate, out DateTime tDate))
+            if (!DateTime.TryParse(fromDate, out DateTime fDate) ||
+                !DateTime.TryParse(toDate, out DateTime tDate)) return null;
+            var confVM = new ConfHomeVM()
             {
-                var confVM = new ConfHomeVM()
-                {
-                    FromDate = fDate,
-                    ToDate = tDate
-                };
-                return PartialView("_Confirmation", confVM);
-            }
-            return null;
+                FromDate = fDate,
+                ToDate = tDate
+            };
+            return PartialView("_Confirmation", confVM);
         }
 
 
@@ -127,8 +123,7 @@ namespace DutyBoard.Controllers
                 Start = ConfHomeVM.FromDate,
                 Finish = ConfHomeVM.ToDate
             };
-            var b = calc.StartCalculate();
-            _mappRepo.InsertData(b);
+            _mappRepo.InsertData(calc.StartCalculate());
 
             return RedirectToAction(nameof(Index));
         }
@@ -141,7 +136,7 @@ namespace DutyBoard.Controllers
             var arrDutyWork = new int[employees.Count()];
             var arrDutyHoly = new int[employees.Count()];
             var data = _mappRepo.GetAll();
-            for (int i = 0; i < employees.Count(); i++)
+            for (var i = 0; i < employees.Count(); i++)
             {
                 arrDuty[i] = data.Count(x => x.Employee.FullName == employees[i]);
                 arrDutyWork[i] = data.Count(x => x.Employee.FullName == employees[i] && (x.Roster.DaysOfWeekId != 7 && x.Roster.DaysOfWeekId != 6));
@@ -156,9 +151,6 @@ namespace DutyBoard.Controllers
             };
             return JsonConvert.SerializeObject(st);
         }
-
-
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
@@ -175,25 +167,19 @@ namespace DutyBoard.Controllers
                 Employee = _empRepo.FirstOrDefault(x.EmployeeId)
             });
             var mainTable = _mappRepo.GetAll();
-            var vm = new List<CrossingOfDaysVM>();
-            foreach (var item in holidays)
-            {
-                var workdays = mainTable.Where(x => x.Employee?.EmployeeId == item.Employee?.EmployeeId);
-                foreach (var workday in workdays)
+            var vm = (
+                from item in holidays 
+                let workdays = mainTable.Where(x => x.Employee?.EmployeeId == item.Employee?.EmployeeId) 
+                from workday in workdays 
+                where workday.DateStart >= item.Holiday.DateStart && workday.DateStart <= item.Holiday.DateFinish 
+                select new CrossingOfDaysVM()
                 {
-                    if (workday.DateStart >= item.Holiday.DateStart && workday.DateStart <= item.Holiday.DateFinish)
-                    {
-                        var cross = new CrossingOfDaysVM()
-                        {
-                            FullName = workday.Employee.FullName,
-                            DateRoster = workday.DateStart,
-                            DateStart = item.Holiday.DateStart,
-                            DateFinish = item.Holiday.DateFinish
-                        };
-                        vm.Add(cross);
-                    }
+                    FullName = workday.Employee.FullName, 
+                    DateRoster = workday.DateStart,
+                    DateStart = item.Holiday.DateStart,
+                    DateFinish = item.Holiday.DateFinish
                 }
-            }
+                ).ToList();
 
             return PartialView("_CrossingOfDays", vm);
         }

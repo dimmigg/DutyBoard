@@ -18,7 +18,7 @@ namespace DutyBoard_DataAccess.Repository
         public new IEnumerable<Holiday> GetAll(int? id)
         {
             var holiDays = base.GetAll(id);
-            using (SqlConnection cn = GetConnection())
+            using (var cn = GetConnection())
             {
                 foreach (var day in holiDays)
                 {
@@ -34,13 +34,5 @@ namespace DutyBoard_DataAccess.Repository
             day.Employee = _empRepo.FirstOrDefault(day.EmployeeId);
             return day;
         }
-
-        //public void Upsert(Holiday entity)
-        //{
-        //    if (entity.HolidayId == 0)
-        //        Add(entity);
-        //    else
-        //        Update(entity);
-        //}
     }
 }

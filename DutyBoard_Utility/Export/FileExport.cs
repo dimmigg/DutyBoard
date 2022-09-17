@@ -1,10 +1,8 @@
-﻿using DutyBoard_Models;
-using OfficeOpenXml;
+﻿using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
 
 namespace DutyBoard_Utility.Export
 {
@@ -56,13 +54,12 @@ namespace DutyBoard_Utility.Export
                 cell.Style.Border.Right.Style = ExcelBorderStyle.Thin;
             }
 
-            for (int i = 2; i < worksheet.Dimension.End.Row; i++)
+            for (var i = 2; i < worksheet.Dimension.End.Row; i++)
             {
-                if (worksheet.Cells[i, 1].Value.ToString() == "Воскресенье" || worksheet.Cells[i, 1].Value.ToString() == "Суббота")
-                {
-                    worksheet.Cells[i, 1, i, worksheet.Dimension.End.Column].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                    worksheet.Cells[i, 1, i, worksheet.Dimension.End.Column].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 242, 204));
-                }
+                if (worksheet.Cells[i, 1].Value.ToString() != "Воскресенье" &&
+                    worksheet.Cells[i, 1].Value.ToString() != "Суббота") continue;
+                worksheet.Cells[i, 1, i, worksheet.Dimension.End.Column].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                worksheet.Cells[i, 1, i, worksheet.Dimension.End.Column].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 242, 204));
             }
         }
     }

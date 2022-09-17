@@ -23,7 +23,7 @@ namespace DutyBoard_DataAccess.Repository
         public new IEnumerable<Mapping> GetAll(int? id)
         {
             var mappings = base.GetAll(id);
-            using (SqlConnection cn = GetConnection())
+            using (var cn = GetConnection())
             {
                 foreach (var map in mappings)
                 {
@@ -46,7 +46,7 @@ namespace DutyBoard_DataAccess.Repository
         {
             using (var connect = GetConnection())
             {
-                DynamicParameters dp = new DynamicParameters();
+                var dp = new DynamicParameters();
                 dp.Add("@MappId", mapp);
                 dp.Add("@EmployeeId", emp);
                 connect.ExecuteProcedure<string>("tool.uspDutyBoardEditMapping", dp);

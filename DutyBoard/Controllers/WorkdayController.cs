@@ -30,17 +30,17 @@ namespace DutyBoard.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<WorkdayVM> Workdays = _workdayRepo.GetAll().Select(x => new WorkdayVM
+            var workdays = _workdayRepo.GetAll().Select(x => new WorkdayVM
             {
                 Workday = x,
                 Employee = _empRepo.FirstOrDefault(x.EmployeeId),
                 Roster = _rostRepo.FirstOrDefault(x.RosterId)
             });
 
-            return View(Workdays);
+            return View(workdays);
         }
 
-        public IActionResult DeleteById(int Id) => PartialView("_Delete", getVM(Id));
+        public IActionResult DeleteById(int Id) => PartialView("_Delete", GetVm(Id));
         
 
         [HttpPost]
@@ -50,23 +50,20 @@ namespace DutyBoard.Controllers
             TempData[WC.Success] = "Дежурство удалено";
             return Redirect(nameof(Index));
         }
-        public IActionResult EditById(int Id) => PartialView("_Edit", getVM(Id));
+        public IActionResult EditById(int Id) => PartialView("_Edit", GetVm(Id));
 
         [HttpPost]
         public IActionResult Edit()
         {
-            if (ModelState.IsValid)
-            {
-                _workdayRepo.Upsert(Workday);
-                TempData[WC.Success] = Workday.WorkdayId == 0 ? "Дежурство добавлено" : "Дежурство изменено";
-                return Redirect(nameof(Index));
-            }
-            return PartialView("_Edit", Workday);
+            if (!ModelState.IsValid) return PartialView("_Edit", Workday);
+            _workdayRepo.Upsert(Workday);
+            TempData[WC.Success] = Workday.WorkdayId == 0 ? "Дежурство добавлено" : "Дежурство изменено";
+            return Redirect(nameof(Index));
         }
 
         public IActionResult GetRosterByDate(string id)
         {
-            WorkdayVM workdayVM = new WorkdayVM();
+            var workdayVM = new WorkdayVM();
 
             if (id == "-1")
                 workdayVM.Rosters = _rostRepo.GetAll().Select(x => new SelectListItem
@@ -88,14 +85,11 @@ namespace DutyBoard.Controllers
             return PartialView("_Rosters", workdayVM);
         }
 
-        private WorkdayVM getVM(int Id)
+        private WorkdayVM GetVm(int Id)
         {
             Workday workday;
-            if (Id == 0)
-                workday = new Workday();
-            else
-                workday = _workdayRepo.FirstOrDefault(Id);
-            WorkdayVM workdayVM = new WorkdayVM
+            workday = Id == 0 ? new Workday() : _workdayRepo.FirstOrDefault(Id);
+            var workdayVM = new WorkdayVM
             {
                 Workday = workday,
                 Employee = _empRepo.FirstOrDefault(workday.EmployeeId),

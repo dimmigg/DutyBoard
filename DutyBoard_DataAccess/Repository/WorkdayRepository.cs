@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System;
+using System.Linq;
 
 namespace DutyBoard_DataAccess.Repository
 {
@@ -22,7 +23,7 @@ namespace DutyBoard_DataAccess.Repository
         public new IEnumerable<Workday> GetAll(int? id)
         {
             var workDays = base.GetAll(id);
-            using (SqlConnection cn = GetConnection())
+            using (var cn = GetConnection())
             {
                 foreach (var day in workDays)
                 {
@@ -36,7 +37,7 @@ namespace DutyBoard_DataAccess.Repository
         public new Workday FirstOrDefault(int? id)
         {
             var day = base.FirstOrDefault(id);
-            using (SqlConnection cn = GetConnection())
+            using (var cn = GetConnection())
             {
                 day.Roster = _rostRepo.FirstOrDefault(day.RosterId);
                 day.Employee = _empRepo.FirstOrDefault(day.EmployeeId);

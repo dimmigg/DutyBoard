@@ -14,6 +14,5 @@ namespace DutyBoard_DataAccess.Repository
         public EmployeeRepository(IConfiguration configuration) : base(configuration)
         {
         }
-
     }
 }

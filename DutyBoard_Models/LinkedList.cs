@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 
 namespace DutyBoard_Models
 {
@@ -64,8 +62,9 @@ namespace DutyBoard_Models
             return true;
         }
 
-        public int Count { get { return CountNode; } }
-        public bool IsEmpty { get { return CountNode == 0; } }
+        public int Count => CountNode;
+        public bool IsEmpty => CountNode == 0;
+
         public void Clear()
         {
             Head = null;
@@ -75,7 +74,7 @@ namespace DutyBoard_Models
 
         public bool Contains(T data)
         {
-            Node<T> current = Head;
+            var current = Head;
             while (current != null)
             {
                 if (current.Data.Equals(data))

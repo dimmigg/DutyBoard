@@ -39,11 +39,8 @@ namespace DutyBoard.Controllers
         public IActionResult EditById(int Id)
         {
             Roster roster;
-            if (Id == 0)
-                roster = new Roster();
-            else
-                roster = _rostRepo.FirstOrDefault(Id);
-            RosterVM rosterVM = new RosterVM()
+            roster = Id == 0 ? new Roster() : _rostRepo.FirstOrDefault(Id);
+            var rosterVM = new RosterVM()
             {
                 Roster = roster,
                 DaysOfWeeks = _dayRepo.GetAll().Select(x => new SelectListItem
@@ -58,13 +55,10 @@ namespace DutyBoard.Controllers
         [HttpPost]
         public IActionResult Edit()
         {
-            if (ModelState.IsValid)
-            {
-                _rostRepo.Upsert(RosterVM.Roster);
-                TempData[WC.Success] = RosterVM.Roster.RosterId == 0 ? "Дежурство добавлено" : "Дежурство изменено";
-                return Redirect(nameof(Index));
-            }
-            return PartialView("_Edit", RosterVM);
+            if (!ModelState.IsValid) return PartialView("_Edit", RosterVM);
+            _rostRepo.Upsert(RosterVM.Roster);
+            TempData[WC.Success] = RosterVM.Roster.RosterId == 0 ? "Дежурство добавлено" : "Дежурство изменено";
+            return Redirect(nameof(Index));
         }
     }
 }

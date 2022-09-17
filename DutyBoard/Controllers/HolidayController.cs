@@ -25,7 +25,7 @@ namespace DutyBoard.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<HolidayVM> holidays = _holidayRepo.GetAll().Select(x => new HolidayVM
+            var holidays = _holidayRepo.GetAll().Select(x => new HolidayVM
             {
                 Holiday = x,
                 Employee = _empRepo.FirstOrDefault(x.EmployeeId)
@@ -72,10 +72,7 @@ namespace DutyBoard.Controllers
         private HolidayVM GetVM(int Id)
         {
             Holiday holiday;
-            if (Id == 0)
-                holiday = new Holiday();
-            else
-                holiday = _holidayRepo.FirstOrDefault(Id);
+            holiday = Id == 0 ? new Holiday() : _holidayRepo.FirstOrDefault(Id);
             var holidayVM = new HolidayVM
             {
                 Holiday = holiday,

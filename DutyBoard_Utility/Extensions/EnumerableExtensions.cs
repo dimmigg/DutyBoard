@@ -22,7 +22,7 @@ namespace DutyBoard_Utility.Extensions
                 properties.Add(property);
             }
 
-            foreach (T item in data)
+            foreach (var item in data)
             {
                 var row = result.NewRow();
 

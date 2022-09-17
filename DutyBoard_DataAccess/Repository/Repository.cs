@@ -72,27 +72,6 @@ namespace DutyBoard_DataAccess.Repository
                 connect.ExecuteProcedure<object>($"tool.uspDutyBoardEdit{Name}", dp);
             }
         }
-
-        //public T FirstOrDefault(Func<T, bool> filter = null)
-        //{
-        //    using (SqlConnection cn = GetConnection())
-        //    {
-        //        if (filter != null)
-        //            return cn.ExecuteProcedure<T>($"tool.uspDutyBoardGet{Name}").FirstOrDefault(filter);
-        //        return cn.ExecuteProcedure<T>($"tool.uspDutyBoardGet{Name}").FirstOrDefault();
-        //    }
-        //}
-
-        //public IEnumerable<T> GetAll(Func<T, bool> filter = null)
-        //{
-        //    using (SqlConnection cn = GetConnection())
-        //    {
-        //        if (filter != null)
-        //            return cn.ExecuteProcedure<T>($"tool.uspDutyBoardGet{Name}").Where(filter);
-        //        return cn.ExecuteProcedure<T>($"tool.uspDutyBoardGet{Name}");
-        //    }
-        //}
-
         public void Remove(T entity)
         {
             var props = typeof(T).GetProperties().Where(p => p.GetCustomAttributes<KeyAttribute>().Any());
@@ -125,9 +104,9 @@ namespace DutyBoard_DataAccess.Repository
 
         public void Upsert(T entity)
         {
-            var prop = typeof(T).GetProperties().Where(p => p.GetCustomAttributes<KeyAttribute>().Any()).FirstOrDefault();
+            var prop = typeof(T).GetProperties().FirstOrDefault(p => p.GetCustomAttributes<KeyAttribute>().Any());
             var val = typeof(T).GetProperty(prop.Name).GetValue(entity, null).ToString();
-            if (int.TryParse(val, out int id) && id == 0)
+            if (int.TryParse(val, out var id) && id == 0)
                 Add(entity);
             else
                 Update(entity);
@@ -137,7 +116,7 @@ namespace DutyBoard_DataAccess.Repository
         {
             if (!data.Any()) return;
 
-            using (SqlBulkCopy bulkCopy = new SqlBulkCopy(GetConnectionString()))
+            using (var bulkCopy = new SqlBulkCopy(GetConnectionString()))
             {
                 bulkCopy.DestinationTableName = $"tool.tDutyBoard{Name}";
                 foreach (var descriptor in typeof(T).GetProperties().Where(p => !p.GetCustomAttributes<NotMappedAttribute>().Any()))

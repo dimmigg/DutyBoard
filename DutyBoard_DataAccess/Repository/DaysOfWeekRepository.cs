@@ -9,13 +9,5 @@ namespace DutyBoard_DataAccess.Repository
         public DaysOfWeekRepository(IConfiguration configuration) : base(configuration)
         {
         }
-
-        //public void Upsert(DaysOfWeek entity)
-        //{
-        //    if(entity.DayOfWeekId == 0)
-        //        Add(entity);
-        //    else
-        //        Update(entity);
-        //}
     }
 }

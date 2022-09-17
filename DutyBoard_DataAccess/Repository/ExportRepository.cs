@@ -13,6 +13,5 @@ namespace DutyBoard_DataAccess.Repository
         public ExportRepository(IConfiguration configuration) : base(configuration)
         {
         }
-
     }
 }

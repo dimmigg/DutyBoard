@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-
-namespace DutyBoard_Utility
+﻿namespace DutyBoard_Utility
 {
     public static class WC
     {

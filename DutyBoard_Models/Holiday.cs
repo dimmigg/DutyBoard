@@ -1,11 +1,9 @@
-﻿using DutyBoard_Models.Attributes;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
 namespace DutyBoard_Models
 {
-    //[HolidayDateComparsion]
     public class Holiday
     {
         [Dapper.Contrib.Extensions.Key]

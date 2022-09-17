@@ -1,5 +1,4 @@
-﻿using Dapper.Contrib.Extensions;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DutyBoard_Models
@@ -26,6 +25,6 @@ namespace DutyBoard_Models
         public Roster Roster { get; set; }
         public DateTime DateStart { get; set; }
         [NotMapped]
-        public DateTime DateEnd => DateStart.AddHours(Roster != null ? Roster.DurationOfDuty : 0);
+        public DateTime DateEnd => DateStart.AddHours(Roster?.DurationOfDuty ?? 0);
     }
 }

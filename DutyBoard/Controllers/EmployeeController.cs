@@ -34,23 +34,17 @@ namespace DutyBoard.Controllers
         public IActionResult EditById(int Id)
         {
             Employee employee;
-            if (Id == 0)
-                employee = new Employee();
-            else
-                employee = _empRepo.FirstOrDefault(Id); 
+            employee = Id == 0 ? new Employee() : _empRepo.FirstOrDefault(Id); 
             return PartialView("_Edit", employee);
         }
 
         [HttpPost]
         public IActionResult Edit()
         {
-            if (ModelState.IsValid)
-            {
-                _empRepo.Upsert(Employee);
-                TempData[WC.Success] = Employee.EmployeeId == 0 ? "Сотрудник добавлен" : "Сотрудник изменен";
-                return Redirect(nameof(Index));
-            }
-            return PartialView("_Edit", Employee);
+            if (!ModelState.IsValid) return PartialView("_Edit", Employee);
+            _empRepo.Upsert(Employee);
+            TempData[WC.Success] = Employee.EmployeeId == 0 ? "Сотрудник добавлен" : "Сотрудник изменен";
+            return Redirect(nameof(Index));
         }
     }
 }

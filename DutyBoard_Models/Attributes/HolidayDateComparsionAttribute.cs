@@ -7,15 +7,9 @@ namespace DutyBoard_Models.Attributes
     {
         public override bool IsValid(object value)
         {
-            if (value is Holiday day)
-            {
-                if (day.DateStart > day.DateFinish)
-                {
-                    ErrorMessage = "Дата начала отпуска должна быть меньше даты окончания.";
-                    return false;
-                }
-                return true;
-            }
+            if (!(value is Holiday day)) return false;
+            if (day.DateStart <= day.DateFinish) return true;
+            ErrorMessage = "Дата начала отпуска должна быть меньше даты окончания.";
             return false;
         }
     }
