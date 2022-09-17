@@ -28,7 +28,7 @@ namespace DutyBoard.Controllers
             IEnumerable<HolidayVM> holidays = _holidayRepo.GetAll().Select(x => new HolidayVM
             {
                 Holiday = x,
-                Employee = _empRepo.FirstOrDefault(e => e.EmployeeId == x.EmployeeId)
+                Employee = _empRepo.FirstOrDefault(x.EmployeeId)
             });
 
             return View(holidays);
@@ -40,7 +40,7 @@ namespace DutyBoard.Controllers
         [HttpPost]
         public IActionResult Del()
         {
-            _holidayRepo.Remove(_holidayRepo.FirstOrDefault(x => x.HolidayId == Holiday.HolidayId)); ;
+            _holidayRepo.Remove(_holidayRepo.FirstOrDefault(Holiday.HolidayId)); ;
             TempData[WC.Success] = "Отпуск удален";
             return Redirect(nameof(Index));
         }
@@ -56,10 +56,10 @@ namespace DutyBoard.Controllers
                 TempData[WC.Success] = Holiday.HolidayId == 0 ? "Отпуск добавлен" : "Отпуск изменен";
                 return Redirect(nameof(Index));
             }
-            HolidayVM holidayVM = new HolidayVM
+            var holidayVM = new HolidayVM
             {
                 Holiday = Holiday,
-                Employee = _empRepo.FirstOrDefault(e => e.EmployeeId == Holiday.EmployeeId),
+                Employee = _empRepo.FirstOrDefault(Holiday.EmployeeId),
                 Employees = _empRepo.GetAll().Select(x => new SelectListItem
                 {
                     Text = x.FullName,
@@ -75,11 +75,11 @@ namespace DutyBoard.Controllers
             if (Id == 0)
                 holiday = new Holiday();
             else
-                holiday = _holidayRepo.FirstOrDefault(x => x.HolidayId == Id);
-            HolidayVM holidayVM = new HolidayVM
+                holiday = _holidayRepo.FirstOrDefault(Id);
+            var holidayVM = new HolidayVM
             {
                 Holiday = holiday,
-                Employee = _empRepo.FirstOrDefault(e => e.EmployeeId == holiday.EmployeeId),
+                Employee = _empRepo.FirstOrDefault(holiday.EmployeeId),
                 Employees = _empRepo.GetAll().Select(x => new SelectListItem
                 {
                     Text = x.FullName,

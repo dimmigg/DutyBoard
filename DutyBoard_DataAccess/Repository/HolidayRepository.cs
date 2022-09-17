@@ -15,23 +15,23 @@ namespace DutyBoard_DataAccess.Repository
             _empRepo = empRepo;
         }
 
-        public new IEnumerable<Holiday> GetAll(Func<Holiday, bool> filter = null)
+        public new IEnumerable<Holiday> GetAll(int? id)
         {
-            var holiDays = base.GetAll(filter);
+            var holiDays = base.GetAll(id);
             using (SqlConnection cn = GetConnection())
             {
                 foreach (var day in holiDays)
                 {
-                    day.Employee = _empRepo.FirstOrDefault(x => x.EmployeeId == day.EmployeeId);
+                    day.Employee = _empRepo.FirstOrDefault(day.EmployeeId);
                 }
             }
             return holiDays;
         }
 
-        public new Holiday FirstOrDefault(Func<Holiday, bool> filter = null)
+        public new Holiday FirstOrDefault(int? id)
         {
-            var day = base.FirstOrDefault(filter);
-            day.Employee = _empRepo.FirstOrDefault(x => x.EmployeeId == day.EmployeeId);
+            var day = base.FirstOrDefault(id);
+            day.Employee = _empRepo.FirstOrDefault(day.EmployeeId);
             return day;
         }
 

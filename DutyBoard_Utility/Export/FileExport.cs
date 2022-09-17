@@ -10,7 +10,7 @@ namespace DutyBoard_Utility.Export
 {
     public static class FileExport
     {
-        public static void WriteToExcel(IEnumerable<ExportModel> report, string path)
+        public static void WriteToExcel(IEnumerable<DutyBoard_Models.Export> report, string path)
         {
             try
             {

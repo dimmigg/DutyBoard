@@ -60,13 +60,13 @@ namespace DutyBoard.Controllers
                 Workdays = _workdayRepo.GetAll().Select(x => new WorkdayVM
                 {
                     Workday = x,
-                    Employee = _empRepo.FirstOrDefault(e => e.EmployeeId == x.EmployeeId),
-                    Roster = _rostRepo.FirstOrDefault(r => r.RosterId == x.RosterId)
+                    Employee = _empRepo.FirstOrDefault(x.EmployeeId),
+                    Roster = _rostRepo.FirstOrDefault(x.RosterId)
                 }),
                 Holidays = _holidayRepo.GetAll().Select(x => new HolidayVM
                 {
                     Holiday = x,
-                    Employee = _empRepo.FirstOrDefault(e => e.EmployeeId == x.EmployeeId)
+                    Employee = _empRepo.FirstOrDefault(x.EmployeeId)
                 }),
                 Employees = _empRepo.GetAll().Select(x => new SelectListItem
                 {
@@ -81,9 +81,9 @@ namespace DutyBoard.Controllers
             var arrDutyHoly = new int[employees.Count()];
             for (int i = 0; i < employees.Count(); i++)
             {
-                arrDuty[i] = vm.MainTable.Count(x => x.Employee.FullName == employees[i]);
-                arrDutyWork[i] = vm.MainTable.Count(x => x.Employee.FullName == employees[i] && (x.Roster.DaysOfWeekId != 7 && x.Roster.DaysOfWeekId != 6));
-                arrDutyHoly[i] = vm.MainTable.Count(x => x.Employee.FullName == employees[i] && (x.Roster.DaysOfWeekId == 7 || x.Roster.DaysOfWeekId == 6));
+                arrDuty[i] = vm.MainTable.Count(x => x.Employee?.FullName == employees[i]);
+                arrDutyWork[i] = vm.MainTable.Count(x => x.Employee?.FullName == employees[i] && (x.Roster.DaysOfWeekId != 7 && x.Roster.DaysOfWeekId != 6));
+                arrDutyHoly[i] = vm.MainTable.Count(x => x.Employee?.FullName == employees[i] && (x.Roster.DaysOfWeekId == 7 || x.Roster.DaysOfWeekId == 6));
             }
             vm.Statistics = JsonConvert.SerializeObject(new Statistics()
             {
@@ -172,13 +172,13 @@ namespace DutyBoard.Controllers
             var holidays = _holidayRepo.GetAll().Select(x => new HolidayVM
             {
                 Holiday = x,
-                Employee = _empRepo.FirstOrDefault(e => e.EmployeeId == x.EmployeeId)
+                Employee = _empRepo.FirstOrDefault(x.EmployeeId)
             });
             var mainTable = _mappRepo.GetAll();
             var vm = new List<CrossingOfDaysVM>();
             foreach (var item in holidays)
             {
-                var workdays = mainTable.Where(x => x.Employee.EmployeeId == item.Employee.EmployeeId);
+                var workdays = mainTable.Where(x => x.Employee?.EmployeeId == item.Employee?.EmployeeId);
                 foreach (var workday in workdays)
                 {
                     if (workday.DateStart >= item.Holiday.DateStart && workday.DateStart <= item.Holiday.DateFinish)

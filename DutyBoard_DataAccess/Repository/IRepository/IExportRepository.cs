@@ -2,7 +2,7 @@
 
 namespace DutyBoard_DataAccess.Repository.IRepository
 {
-    public interface IExportRepository : IRepository<ExportModel>
+    public interface IExportRepository : IRepository<Export>
     {
     }
 }

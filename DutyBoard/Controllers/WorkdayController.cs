@@ -33,8 +33,8 @@ namespace DutyBoard.Controllers
             IEnumerable<WorkdayVM> Workdays = _workdayRepo.GetAll().Select(x => new WorkdayVM
             {
                 Workday = x,
-                Employee = _empRepo.FirstOrDefault(e => e.EmployeeId == x.EmployeeId),
-                Roster = _rostRepo.FirstOrDefault(r => r.RosterId == x.RosterId)
+                Employee = _empRepo.FirstOrDefault(x.EmployeeId),
+                Roster = _rostRepo.FirstOrDefault(x.RosterId)
             });
 
             return View(Workdays);
@@ -46,7 +46,7 @@ namespace DutyBoard.Controllers
         [HttpPost]
         public IActionResult Del()
         {
-            _workdayRepo.Remove(_workdayRepo.FirstOrDefault(x => x.WorkdayId == Workday.WorkdayId)); ;
+            _workdayRepo.Remove(_workdayRepo.FirstOrDefault(Workday.WorkdayId)); ;
             TempData[WC.Success] = "Дежурство удалено";
             return Redirect(nameof(Index));
         }
@@ -77,7 +77,7 @@ namespace DutyBoard.Controllers
             else
             {
                 if (DateTime.TryParse(id, out DateTime valDate))
-                    workdayVM.Rosters = _rostRepo.GetAll(x => x.DaysOfWeekId == valDate.GetDayOfWeek()).Select(x => new SelectListItem
+                    workdayVM.Rosters = _rostRepo.GetAll(daysOfWeekId : valDate.GetDayOfWeek()).Select(x => new SelectListItem
                     {
                         Text = $"{x.DaysOfWeek.DayOfWeekNameShort}: {x.StartTime:hh\\:mm} - {x.EndTime:hh\\:mm}",
                         Value = x.RosterId.ToString()
@@ -94,12 +94,12 @@ namespace DutyBoard.Controllers
             if (Id == 0)
                 workday = new Workday();
             else
-                workday = _workdayRepo.FirstOrDefault(x => x.WorkdayId == Id);
+                workday = _workdayRepo.FirstOrDefault(Id);
             WorkdayVM workdayVM = new WorkdayVM
             {
                 Workday = workday,
-                Employee = _empRepo.FirstOrDefault(e => e.EmployeeId == workday.EmployeeId),
-                Roster = _rostRepo.FirstOrDefault(e => e.RosterId == workday.RosterId),
+                Employee = _empRepo.FirstOrDefault(workday.EmployeeId),
+                Roster = _rostRepo.FirstOrDefault(workday.RosterId),
                 Employees = _empRepo.GetAll().Select(x => new SelectListItem
                 {
                     Text = x.FullName,
@@ -114,7 +114,7 @@ namespace DutyBoard.Controllers
                 });
             else
             {
-                workdayVM.Rosters = _rostRepo.GetAll(x => x.DaysOfWeekId == workday.DateWork.GetDayOfWeek()).Select(x => new SelectListItem
+                workdayVM.Rosters = _rostRepo.GetAll(daysOfWeekId : workday.DateWork.GetDayOfWeek()).Select(x => new SelectListItem
                 {
                     Text = $"{x.DaysOfWeek.DayOfWeekNameShort}: {x.StartTime:hh\\:mm} - {x.EndTime:hh\\:mm}",
                     Value = x.RosterId.ToString()

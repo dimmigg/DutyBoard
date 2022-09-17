@@ -8,18 +8,11 @@ using DutyBoard_DataAccess.Extensions;
 
 namespace DutyBoard_DataAccess.Repository
 {
-    public class ExportRepository : Repository<ExportModel>, IExportRepository
+    public class ExportRepository : Repository<Export>, IExportRepository
     {
         public ExportRepository(IConfiguration configuration) : base(configuration)
         {
         }
 
-        public new IEnumerable<ExportModel> GetAll(Func<ExportModel, bool> filter = null)
-        {
-            using (SqlConnection cn = GetConnection())
-            {
-                return cn.ExecuteProcedure<ExportModel>($"tool.uspDutyBoardGetExportTable");
-            }
-        }
     }
 }

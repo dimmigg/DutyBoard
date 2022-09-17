@@ -20,25 +20,25 @@ namespace DutyBoard_DataAccess.Repository
             _rostRepo = rostRepo;
             _empRepo = empRepo;
         }
-        public new IEnumerable<Mapping> GetAll(Func<Mapping, bool> filter = null)
+        public new IEnumerable<Mapping> GetAll(int? id)
         {
-            var mappings = base.GetAll(filter);
+            var mappings = base.GetAll(id);
             using (SqlConnection cn = GetConnection())
             {
                 foreach (var map in mappings)
                 {
-                    map.Employee = _empRepo.FirstOrDefault(x => x.EmployeeId == map.EmployeeId);
-                    map.Roster = _rostRepo.FirstOrDefault(x => x.RosterId == map.RosterId);
+                    map.Employee = _empRepo.FirstOrDefault(map.EmployeeId);
+                    map.Roster = _rostRepo.FirstOrDefault(map.RosterId);
                 }
             }
             return mappings;
         }
 
-        public new Mapping FirstOrDefault(Func<Mapping, bool> filter = null)
+        public new Mapping FirstOrDefault(int? id)
         {
-            var map = base.FirstOrDefault(filter);
-            map.Employee = _empRepo.FirstOrDefault(x => x.EmployeeId == map.EmployeeId);
-            map.Roster = _rostRepo.FirstOrDefault(x => x.RosterId == map.RosterId);
+            var map = base.FirstOrDefault(id);
+            map.Employee = _empRepo.FirstOrDefault(map.EmployeeId);
+            map.Roster = _rostRepo.FirstOrDefault(map.RosterId);
             return map;
         }
 

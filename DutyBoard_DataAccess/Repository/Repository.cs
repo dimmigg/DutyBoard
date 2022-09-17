@@ -11,7 +11,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
+using DutyBoard_Models;
 using static Dapper.SqlMapper;
+using TableAttribute = System.ComponentModel.DataAnnotations.Schema.TableAttribute;
 
 namespace DutyBoard_DataAccess.Repository
 {
@@ -71,25 +73,25 @@ namespace DutyBoard_DataAccess.Repository
             }
         }
 
-        public T FirstOrDefault(Func<T, bool> filter = null)
-        {
-            using (SqlConnection cn = GetConnection())
-            {
-                if (filter != null)
-                    return cn.ExecuteProcedure<T>($"tool.uspDutyBoardGet{Name}").FirstOrDefault(filter);
-                return cn.ExecuteProcedure<T>($"tool.uspDutyBoardGet{Name}").FirstOrDefault();
-            }
-        }
+        //public T FirstOrDefault(Func<T, bool> filter = null)
+        //{
+        //    using (SqlConnection cn = GetConnection())
+        //    {
+        //        if (filter != null)
+        //            return cn.ExecuteProcedure<T>($"tool.uspDutyBoardGet{Name}").FirstOrDefault(filter);
+        //        return cn.ExecuteProcedure<T>($"tool.uspDutyBoardGet{Name}").FirstOrDefault();
+        //    }
+        //}
 
-        public IEnumerable<T> GetAll(Func<T, bool> filter = null)
-        {
-            using (SqlConnection cn = GetConnection())
-            {
-                if (filter != null)
-                    return cn.ExecuteProcedure<T>($"tool.uspDutyBoardGet{Name}").Where(filter);
-                return cn.ExecuteProcedure<T>($"tool.uspDutyBoardGet{Name}");
-            }
-        }
+        //public IEnumerable<T> GetAll(Func<T, bool> filter = null)
+        //{
+        //    using (SqlConnection cn = GetConnection())
+        //    {
+        //        if (filter != null)
+        //            return cn.ExecuteProcedure<T>($"tool.uspDutyBoardGet{Name}").Where(filter);
+        //        return cn.ExecuteProcedure<T>($"tool.uspDutyBoardGet{Name}");
+        //    }
+        //}
 
         public void Remove(T entity)
         {
@@ -151,6 +153,34 @@ namespace DutyBoard_DataAccess.Repository
                 {
                     throw new Exception(ex.Message);
                 }
+            }
+        }
+
+        public IEnumerable<T> GetAll(int? id = null)
+        {
+            var props = typeof(T).GetProperties().Where(p => p.GetCustomAttributes<KeyAttribute>().Any());
+            var dp = new DynamicParameters();
+            foreach (var prop in props)
+            {
+                dp.Add(prop.Name, id);
+            }
+            using (var connect = GetConnection())
+            {
+                return connect.ExecuteProcedure<T>($"tool.uspDutyBoardGet{Name}", dp);
+            }
+        }
+
+        public T FirstOrDefault(int? id = null)
+        {
+            var props = typeof(T).GetProperties().Where(p => p.GetCustomAttributes<KeyAttribute>().Any());
+            var dp = new DynamicParameters();
+            foreach (var prop in props)
+            {
+                dp.Add(prop.Name, id);
+            }
+            using (var connect = GetConnection())
+            {
+                return connect.ExecuteProcedure<T>($"tool.uspDutyBoardGet{Name}", dp).FirstOrDefault();
             }
         }
     }

@@ -1,13 +1,14 @@
-﻿using System;
+﻿using DutyBoard_Models;
+using System;
 using System.Collections.Generic;
 
 namespace DutyBoard_DataAccess.Repository.IRepository
 {
     public interface IRepository<T> where T : class
     {
-        IEnumerable<T> GetAll(Func<T, bool> filter = null);
+        //IEnumerable<T> GetAll(Func<T, bool> filter = null);
 
-        T FirstOrDefault(Func<T, bool> filter = null);
+        //T FirstOrDefault(Func<T, bool> filter = null);
 
         void Add(T entity);
         void Update(T entity);
@@ -16,5 +17,7 @@ namespace DutyBoard_DataAccess.Repository.IRepository
         void ClearTable(string table);
         void Upsert(T entity);
         void InsertData(IEnumerable<T> data);
+        IEnumerable<T> GetAll(int? id = null);
+        T FirstOrDefault(int? id = null);
     }
 }

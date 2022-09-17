@@ -27,12 +27,12 @@ namespace DutyBoard.Controllers
             return View(_rostRepo.GetAll());
         }
 
-        public IActionResult DeleteById(int Id) => PartialView("_Delete", _rostRepo.FirstOrDefault(x => x.RosterId == Id));
+        public IActionResult DeleteById(int Id) => PartialView("_Delete", _rostRepo.FirstOrDefault(Id));
 
         [HttpPost]
         public IActionResult Del()
         {
-            _rostRepo.Remove(_rostRepo.FirstOrDefault(x => x.RosterId == Roster.RosterId)); ;
+            _rostRepo.Remove(_rostRepo.FirstOrDefault(Roster.RosterId)); ;
             TempData[WC.Success] = "Дежурство удалено";
             return Redirect(nameof(Index));
         }
@@ -42,7 +42,7 @@ namespace DutyBoard.Controllers
             if (Id == 0)
                 roster = new Roster();
             else
-                roster = _rostRepo.FirstOrDefault(x => x.RosterId == Id);
+                roster = _rostRepo.FirstOrDefault(Id);
             RosterVM rosterVM = new RosterVM()
             {
                 Roster = roster,

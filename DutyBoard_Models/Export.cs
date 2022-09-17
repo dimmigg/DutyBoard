@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace DutyBoard_Models
 {
-    public class ExportModel
+    public class Export
     {
         [Description("День недели")]
         public string DayOfWeekName { get; set; }

@@ -34,11 +34,12 @@ document.getElementById("fromDate").value = getDate(dt);
 dt.setMonth(dt.getMonth() + 1);
 dt.setDate(dt.getDate() - 1);
 document.getElementById("toDate").value = getDate(dt)
-//Menu toggle
-//let navigation = document.querySelector('.navigation');
-//let toggle = document.querySelector('.toggle');
-//let main = document.querySelector('.main');
-//toggle.onclick = function () {
-//    navigation.classList.toggle('active');
-//    main.classList.toggle('active');
-//}
+
+
+getCalendarRange('#fromDate', '#toDate');
+function Calc() {
+    let url = '/Home/ConfCalc/';
+    let fromDate = $('#fromDate').val();
+    let toDate = $('#toDate').val();
+    $('#edit-content').load(url, { fromDate: fromDate, toDate: toDate });
+}

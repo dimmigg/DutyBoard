@@ -22,12 +22,12 @@ namespace DutyBoard.Controllers
             return View(_empRepo.GetAll());
         }
 
-        public IActionResult DeleteById(int Id) => PartialView("_Delete", _empRepo.FirstOrDefault(x => x.EmployeeId == Id));
+        public IActionResult DeleteById(int Id) => PartialView("_Delete", _empRepo.FirstOrDefault(Id));
 
         [HttpPost]
         public IActionResult Del()
         {
-            _empRepo.Remove(_empRepo.FirstOrDefault(x => x.EmployeeId == Employee.EmployeeId)); ;
+            _empRepo.Remove(_empRepo.FirstOrDefault(Employee.EmployeeId)); ;
             TempData[WC.Success] = "Сотрудник удален";
             return Redirect(nameof(Index));
         }
@@ -37,7 +37,7 @@ namespace DutyBoard.Controllers
             if (Id == 0)
                 employee = new Employee();
             else
-                employee = _empRepo.FirstOrDefault(x => x.EmployeeId == Id);
+                employee = _empRepo.FirstOrDefault(Id); 
             return PartialView("_Edit", employee);
         }
 

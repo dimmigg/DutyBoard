@@ -19,38 +19,30 @@ namespace DutyBoard_DataAccess.Repository
             _empRepo = empRepo;
         }
 
-        public new IEnumerable<Workday> GetAll(Func<Workday, bool> filter = null)
+        public new IEnumerable<Workday> GetAll(int? id)
         {
-            var workDays = base.GetAll(filter);
+            var workDays = base.GetAll(id);
             using (SqlConnection cn = GetConnection())
             {
                 foreach (var day in workDays)
                 {
-                    day.Roster = _rostRepo.FirstOrDefault(x => x.RosterId == day.RosterId);
-                    day.Employee = _empRepo.FirstOrDefault(x => x.EmployeeId == day.EmployeeId);
+                    day.Roster = _rostRepo.FirstOrDefault(day.RosterId);
+                    day.Employee = _empRepo.FirstOrDefault(day.EmployeeId);
                 }
             }
             return workDays;
         }
 
-        public new Workday FirstOrDefault(Func<Workday, bool> filter = null)
+        public new Workday FirstOrDefault(int? id)
         {
-            var day = base.FirstOrDefault(filter);
+            var day = base.FirstOrDefault(id);
             using (SqlConnection cn = GetConnection())
             {
-                day.Roster = _rostRepo.FirstOrDefault(x => x.RosterId == day.RosterId);
-                day.Employee = _empRepo.FirstOrDefault(x => x.EmployeeId == day.EmployeeId);
+                day.Roster = _rostRepo.FirstOrDefault(day.RosterId);
+                day.Employee = _empRepo.FirstOrDefault(day.EmployeeId);
                 
             }
             return day;
         }
-
-        //public void Upsert(Holiday entity)
-        //{
-        //    if (entity.HolidayId == 0)
-        //        Add(entity);
-        //    else
-        //        Update(entity);
-        //}
     }
 }
