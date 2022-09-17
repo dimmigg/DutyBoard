@@ -47,7 +47,7 @@ namespace DutyBoard.Controllers
             _workdayRepo = workdayRepo;
             _mappRepo = mappRepo;
             _expRepo = expRepo;
-            _path = @$"{TempFileService.GetSharedPath(env.ContentRootPath)}\temp.xlsx";
+            _path = @$"{TempFileService.GetSharedPath()}\temp.xlsx";
         }
 
         [BindProperty]

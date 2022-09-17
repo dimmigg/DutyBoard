@@ -9,6 +9,7 @@ using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.InputFiles;
 using DutyBoard_DataAccess.Repository.IRepository;
 using DutyBoard_Utility;
+using DutyBoard_Utility.TempFile;
 
 namespace DutyBoard_Telegram.Commands
 {
@@ -35,10 +36,10 @@ namespace DutyBoard_Telegram.Commands
 
         private async Task SendMessage(long chatId)
         {
-            _path = TempFileService.GetSharedPath(WC.Path);
+            _path = TempFileService.GetSharedPath();
             var cancellationToken = new CancellationTokenSource();
-            var path = @$"{_path}\{Path.GetRandomFileName()}.xlsx";
-
+            //var path = @$"{_path}\{Path.GetRandomFileName()}.xlsx";
+            var path = @$"{TempFileService.GetSharedPath()}\temp.xlsx";
             FileExport.WriteToExcel(_exportRepo.GetAll(), path);
             using (var fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
