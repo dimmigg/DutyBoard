@@ -1,6 +1,8 @@
 using DutyBoard_DataAccess.Repository;
 using DutyBoard_DataAccess.Repository.IRepository;
 using DutyBoard_Models;
+using DutyBoard_Telegram.Interface;
+using DutyBoard_Telegram;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,6 +14,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DutyBoard_Telegram.Commands;
+using DutyBoard_Telegram.Commands.Callback.Users;
+using DutyBoard_Telegram.Services;
+using DutyBoard_Utility;
 
 namespace DutyBoard
 {
@@ -35,12 +41,27 @@ namespace DutyBoard
             services.AddScoped<IMappingRepository, MappingRepository>();
             services.AddScoped<IRosterRepository, RosterRepository>();
             services.AddScoped<IExportRepository, ExportRepository>();
+            services.AddScoped<ITelegramUserRepository, TelegramUserRepository>();
+
+
+            //Telegram
+            services.AddScoped<ICommandExecutor, CommandExecutor>();
+            services.AddScoped<BaseCommand, StartCommand>();
+            services.AddScoped<BaseCommand, AdminCommand>();
+            services.AddScoped<BaseCommand, UsersCommand>();
+            services.AddScoped<BaseCommand, WhoDutyCommand>();
+            services.AddScoped<BaseCommand, ListDutyCommand>();
+            services.AddScoped<BaseCommand, FileCommand>();
+            services.AddScoped<BaseCommand, HelpCommand>();
+            services.AddScoped<BaseCommand, GetAnalyticCommand>();
+            services.AddScoped<ITelegramUserService, TelegramUserService>();
+            services.AddScoped<TelegramBot>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
-
+            WC.Path = env.ContentRootPath;
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -57,6 +78,8 @@ namespace DutyBoard
             app.UseRouting();
 
             app.UseAuthorization();
+
+            serviceProvider.GetRequiredService<TelegramBot>().GetBot().Wait();
 
             app.UseEndpoints(endpoints =>
             {

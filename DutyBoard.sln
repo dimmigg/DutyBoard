@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32804.467
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DutyBoard", "DutyBoard\DutyBoard.csproj", "{0C250D80-549D-4B53-BC2D-BC1CA68D5C89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DutyBoard", "DutyBoard\DutyBoard.csproj", "{0C250D80-549D-4B53-BC2D-BC1CA68D5C89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DutyBoard_Models", "DutyBoard_Models\DutyBoard_Models.csproj", "{AEDC86ED-5E95-4DEA-A03F-A300AE1AA976}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DutyBoard_Models", "DutyBoard_Models\DutyBoard_Models.csproj", "{AEDC86ED-5E95-4DEA-A03F-A300AE1AA976}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DutyBoard_DataAccess", "DutyBoard_DataAccess\DutyBoard_DataAccess.csproj", "{BDEA7AA7-18CF-4A80-BE85-0E7058624FF2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DutyBoard_DataAccess", "DutyBoard_DataAccess\DutyBoard_DataAccess.csproj", "{BDEA7AA7-18CF-4A80-BE85-0E7058624FF2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DutyBoard_Utility", "DutyBoard_Utility\DutyBoard_Utility.csproj", "{3B90C847-7C67-4B48-926D-96F80D57CABC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DutyBoard_Utility", "DutyBoard_Utility\DutyBoard_Utility.csproj", "{3B90C847-7C67-4B48-926D-96F80D57CABC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DutyBoard_Telegram", "DutyBoard_Telegram\DutyBoard_Telegram.csproj", "{384E5141-D34B-41A0-A5D2-B13D4B0CEE50}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{3B90C847-7C67-4B48-926D-96F80D57CABC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B90C847-7C67-4B48-926D-96F80D57CABC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B90C847-7C67-4B48-926D-96F80D57CABC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{384E5141-D34B-41A0-A5D2-B13D4B0CEE50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{384E5141-D34B-41A0-A5D2-B13D4B0CEE50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{384E5141-D34B-41A0-A5D2-B13D4B0CEE50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{384E5141-D34B-41A0-A5D2-B13D4B0CEE50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

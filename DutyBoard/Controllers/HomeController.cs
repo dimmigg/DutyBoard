@@ -16,6 +16,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Hosting;
 
 namespace DutyBoard.Controllers
 {
@@ -31,7 +32,7 @@ namespace DutyBoard.Controllers
         private readonly string _path;
 
         public HomeController(ILogger<HomeController> logger,
-                              IWebHostEnvironment env,
+                              IHostEnvironment env,
                               IEmployeeRepository empRepo,
                               IHolidayRepository holidayRepo,
                               IRosterRepository rostRepo,
