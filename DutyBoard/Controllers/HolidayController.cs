@@ -64,7 +64,7 @@ namespace DutyBoard.Controllers
                 Employee = _empRepo.FirstOrDefault(Holiday.EmployeeId),
                 Employees = _empRepo.GetAll().Select(x => new SelectListItem
                 {
-                    Text = x.FullName,
+                    Text = x.Name,
                     Value = x.EmployeeId.ToString()
                 })
             };
@@ -81,7 +81,7 @@ namespace DutyBoard.Controllers
                 Employee = _empRepo.FirstOrDefault(holiday.EmployeeId),
                 Employees = _empRepo.GetAll().Select(x => new SelectListItem
                 {
-                    Text = x.FullName,
+                    Text = x.Name,
                     Value = x.EmployeeId.ToString()
                 })
             };

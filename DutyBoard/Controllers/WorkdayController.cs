@@ -98,7 +98,7 @@ namespace DutyBoard.Controllers
                 Roster = _rostRepo.FirstOrDefault(workday.RosterId),
                 Employees = _empRepo.GetAll().Select(x => new SelectListItem
                 {
-                    Text = x.FullName,
+                    Text = x.Name,
                     Value = x.EmployeeId.ToString()
                 })
             };

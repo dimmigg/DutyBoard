@@ -35,14 +35,14 @@ namespace DutyBoard_Telegram.Commands
             var sb = new StringBuilder();
             sb.AppendLine("📄 *Список дежурных:*");
             var cancellationToken = new CancellationTokenSource();
-            var all = _exportRepo.GetAll().OrderBy(o => o.FullName).GroupBy(x => x.FullName);
+            var all = _exportRepo.GetAll().OrderBy(o => o.Name).GroupBy(x => x.Name);
             foreach (var item in all)
             {
                 var duty = item.First();
-                sb.Append($"_{duty.FullName} ");
-                //var num = Convert.ToInt64(duty.Phone.Replace(" ", "").Replace("-", ""));
+                sb.Append($"_{duty.Name} ");
+                //var num = Convert.ToInt64(duty.PhoneNumber.Replace(" ", "").Replace("-", ""));
                 //sb.AppendLine($"{num:+#(###)###-##-##}_");
-                sb.AppendLine($"{duty.Phone}_");
+                sb.AppendLine($"{duty.PhoneNumber}_");
             }
             var sentMessage1 = await _botClient.SendTextMessageAsync(
                 chatId: chatId,

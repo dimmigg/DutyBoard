@@ -4,7 +4,7 @@
         <input asp-for="Holiday.HolidayId" hidden />
         <div class="modal-body p-2 text-center">
             <h5 class="mb-1">Удалить отпуск?</h5>
-            <p class="mb-0" style="font-size:16px"><b>@Model.Employee.FullName</b></p>
+            <p class="mb-0" style="font-size:16px"><b>@Model.Employee.Name</b></p>
             <p class="mb-0" style="font-size:14px">@Model.Holiday.DateStart.ToString(@"dd.MM.yyyy") - @Model.Holiday.DateFinish.ToString(@"dd.MM.yyyy")</p>
         </div>
         <div class="modal-footer flex-nowrap p-0">

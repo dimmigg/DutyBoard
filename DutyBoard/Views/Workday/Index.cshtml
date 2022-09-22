@@ -38,7 +38,7 @@
                                 <div class="col-9">
                                     <a href="#" class="col text-start" id=@item.Workday.WorkdayId.ToString() title="Изменить" data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this, 'Workday')" style="text-decoration: none;">
 
-                                        <h5 class="mb-0">@item.Employee.FullName</h5>
+                                        <h5 class="mb-0">@item.Employee.Name</h5>
                                         <p class=" mb-0">@day, @item.Roster.StartTime.ToString(@"hh\:mm") - @item.Roster.EndTime.ToString(@"hh\:mm") </p>
                                     </a>
                                 </div>

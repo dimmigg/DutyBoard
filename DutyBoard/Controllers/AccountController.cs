@@ -73,8 +73,10 @@ namespace DutyBoard.Controllers
                         LoginName = model.LoginName,
                         Password = model.Password
                     });
-                    await Authenticate(model.LoginName); // аутентификация
-                    TempData[WC.Success] = "Регистрация завершена!";
+
+                    //await Authenticate(model.Login); // аутентификация
+                    TempData[WC.Success] = "Регистрация завершена.";
+                    TempData[WC.Error] = "Авторизация не выполнена!\nНеобхрдимо активировать аккаунт.";
                     return RedirectToAction("Index", "Home");
                 }
             }

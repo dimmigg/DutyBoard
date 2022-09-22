@@ -14,7 +14,7 @@
         <div class="scroll-table">
             <div class="scroll-table-body second">
                 <ul class="list-group">
-                    @foreach (var item in Model.OrderBy(x => x.Holiday.DateStart).ThenBy(x => x.Holiday.DateFinish).ThenBy(x => x.Employee.FullName))
+                    @foreach (var item in Model.OrderBy(x => x.Holiday.DateStart).ThenBy(x => x.Holiday.DateFinish).ThenBy(x => x.Employee.Name))
                     {
                         <li>
                             <div class="row">
@@ -22,7 +22,7 @@
                                 <div class="col-11">
                                     <a href="#" class="col text-start" id=@item.Holiday.HolidayId.ToString() title="Изменить" data-bs-toggle="modal" data-bs-target="#modal" onClick="Edit(this, 'Holiday')" style="text-decoration: none;">
 
-                                        <h5 class="mb-0">@item.Employee.FullName</h5>
+                                        <h5 class="mb-0">@item.Employee.Name</h5>
                                         <p class="mb-0">@item.Holiday.DateStart.ToString(@"dd.MM.yyyy") - @item.Holiday.DateFinish.ToString(@"dd.MM.yyyy")</p>
                                     </a>
                                 </div>

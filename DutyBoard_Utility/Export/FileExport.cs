@@ -3,6 +3,7 @@ using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace DutyBoard_Utility.Export
 {
@@ -16,9 +17,12 @@ namespace DutyBoard_Utility.Export
                 {
                     var worksheet = excel.Workbook.Worksheets.Add("Лист1");
                     worksheet.Cells["A1"].LoadFromCollection(report, true);
+                    
+                    worksheet.DeleteColumn(9);
+                    worksheet.DeleteColumn(8);
+                    worksheet.DeleteColumn(7);
 
                     FormattingExcel(worksheet);
-
                     excel.SaveAs(new System.IO.FileInfo(path));
                 }
             }

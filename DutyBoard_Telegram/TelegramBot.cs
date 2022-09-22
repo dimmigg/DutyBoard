@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using DutyBoard_Models.Extensions;
 using DutyBoard_Utility;
 using Telegram.Bot;
 
@@ -12,7 +13,7 @@ namespace DutyBoard_Telegram
 
         public TelegramBot()
         {
-            _token = WC.TokenTG;
+            _token = string.Concat(WC.TokenTG0.Decryption(), WC.TokenTG1.Decryption(), WC.TokenTG2.Decryption());
             _url = WC.UrlTG;
         }
         public async Task<TelegramBotClient> GetBot()

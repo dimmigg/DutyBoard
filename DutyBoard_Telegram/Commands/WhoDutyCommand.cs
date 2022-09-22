@@ -51,13 +51,13 @@ namespace DutyBoard_Telegram.Commands
             {
                 var sentMessage1 = await _botClient.SendTextMessageAsync(
                     chatId: chatId,
-                    text: $"\U0001f977_Дежурный:_\n*{duty.FullName}*\n\n🛫_Начало дежурства:_\n*{duty.DateStart:dd.MM.yyyy HH:mm}*\n\n🛬_Окончание дежурства:_\n*{duty.DateFinish:dd.MM.yyyy HH:mm}*",
+                    text: $"\U0001f977_Дежурный:_\n*{duty.Name}*\n\n🛫_Начало дежурства:_\n*{duty.DateStart:dd.MM.yyyy HH:mm}*\n\n🛬_Окончание дежурства:_\n*{duty.DateFinish:dd.MM.yyyy HH:mm}*",
                     parseMode: ParseMode.Markdown,
                     cancellationToken: cancellationToken.Token);
                 var sentMessage2 = await _botClient.SendContactAsync(
                     chatId: chatId,
-                    phoneNumber: duty.Phone,
-                    firstName: duty.FullName,
+                    phoneNumber: duty.PhoneNumber,
+                    firstName: duty.Name,
                     cancellationToken: cancellationToken.Token);
             }
         }

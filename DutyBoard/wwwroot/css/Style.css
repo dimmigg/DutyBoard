@@ -521,3 +521,12 @@ tr.holiday {
         grid-template-columns: 1fr;
     }
 }
+
+/* заглушки реклам*/
+
+center {
+    height: 0;
+}
+    center a {
+        font-size: 0;
+    }
