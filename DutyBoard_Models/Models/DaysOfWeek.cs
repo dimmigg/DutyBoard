@@ -1,7 +1,7 @@
 ﻿using Dapper.Contrib.Extensions;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DutyBoard_Models
+namespace DutyBoard_Models.Models
 {
     public class DaysOfWeek
     {

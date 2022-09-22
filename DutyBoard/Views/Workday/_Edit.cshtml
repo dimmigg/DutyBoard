@@ -60,7 +60,7 @@
                 <label asp-for="Workday.EmployeeId" class="col-form-label"></label>
             </div>
             <div class="col-sm-7">
-                <select asp-for="Workday.EmployeeId" asp-items="@Model.Employees" class="form-select">
+                <select asp-for="Workday.EmployeeId" asp-items="@Model.Employees.OrderBy(x => x.Text)" class="form-select">
                 </select>
                 <span asp-validation-for="Workday.EmployeeId" class="text-danger"></span>
             </div>

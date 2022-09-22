@@ -1,14 +1,16 @@
 ﻿using DutyBoard_DataAccess.Repository.IRepository;
 using DutyBoard_Models.ViewModels;
-using DutyBoard_Models;
 using DutyBoard_Utility;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using DutyBoard_Models.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DutyBoard.Controllers
 {
+    [Authorize]
     public class HolidayController : Controller
     {
         private readonly IEmployeeRepository _empRepo;
@@ -62,7 +64,7 @@ namespace DutyBoard.Controllers
                 Employee = _empRepo.FirstOrDefault(Holiday.EmployeeId),
                 Employees = _empRepo.GetAll().Select(x => new SelectListItem
                 {
-                    Text = x.FullName,
+                    Text = x.Name,
                     Value = x.EmployeeId.ToString()
                 })
             };
@@ -79,7 +81,7 @@ namespace DutyBoard.Controllers
                 Employee = _empRepo.FirstOrDefault(holiday.EmployeeId),
                 Employees = _empRepo.GetAll().Select(x => new SelectListItem
                 {
-                    Text = x.FullName,
+                    Text = x.Name,
                     Value = x.EmployeeId.ToString()
                 })
             };

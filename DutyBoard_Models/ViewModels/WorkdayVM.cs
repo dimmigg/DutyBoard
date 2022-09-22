@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DutyBoard_Models.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DutyBoard_Models.ViewModels

@@ -16,9 +16,13 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using DutyBoard_Models.Models;
+using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DutyBoard.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -31,7 +35,7 @@ namespace DutyBoard.Controllers
         private readonly string _path;
 
         public HomeController(ILogger<HomeController> logger,
-                              IWebHostEnvironment env,
+                              IHostEnvironment env,
                               IEmployeeRepository empRepo,
                               IHolidayRepository holidayRepo,
                               IRosterRepository rostRepo,
@@ -46,7 +50,7 @@ namespace DutyBoard.Controllers
             _workdayRepo = workdayRepo;
             _mappRepo = mappRepo;
             _expRepo = expRepo;
-            _path = @$"{TempFileService.GetSharedPath(env.ContentRootPath)}\temp.xlsx";
+            _path = @$"{TempFileService.GetSharedPath()}\temp.xlsx";
         }
 
         [BindProperty]
@@ -54,6 +58,7 @@ namespace DutyBoard.Controllers
 
         public IActionResult Index()
         {
+            
             var vm = new HomeVM
             {
                 MainTable = _mappRepo.GetAll(),
@@ -70,7 +75,7 @@ namespace DutyBoard.Controllers
                 }),
                 Employees = _empRepo.GetAll().Select(x => new SelectListItem
                 {
-                    Text = x.FullName,
+                    Text = x.Name,
                     Value = x.EmployeeId.ToString()
                 }),
                 CrossingOfDays = new List<string>()
@@ -81,9 +86,9 @@ namespace DutyBoard.Controllers
             var arrDutyHoly = new int[employees.Count()];
             for (var i = 0; i < employees.Count(); i++)
             {
-                arrDuty[i] = vm.MainTable.Count(x => x.Employee?.FullName == employees[i]);
-                arrDutyWork[i] = vm.MainTable.Count(x => x.Employee?.FullName == employees[i] && (x.Roster.DaysOfWeekId != 7 && x.Roster.DaysOfWeekId != 6));
-                arrDutyHoly[i] = vm.MainTable.Count(x => x.Employee?.FullName == employees[i] && (x.Roster.DaysOfWeekId == 7 || x.Roster.DaysOfWeekId == 6));
+                arrDuty[i] = vm.MainTable.Count(x => x.Employee?.Name == employees[i]);
+                arrDutyWork[i] = vm.MainTable.Count(x => x.Employee?.Name == employees[i] && (x.Roster.DaysOfWeekId != 7 && x.Roster.DaysOfWeekId != 6));
+                arrDutyHoly[i] = vm.MainTable.Count(x => x.Employee?.Name == employees[i] && (x.Roster.DaysOfWeekId == 7 || x.Roster.DaysOfWeekId == 6));
             }
             vm.Statistics = JsonConvert.SerializeObject(new Statistics()
             {
@@ -131,16 +136,16 @@ namespace DutyBoard.Controllers
         public string EditMapping(string mapp, string emp)
         {
             _mappRepo.Update(mapp, emp);
-            var employees = _empRepo.GetAll().Select(x => x.FullName).Distinct().OrderBy(x => x).ToArray();
+            var employees = _empRepo.GetAll().Select(x => x.Name).Distinct().OrderBy(x => x).ToArray();
             var arrDuty = new int[employees.Count()];
             var arrDutyWork = new int[employees.Count()];
             var arrDutyHoly = new int[employees.Count()];
             var data = _mappRepo.GetAll();
             for (var i = 0; i < employees.Count(); i++)
             {
-                arrDuty[i] = data.Count(x => x.Employee.FullName == employees[i]);
-                arrDutyWork[i] = data.Count(x => x.Employee.FullName == employees[i] && (x.Roster.DaysOfWeekId != 7 && x.Roster.DaysOfWeekId != 6));
-                arrDutyHoly[i] = data.Count(x => x.Employee.FullName == employees[i] && (x.Roster.DaysOfWeekId == 7 || x.Roster.DaysOfWeekId == 6));
+                arrDuty[i] = data.Count(x => x.Employee.Name == employees[i]);
+                arrDutyWork[i] = data.Count(x => x.Employee.Name == employees[i] && (x.Roster.DaysOfWeekId != 7 && x.Roster.DaysOfWeekId != 6));
+                arrDutyHoly[i] = data.Count(x => x.Employee.Name == employees[i] && (x.Roster.DaysOfWeekId == 7 || x.Roster.DaysOfWeekId == 6));
             }
             var st = new Statistics()
             {
@@ -174,7 +179,7 @@ namespace DutyBoard.Controllers
                 where workday.DateStart >= item.Holiday.DateStart && workday.DateStart <= item.Holiday.DateFinish 
                 select new CrossingOfDaysVM()
                 {
-                    FullName = workday.Employee.FullName, 
+                    FullName = workday.Employee.Name, 
                     DateRoster = workday.DateStart,
                     DateStart = item.Holiday.DateStart,
                     DateFinish = item.Holiday.DateFinish

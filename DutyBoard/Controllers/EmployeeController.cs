@@ -1,10 +1,12 @@
 ﻿using DutyBoard_DataAccess.Repository.IRepository;
-using DutyBoard_Models;
+using DutyBoard_Models.Models;
 using DutyBoard_Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DutyBoard.Controllers
 {
+    [Authorize]
     public class EmployeeController : Controller
     {
 

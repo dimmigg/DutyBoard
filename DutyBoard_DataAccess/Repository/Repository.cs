@@ -22,15 +22,22 @@ namespace DutyBoard_DataAccess.Repository
         public string Name = typeof(T).Name;
         private readonly string _server;
         private readonly string _db;
+        private readonly string _conectionString;
 
         internal string GetConnectionString()
         {
+#if DEBUG
             return new SqlConnectionStringBuilder()
             {
                 DataSource = _server,
                 IntegratedSecurity = true,
                 InitialCatalog = _db
             }.ConnectionString;
+#else
+            return _conectionString;
+#endif
+
+
         }
 
         internal SqlConnection GetConnection()
@@ -38,10 +45,11 @@ namespace DutyBoard_DataAccess.Repository
             return new SqlConnection(GetConnectionString());
         }
 
-        public Repository(IConfiguration configuration)
+        internal Repository(IConfiguration configuration)
         {
             _server = configuration.GetConnectionString("Server");
             _db = configuration.GetConnectionString("Database");
+            _conectionString = configuration.GetConnectionString("Db");
         }
 
 

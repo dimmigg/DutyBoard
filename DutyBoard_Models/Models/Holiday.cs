@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace DutyBoard_Models
+namespace DutyBoard_Models.Models
 {
     public class Holiday
     {

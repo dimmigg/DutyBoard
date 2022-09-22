@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace DutyBoard_Models
+namespace DutyBoard_Models.Calc
 {
     public class LinkList<T> : IEnumerable<T>
     {

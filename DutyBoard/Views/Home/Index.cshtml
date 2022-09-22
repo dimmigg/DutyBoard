@@ -35,7 +35,7 @@
                                 <td>@item.Roster.DaysOfWeek.DayOfWeekName</td>
                                 <td>@item.DateStart.ToString("dd.MM.yyyy HH:mm") - @item.DateEnd.ToString("dd.MM.yyyy HH:mm")</td>
                                 <td>
-                                    <select asp-for="@item.EmployeeId" asp-items="@Model.Employees" class="form-select-sm @day" onchange="selectChanged(this)" id="@item.MappingId.ToString()">
+                                    <select asp-for="@item.EmployeeId" asp-items="@Model.Employees.OrderBy(x => x.Text)" class="form-select-sm @day" onchange="selectChanged(this)" id="@item.MappingId.ToString()">
                                     </select>
                                 </td>
                             </tr>
@@ -98,7 +98,7 @@
                                 }
                                 <tr>
                                     <td>
-                                        @item.Employee.FullName<br>
+                                        @item.Employee.Name<br>
                                         <span>@day, @item.Roster.StartTime.ToString(@"hh\:mm") - @item.Roster.EndTime.ToString(@"hh\:mm")</span>
                                     </td>
                                 </tr>
@@ -117,12 +117,12 @@
                 <div class="scroll-table mainpage">
                     <div class="scroll-table-body">
                         <table>
-                            @foreach (var item in Model.Holidays.OrderBy(x => x.Holiday.DateStart).ThenBy(x => x.Holiday.DateFinish).ThenBy(x => x.Employee.FullName))
+                            @foreach (var item in Model.Holidays.OrderBy(x => x.Holiday.DateStart).ThenBy(x => x.Holiday.DateFinish).ThenBy(x => x.Employee.Name))
                             {
                                 <tr>
                                     <td>
 
-                                        @item.Employee.FullName<br>
+                                        @item.Employee.Name<br>
                                         <span>@item.Holiday.DateStart.ToString(@"dd.MM.yyyy") - @item.Holiday.DateFinish.ToString(@"dd.MM.yyyy")</span>
 
                                     </td>

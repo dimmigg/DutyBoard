@@ -1,4 +1,4 @@
-﻿using DutyBoard_Models;
+﻿using DutyBoard_Models.Models;
 
 namespace DutyBoard_DataAccess.Repository.IRepository
 {

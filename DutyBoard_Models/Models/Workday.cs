@@ -4,8 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
-namespace DutyBoard_Models
-{ 
+namespace DutyBoard_Models.Models
+{
     public class Workday
     {
         public Workday()
@@ -32,7 +32,7 @@ namespace DutyBoard_Models
         [Display(Name = "День")]
         public DateTime DateWork { get; set; } = DateTime.Today;
         [NotMapped]
-        public DateTime StartDateWork => (DateWork + Roster.StartTime);
+        public DateTime StartDateWork => DateWork + Roster.StartTime;
 
     }
 }

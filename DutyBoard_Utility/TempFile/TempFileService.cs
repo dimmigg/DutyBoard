@@ -7,9 +7,9 @@ namespace DutyBoard_Utility.TempFile
 {
     public static class TempFileService
     {
-        public static string GetSharedPath(string path)
+        public static string GetSharedPath()
         {
-            var dir = Path.Combine(path, "Shared");
+            var dir = Path.Combine(WC.Path, "Shared");
             if (!Directory.Exists(dir))
                 Directory.CreateDirectory(dir);
             return dir;
