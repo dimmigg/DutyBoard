@@ -42,6 +42,7 @@ namespace DutyBoard_DataAccess.Repository
 
         internal SqlConnection GetConnection()
         {
+            var a = GetConnectionString();
             return new SqlConnection(GetConnectionString());
         }
 

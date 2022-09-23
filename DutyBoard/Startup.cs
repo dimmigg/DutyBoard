@@ -13,6 +13,10 @@ using DutyBoard_Telegram.Commands.Callback.Users;
 using DutyBoard_Telegram.Services;
 using DutyBoard_Utility;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using DutyBoard_DataAccess.Account;
+using DutyBoard_Models.Account;
+using DutyBoard_Utility.Account.Email;
+using Microsoft.AspNetCore.Identity;
 
 namespace DutyBoard
 {
@@ -53,12 +57,14 @@ namespace DutyBoard
             services.AddScoped<ITelegramUserService, TelegramUserService>();
             services.AddScoped<TelegramBot>();
 
-            // установка конфигурации подключения
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options => //CookieAuthenticationOptions
-                {
-                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
-                });
+            services.AddTransient<IUserStore<ApplicationUser>, UserStore>();
+            services.AddTransient<IRoleStore<ApplicationRole>, RoleStore>();
+
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
+                .AddDefaultTokenProviders();
+
+            // Add application services.
+            services.AddTransient<IEmailSender, EmailSender>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
