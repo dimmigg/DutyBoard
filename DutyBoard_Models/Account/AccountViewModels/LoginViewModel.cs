@@ -8,15 +8,15 @@ namespace DutyBoard_Models.Account.AccountViewModels
 {
     public class LoginViewModel
     {
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessage = "Поле обязательно для ввода")]
+        [EmailAddress(ErrorMessage = "Введи корректный Email")]
         public string Email { get; set; }
 
-        [Required]
-        [DataType(DataType.Password)]
+        [Required(ErrorMessage = "Поле обязательно для ввода")]
+        [DataType(DataType.Password, ErrorMessage = "Не сооветствует требованиям")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Запомнить меня?")]
         public bool RememberMe { get; set; }
     }
 }

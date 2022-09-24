@@ -10,7 +10,7 @@
 .login-box {
     position: relative;
     width: 380px;
-    height: 420px;
+    height: 445px;
     background: #fff;
     border-radius: 20px;
     overflow: hidden;
@@ -22,7 +22,7 @@
         top: -50%;
         left: -50%;
         width: 380px;
-        height: 420px;
+        height: 445px;
         background: linear-gradient(0deg, transparent, var(--blue), var(--blue));
         transform-origin: bottom right;
         animation: animate 6s linear infinite;
@@ -35,7 +35,7 @@
     top: -50%;
     left: -50%;
     width: 380px;
-    height: 420px;
+    height: 445px;
     background: linear-gradient(0deg, transparent, var(--blue), var(--blue));
     transform-origin: bottom right;
     animation: animate 6s linear infinite;
@@ -67,6 +67,12 @@
     letter-spacing: 0.1em;
 
 }
+
+.login-box form .inputField {
+        /*padding-bottom: 40px;*/
+        padding-top: 10px;
+    }
+
 .login-box form .inputBox {
     position: relative;
     width: 300px;
@@ -100,6 +106,13 @@
     .login-box form .inputBox input:focus ~ span {
         color: var(--blue);
         transform: translateX(0px) translateY(-34px);
+        font-size: 0.85em;
+    }
+
+.login-box form span.text-danger {
+        position: absolute;
+        /*padding: 20px 10px 10px;*/
+        color: #a52a2a;
         font-size: 0.85em;
     }
 

@@ -1,13 +1,13 @@
 ﻿@model IndexViewModel
 @{
-    ViewData["Title"] = "Profile";
-    ViewData.AddActivePage(ManageNavPages.Index);
+    ViewData["Title"] = "Профиль";
+    //ViewData.AddActivePage(ManageNavPages.Index);
 }
 
-<h4>@ViewData["Title"]</h4>
-@Html.Partial("_StatusMessage", Model.StatusMessage)
+@*<h4>@ViewData["Title"]</h4>*@
+@*@Html.Partial("_StatusMessage", Model.StatusMessage)*@
 <div class="row">
-    <div class="col-md-6">
+    <div class="col">
         <form method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
@@ -35,7 +35,7 @@
                 <input asp-for="PhoneNumber" class="form-control" />
                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-default">Save</button>
+            <button type="submit" class="btn btn-primary mt-2">Сохранить</button>
         </form>
     </div>
 </div>

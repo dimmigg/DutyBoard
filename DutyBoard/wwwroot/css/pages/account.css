@@ -1,131 +1,31 @@
-﻿.accNavigation {
-    position: fixed;
-    top: 2px;
-    right: 20px;
-    width: 100px;
-    height: 50px;
-    background: #fff;
-    box-shadow: 0 25px 36px rgba(0, 0, 0, 0.1);
+﻿ul.accountNavigation {
+    position: relative;
     display: flex;
-    justify-content: space-between;
-    transition: height 0.5s, width 0.5s;
-    transition-delay: 0s, 0.75s;
-    overflow: hidden;
+    padding-left: 20px;
+    gap: 30px;
 }
-
-    .accNavigation.active {
-        width: 250px;
-        height: 400px;
-        transition: height 0.5s, width 0.5s;
-        transition-delay: 0.75s, 0s;
-        /*z-index: 1;*/
-    }
-
-    .accNavigation .accBox {
+ul.accountNavigation li {
         position: relative;
-        width: 50px;
-        height: 50px;
-        background: #fff;
-        display: flex;
-        align-items: center;
-        overflow: hidden;
-        transition: 0.5s;
-        transition-delay: 0.5s;
-    }
-    .accNavigation.active .accBox {
-        width: calc(100% - 50px);
-        transition-delay: 0s;
-    }
-    .accNavigation .accBox .loginName {
-        white-space: nowrap;
-        color: #555;
-        font-size: 1.1em;
-        margin: 0 5px;
-    }
-
-        .accNavigation .accBox .logo {
-            position: relative;
-            min-width: 50px;
-            height: 50px;
-            overflow: hidden;
-            background: #000;
-            border-radius: 50%;
-            border: 2px solid #fff;
-        }
-
-            .accNavigation .accBox .logo img {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-
-    .accNavigation .toggleMenu {
-        position: relative;
-        width: 50px;
-        height: 50px;
+        outline-style: none;
+        list-style: none;
+/*        width: 50px;
+        height: 50px;*/
+        /*background: var(--white);*/
+        /*border-radius: 50px;*/
         cursor: pointer;
         display: flex;
         justify-content: center;
         align-items: center;
+        /*box-shadow: 0 16px 25px rgba(0, 0, 0, 0.1);*/
+        /*transition: 0.5s;*/
     }
 
-        .accNavigation .toggleMenu::before {
-            content: '';
-            position: absolute;
-            width: 26px;
-            height: 2px;
-            background: #555;
-            transform: translateY(-10px);
-            box-shadow: 0 10px #555;
-            transition: 0.5s;
-        }
-
-        .accNavigation .toggleMenu::after {
-            content: '';
-            position: absolute;
-            width: 26px;
-            height: 2px;
-            background: #555;
-            transform: translateY(10px);
-            transition: 0.5s;
-        }
-
-    .accNavigation.active .toggleMenu::before {
-        transform: translateY(0px) rotate(45deg);
-        box-shadow: 0 0 #555;
-    }
-
-    .accNavigation.active .toggleMenu::after {
-        transform: translateY(0px) rotate(-45deg);
-    }
-
-.accMenu {
-    position: absolute;
-    width: 100%;
-    height: calc(100% - 50px);
-    margin-top: 60px;
-    padding: 20px;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.accMenu li {
-    list-style: none;
-}
-    .accMenu li a {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin: 20px 0;
-        font-size: 1em;
+ul.accountNavigation li a {
         text-decoration: none;
-        color: #555;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--black2);
     }
-.accMenu li a:hover {
+ul.accountNavigation li a:hover {
     color: var(--blue);
 }
-        .accMenu li i {
-            font-size: 1.5em;
-        }

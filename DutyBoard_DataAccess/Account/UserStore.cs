@@ -72,7 +72,7 @@ namespace DutyBoard_DataAccess.Account
             {
                 await connection.OpenAsync(cancellationToken);
                 return await connection.QuerySingleOrDefaultAsync<ApplicationUser>($@"SELECT * FROM [ApplicationUser]
-                    WHERE [NormalizedUserName] = @{nameof(normalizedUserName)}", new { normalizedUserName });
+                    WHERE [NormalizedUserName] = @{nameof(normalizedUserName)} AND [EmailConfirmed] = 1", new { normalizedUserName });
             }
         }
 
@@ -156,7 +156,7 @@ namespace DutyBoard_DataAccess.Account
             {
                 await connection.OpenAsync(cancellationToken);
                 return await connection.QuerySingleOrDefaultAsync<ApplicationUser>($@"SELECT * FROM [ApplicationUser]
-                    WHERE [NormalizedEmail] = @{nameof(normalizedEmail)}", new { normalizedEmail });
+                    WHERE [NormalizedEmail] = @{nameof(normalizedEmail)} AND [EmailConfirmed] = 1", new { normalizedEmail });
             }
         }
 

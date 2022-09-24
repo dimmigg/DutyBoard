@@ -12,12 +12,12 @@ namespace DutyBoard_Models.Account.ManageViewModels
 
         public bool IsEmailConfirmed { get; set; }
 
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessage = "Поле обязательно для ввода")]
+        [EmailAddress(ErrorMessage = "Введи корректный Email")]
         public string Email { get; set; }
 
         [Phone]
-        [Display(Name = "Phone number")]
+        [Display(Name = "Номер телефона")]
         public string PhoneNumber { get; set; }
 
         public string StatusMessage { get; set; }

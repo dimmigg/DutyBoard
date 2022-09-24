@@ -86,7 +86,8 @@ namespace DutyBoard.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "Неверный логин или пароль.");
+                    TempData[WC.Error] = "Неверный логин или пароль.";
                     return View(model);
                 }
             }
@@ -239,7 +240,7 @@ namespace DutyBoard.Controllers
                     var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
                     await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
-                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    //await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
                     return RedirectToLocal(returnUrl);
                 }
@@ -453,6 +454,7 @@ namespace DutyBoard.Controllers
             foreach (var error in result.Errors)
             {
                 ModelState.AddModelError(string.Empty, error.Description);
+                TempData[WC.Error] = error.Description;
             }
         }
 

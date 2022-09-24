@@ -8,20 +8,20 @@ namespace DutyBoard_Models.Account.ManageViewModels
 {
     public class ChangePasswordViewModel
     {
-        [Required]
-        [DataType(DataType.Password)]
-        [Display(Name = "Current password")]
+        [Required(ErrorMessage = "Поле обязательно для ввода")]
+        [DataType(DataType.Password, ErrorMessage = "Не сооветствует требованиям")]
+        [Display(Name = "Текущий пароль")]
         public string OldPassword { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
-        [DataType(DataType.Password)]
-        [Display(Name = "New password")]
+        [Required(ErrorMessage = "Поле обязательно для ввода")]
+        [StringLength(100, ErrorMessage = "Пароль должен быть от {2} до {1} символов", MinimumLength = 6)]
+        [DataType(DataType.Password, ErrorMessage = "Не сооветствует требованиям")]
+        [Display(Name = "Новый пароль")]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        [Display(Name = "Повторите пароль")]
+        [Compare("NewPassword", ErrorMessage = "Пароли не совпадают")]
         public string ConfirmPassword { get; set; }
 
         public string StatusMessage { get; set; }

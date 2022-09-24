@@ -8,9 +8,9 @@ namespace DutyBoard_Models.Account.AccountViewModels
 {
     public class LoginWithRecoveryCodeViewModel
     {
-            [Required]
-            [DataType(DataType.Text)]
-            [Display(Name = "Recovery Code")]
-            public string RecoveryCode { get; set; }
+        [Required(ErrorMessage = "Поле обязательно для ввода")]
+        [DataType(DataType.Text)]
+        [Display(Name = "Код восстановления")]
+        public string RecoveryCode { get; set; }
     }
 }
