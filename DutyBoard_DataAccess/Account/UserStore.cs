@@ -8,6 +8,7 @@ using Dapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using DutyBoard_Models.Account;
+using Microsoft.AspNetCore.Hosting.Server;
 
 namespace DutyBoard_DataAccess.Account
 {
@@ -18,7 +19,16 @@ namespace DutyBoard_DataAccess.Account
 
         public UserStore(IConfiguration configuration)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+#if DEBUG
+            _connectionString = new SqlConnectionStringBuilder()
+            {
+                DataSource = configuration.GetConnectionString("Server"),
+                IntegratedSecurity = true,
+                InitialCatalog = configuration.GetConnectionString("Database")
+        }.ConnectionString;
+#else
+            _connectionString = configuration.GetConnectionString("Db");
+#endif
         }
 
         public async Task<IdentityResult> CreateAsync(ApplicationUser user, CancellationToken cancellationToken)
@@ -28,7 +38,7 @@ namespace DutyBoard_DataAccess.Account
             using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync(cancellationToken);
-                user.Id = await connection.QuerySingleAsync<int>($@"INSERT INTO [ApplicationUser] ([UserName], [NormalizedUserName], [Email],
+                user.Id = await connection.QuerySingleAsync<int>($@"INSERT INTO [tool].[ApplicationUser] ([UserName], [NormalizedUserName], [Email],
                     [NormalizedEmail], [EmailConfirmed], [PasswordHash], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled])
                     VALUES (@{nameof(ApplicationUser.UserName)}, @{nameof(ApplicationUser.NormalizedUserName)}, @{nameof(ApplicationUser.Email)},
                     @{nameof(ApplicationUser.NormalizedEmail)}, @{nameof(ApplicationUser.EmailConfirmed)}, @{nameof(ApplicationUser.PasswordHash)},
@@ -46,7 +56,7 @@ namespace DutyBoard_DataAccess.Account
             using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync(cancellationToken);
-                await connection.ExecuteAsync($"DELETE FROM [ApplicationUser] WHERE [Id] = @{nameof(ApplicationUser.Id)}", user);
+                await connection.ExecuteAsync($"DELETE FROM [tool].[ApplicationUser] WHERE [Id] = @{nameof(ApplicationUser.Id)}", user);
             }
 
             return IdentityResult.Success;
@@ -59,8 +69,8 @@ namespace DutyBoard_DataAccess.Account
             using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync(cancellationToken);
-                return await connection.QuerySingleOrDefaultAsync<ApplicationUser>($@"SELECT * FROM [ApplicationUser]
-                    WHERE [Id] = @{nameof(userId)}", new { userId });
+                return await connection.QuerySingleOrDefaultAsync<ApplicationUser>($@"SELECT * FROM [tool].[ApplicationUser]
+                    WHERE [Id] = @{nameof(userId)} AND [EmailConfirmed] = 1", new { userId });
             }
         }
 
@@ -71,7 +81,7 @@ namespace DutyBoard_DataAccess.Account
             using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync(cancellationToken);
-                return await connection.QuerySingleOrDefaultAsync<ApplicationUser>($@"SELECT * FROM [ApplicationUser]
+                return await connection.QuerySingleOrDefaultAsync<ApplicationUser>($@"SELECT * FROM [tool].[ApplicationUser]
                     WHERE [NormalizedUserName] = @{nameof(normalizedUserName)} AND [EmailConfirmed] = 1", new { normalizedUserName });
             }
         }
@@ -110,7 +120,7 @@ namespace DutyBoard_DataAccess.Account
             using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync(cancellationToken);
-                await connection.ExecuteAsync($@"UPDATE [ApplicationUser] SET
+                await connection.ExecuteAsync($@"UPDATE [tool].[ApplicationUser] SET
                     [UserName] = @{nameof(ApplicationUser.UserName)},
                     [NormalizedUserName] = @{nameof(ApplicationUser.NormalizedUserName)},
                     [Email] = @{nameof(ApplicationUser.Email)},
@@ -155,7 +165,7 @@ namespace DutyBoard_DataAccess.Account
             using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync(cancellationToken);
-                return await connection.QuerySingleOrDefaultAsync<ApplicationUser>($@"SELECT * FROM [ApplicationUser]
+                return await connection.QuerySingleOrDefaultAsync<ApplicationUser>($@"SELECT * FROM [tool].[ApplicationUser]
                     WHERE [NormalizedEmail] = @{nameof(normalizedEmail)} AND [EmailConfirmed] = 1", new { normalizedEmail });
             }
         }
@@ -228,13 +238,13 @@ namespace DutyBoard_DataAccess.Account
             {
                 await connection.OpenAsync(cancellationToken);
                 var normalizedName = roleName.ToUpper();
-                var roleId = await connection.ExecuteScalarAsync<int?>($"SELECT [Id] FROM [ApplicationRole] WHERE [NormalizedName] = @{nameof(normalizedName)}", new { normalizedName });
+                var roleId = await connection.ExecuteScalarAsync<int?>($"SELECT [Id] FROM [tool].[ApplicationRole] WHERE [NormalizedName] = @{nameof(normalizedName)}", new { normalizedName });
                 if (!roleId.HasValue)
-                    roleId = await connection.ExecuteAsync($"INSERT INTO [ApplicationRole]([Name], [NormalizedName]) VALUES(@{nameof(roleName)}, @{nameof(normalizedName)})",
+                    roleId = await connection.ExecuteAsync($"INSERT INTO [tool].[ApplicationRole]([Name], [NormalizedName]) VALUES(@{nameof(roleName)}, @{nameof(normalizedName)})",
                         new { roleName, normalizedName });
 
-                await connection.ExecuteAsync($"IF NOT EXISTS(SELECT 1 FROM [ApplicationUserRole] WHERE [UserId] = @userId AND [RoleId] = @{nameof(roleId)}) " +
-                    $"INSERT INTO [ApplicationUserRole]([UserId], [RoleId]) VALUES(@userId, @{nameof(roleId)})",
+                await connection.ExecuteAsync($"IF NOT EXISTS(SELECT 1 FROM [tool].[ApplicationUserRole] WHERE [UserId] = @userId AND [RoleId] = @{nameof(roleId)}) " +
+                    $"INSERT INTO [tool].[ApplicationUserRole]([UserId], [RoleId]) VALUES(@userId, @{nameof(roleId)})",
                     new { userId = user.Id, roleId });
             }
         }
@@ -246,9 +256,9 @@ namespace DutyBoard_DataAccess.Account
             using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync(cancellationToken);
-                var roleId = await connection.ExecuteScalarAsync<int?>("SELECT [Id] FROM [ApplicationRole] WHERE [NormalizedName] = @normalizedName", new { normalizedName = roleName.ToUpper() });
+                var roleId = await connection.ExecuteScalarAsync<int?>("SELECT [Id] FROM [tool].[ApplicationRole] WHERE [NormalizedName] = @normalizedName", new { normalizedName = roleName.ToUpper() });
                 if (!roleId.HasValue)
-                    await connection.ExecuteAsync($"DELETE FROM [ApplicationUserRole] WHERE [UserId] = @userId AND [RoleId] = @{nameof(roleId)}", new { userId = user.Id, roleId });
+                    await connection.ExecuteAsync($"DELETE FROM [tool].[ApplicationUserRole] WHERE [UserId] = @userId AND [RoleId] = @{nameof(roleId)}", new { userId = user.Id, roleId });
             }
         }
 
@@ -259,7 +269,7 @@ namespace DutyBoard_DataAccess.Account
             using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync(cancellationToken);
-                var queryResults = await connection.QueryAsync<string>("SELECT r.[Name] FROM [ApplicationRole] r INNER JOIN [ApplicationUserRole] ur ON ur.[RoleId] = r.Id " +
+                var queryResults = await connection.QueryAsync<string>("SELECT r.[Name] FROM [tool].[ApplicationRole] r INNER JOIN [tool].[ApplicationUserRole] ur ON ur.[RoleId] = r.Id " +
                     "WHERE ur.UserId = @userId", new { userId = user.Id });
 
                 return queryResults.ToList();
@@ -272,9 +282,9 @@ namespace DutyBoard_DataAccess.Account
 
             using (var connection = new SqlConnection(_connectionString))
             {
-                var roleId = await connection.ExecuteScalarAsync<int?>("SELECT [Id] FROM [ApplicationRole] WHERE [NormalizedName] = @normalizedName", new { normalizedName = roleName.ToUpper() });
+                var roleId = await connection.ExecuteScalarAsync<int?>("SELECT [Id] FROM [tool].[ApplicationRole] WHERE [NormalizedName] = @normalizedName", new { normalizedName = roleName.ToUpper() });
                 if (roleId == default(int)) return false;
-                var matchingRoles = await connection.ExecuteScalarAsync<int>($"SELECT COUNT(*) FROM [ApplicationUserRole] WHERE [UserId] = @userId AND [RoleId] = @{nameof(roleId)}",
+                var matchingRoles = await connection.ExecuteScalarAsync<int>($"SELECT COUNT(*) FROM [tool].[ApplicationUserRole] WHERE [UserId] = @userId AND [RoleId] = @{nameof(roleId)}",
                     new { userId = user.Id, roleId });
                 
                 return matchingRoles > 0;
@@ -287,8 +297,8 @@ namespace DutyBoard_DataAccess.Account
 
             using (var connection = new SqlConnection(_connectionString))
             {
-                var queryResults = await connection.QueryAsync<ApplicationUser>("SELECT u.* FROM [ApplicationUser] u " +
-                    "INNER JOIN [ApplicationUserRole] ur ON ur.[UserId] = u.[Id] INNER JOIN [ApplicationRole] r ON r.[Id] = ur.[RoleId] WHERE r.[NormalizedName] = @normalizedName",
+                var queryResults = await connection.QueryAsync<ApplicationUser>("SELECT u.* FROM [tool].[ApplicationUser] u " +
+                    "INNER JOIN [tool].[ApplicationUserRole] ur ON ur.[UserId] = u.[Id] INNER JOIN [tool].[ApplicationRole] r ON r.[Id] = ur.[RoleId] WHERE r.[NormalizedName] = @normalizedName",
                     new { normalizedName = roleName.ToUpper() });
 
                 return queryResults.ToList();

@@ -36,13 +36,10 @@ namespace DutyBoard_DataAccess.Repository
 #else
             return _conectionString;
 #endif
-
-
         }
 
         internal SqlConnection GetConnection()
         {
-            var a = GetConnectionString();
             return new SqlConnection(GetConnectionString());
         }
 
