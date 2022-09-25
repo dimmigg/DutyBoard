@@ -1,4 +1,6 @@
 ﻿using DutyBoard_DataAccess.Repository.IRepository;
+using DutyBoard_Models.Telegram;
+using DutyBoard_Telegram.Interface;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -11,31 +13,18 @@ namespace DutyBoard_Telegram.Commands
 {
     public class ListDutyCommand : BaseCommand
     {
-        private readonly TelegramBotClient _botClient;
-        private readonly IExportRepository _exportRepo;
         private readonly IEmployeeRepository _empRepo;
 
-        public ListDutyCommand(ITelegramUserRepository telegramRepo,
-            IExportRepository exportRepo,
+        public ListDutyCommand(ITelegramUserService telegramUserService,
             IEmployeeRepository empRepo,
-            TelegramBot telegramBot) : base(telegramRepo)
+            TelegramBot telegramBot) : base(telegramUserService, telegramBot)
         {
-            _botClient = telegramBot.GetBot().Result;
-            _exportRepo = exportRepo;
             _empRepo = empRepo;
         }
 
         public override string Name => CommandNames.ListDuty;
 
-        public override async Task ExecuteAsync(Update update)
-        {
-            var chatId = update.CallbackQuery?.Message.Chat.Id ?? update.Message.Chat.Id;
-
-            await SendMessage(chatId);
-
-        }
-
-        private async Task SendMessage(long chatId)
+        internal override async Task SendMessage(Update update, TelegramUser user)
         {
             var sb = new StringBuilder();
             sb.AppendLine("📄 *Список дежурных:*");
@@ -47,8 +36,8 @@ namespace DutyBoard_Telegram.Commands
                 sb.Append($"_{duty.Name} ");
                 sb.AppendLine($"{duty.PhoneNumber}_");
             }
-            var sentMessage1 = await _botClient.SendTextMessageAsync(
-                chatId: chatId,
+            var sentMessage1 = await BotClient.SendTextMessageAsync(
+                chatId: user.ChatId,
                 text: sb.ToString(),
                 parseMode: ParseMode.Markdown,
                 cancellationToken: cancellationToken.Token);

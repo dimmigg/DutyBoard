@@ -31,7 +31,7 @@ namespace DutyBoard.Controllers
             {
                 await _commandExecutor.Execute(upd);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return Ok();
             }

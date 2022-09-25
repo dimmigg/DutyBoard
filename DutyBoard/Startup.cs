@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using DutyBoard_Telegram.Commands;
-using DutyBoard_Telegram.Commands.Callback.Users;
+using DutyBoard_Telegram.Commands.Callback.Admin;
 using DutyBoard_Telegram.Services;
 using DutyBoard_Utility;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -53,9 +53,10 @@ namespace DutyBoard
             services.AddScoped<BaseCommand, ListDutyCommand>();
             services.AddScoped<BaseCommand, FileCommand>();
             services.AddScoped<BaseCommand, HelpCommand>();
-            services.AddScoped<BaseCommand, GetAnalyticCommand>();
+            services.AddScoped<BaseCommand, ActivateTelegramUserCommand>();
             services.AddScoped<ITelegramUserService, TelegramUserService>();
             services.AddScoped<TelegramBot>();
+            services.AddScoped<RequestActivationCommand>();
 
             services.AddTransient<IUserStore<ApplicationUser>, UserStore>();
             services.AddTransient<IRoleStore<ApplicationRole>, RoleStore>();

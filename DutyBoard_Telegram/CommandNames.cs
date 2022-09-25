@@ -14,8 +14,11 @@
         public const string UsersCallback = "Users";
 
         public const string AddOperationCommand = "add-operation";
-        public const string GetAnalyticsCommand = "get-analytics";
         public const string SelectCategoryCommand = "select-category";
+        public const string TelegramActivateCommand = "telegram-activate";
+
+        
         public const string Admin = "Админ панель";
+
     }
 }

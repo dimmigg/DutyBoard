@@ -66,7 +66,7 @@ namespace DutyBoard_Telegram
 
         private async Task ExecuteCommand(string commandName, Update update)
         {
-            _lastCommand = _commands.First(x => x.Name == commandName);
+            _lastCommand = _commands.First(x => x.Name == commandName.Split("_")[0]);
             await _lastCommand.ExecuteAsync(update);
         }
     }

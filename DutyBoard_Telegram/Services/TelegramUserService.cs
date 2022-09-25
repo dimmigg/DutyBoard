@@ -4,15 +4,19 @@ using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using DutyBoard_DataAccess.Repository.IRepository;
 using DutyBoard_Models.Telegram;
+using DutyBoard_Telegram.Commands;
 
 namespace DutyBoard_Telegram.Services
 {
     public class TelegramUserService : ITelegramUserService
     {
         internal readonly ITelegramUserRepository _telegramRepo;
-        public TelegramUserService(ITelegramUserRepository telegramRepo)
+        internal readonly RequestActivationCommand RequestActivationCommand;
+        
+        public TelegramUserService(ITelegramUserRepository telegramRepo, RequestActivationCommand requestActivationCommand)
         {
             _telegramRepo = telegramRepo;
+            RequestActivationCommand = requestActivationCommand;
         }
         public TelegramUser GetOrCreate(Update update)
         {
@@ -39,6 +43,7 @@ namespace DutyBoard_Telegram.Services
             _telegramRepo.Upsert(newUser);
             user = _telegramRepo.FirstOrDefault(chatId: newUser.ChatId);
 
+            RequestActivationCommand.RequestActiveTelegramUser(user).GetAwaiter().GetResult();
             return user;
         }
     }
