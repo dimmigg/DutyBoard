@@ -12,26 +12,21 @@ namespace DutyBoard_Telegram.Commands
 {
     public class StartCommand : BaseCommand
     {
-        private readonly TelegramBotClient _botClient;
-        private readonly ITelegramUserService _telegramUserService;
 
-        public StartCommand(ITelegramUserRepository telegramRepo, ITelegramUserService telegramUserService, TelegramBot telegramBot) : base(telegramRepo)
+        public StartCommand(ITelegramUserService telegramUserService, TelegramBot telegramBot) : base(telegramUserService, telegramBot)
         {
-            _telegramUserService = telegramUserService;
-            _botClient = telegramBot.GetBot().Result;
         }
 
         public override string Name => CommandNames.StartCommand;
 
-        public override async Task ExecuteAsync(Update update)
+
+        internal override async Task SendMessage(Update update, TelegramUser user)
         {
-            var user = _telegramUserService.GetOrCreate(update);
             var inlineKeyboard = new ReplyKeyboardMarkup(CreateButtons(user))
             {
                 ResizeKeyboard = true
             };
-
-            await _botClient.SendTextMessageAsync(user.ChatId, "*Добро пожаловать!*\nЯ помогу с поиском дежурного.\n\n_Добавлена панель команд._",
+            await BotClient.SendTextMessageAsync(user.ChatId, "*Добро пожаловать!*\nЯ помогу с поиском дежурного.\n\n_Добавлена панель команд._",
                 ParseMode.Markdown, replyMarkup: inlineKeyboard);
         }
 

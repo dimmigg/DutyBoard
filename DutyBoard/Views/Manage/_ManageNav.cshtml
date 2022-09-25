@@ -1,0 +1,17 @@
+﻿@using DutyBoard.Views.Manage
+@using DutyBoard_Models.Account
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@inject SignInManager<ApplicationUser> SignInManager
+@{
+    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+}
+<ul class="accountNavigation">
+    <li class="@ManageNavPages.IndexNavClass(ViewContext)"><a asp-action="Index"><i class="fa-solid fa-user"></i> Профиль</a></li>
+    <li class="@ManageNavPages.ChangePasswordNavClass(ViewContext)"><a asp-action="ChangePassword"><i class="fa-solid fa-lock"></i> Изменить пароль</a></li>
+@*    @if (hasExternalLogins)
+    {
+        <li class="@ManageNavPages.ExternalLoginsNavClass(ViewContext)"><a asp-action="ExternalLogins">External logins</a></li>
+    }
+    <li class="@ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)"><a asp-action="TwoFactorAuthentication">Two-factor authentication</a></li>*@
+</ul>

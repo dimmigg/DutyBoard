@@ -1,4 +1,5 @@
 ﻿using DutyBoard_DataAccess.Repository.IRepository;
+using DutyBoard_Models.Telegram;
 using DutyBoard_Telegram.Interface;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,38 +11,17 @@ namespace DutyBoard_Telegram.Commands
 {
     public class AdminCommand : BaseCommand
     {
-        private readonly TelegramBotClient _botClient;
-        private readonly ITelegramUserService _telegramUserService;
 
-        public AdminCommand(ITelegramUserRepository telegramRepo, ITelegramUserService telegramUserService, TelegramBot telegramBot) : base(telegramRepo)
+        public AdminCommand(ITelegramUserService telegramUserService, TelegramBot telegramBot) : base(telegramUserService, telegramBot)
         {
-            _telegramUserService = telegramUserService;
-            _botClient = telegramBot.GetBot().Result;
         }
 
         public override string Name => CommandNames.Admin;
-
-        public override async Task ExecuteAsync(Update update)
-        {
-            var user = _telegramUserService.GetOrCreate(update);
-            if (user.IsAdmin)
-            {
-                if (update.CallbackQuery == null)
-                {
-                    await SendMessage(user.ChatId);
-                }
-                else
-                {
-                    await EditMessage(update);
-                }
-            }
-
-        }
-
+        
         private async Task EditMessage(Update update)
         {
             var cancellationToken = new CancellationTokenSource();
-            var sentMessage = await _botClient.EditMessageTextAsync(
+            var sentMessage = await BotClient.EditMessageTextAsync(
                 chatId: update.CallbackQuery.Message.Chat.Id,
                 messageId: update.CallbackQuery.Message.MessageId,
                 text: "Выберите команду",
@@ -49,14 +29,22 @@ namespace DutyBoard_Telegram.Commands
                 cancellationToken: cancellationToken.Token);
         }
 
-        private async Task SendMessage(long chatId)
+        internal override async Task SendMessage(Update update, TelegramUser user)
         {
-            var cancellationToken = new CancellationTokenSource();
-            var sentMessage = await _botClient.SendTextMessageAsync(
-                chatId: chatId,
-                text: "Выберите команду",
-                replyMarkup: GetKeyboard(),
-                cancellationToken: cancellationToken.Token);
+            if (user.IsAdmin)
+            {
+                if (update.CallbackQuery != null)
+                {
+                    var cancellationToken = new CancellationTokenSource();
+                    var sentMessage = await BotClient.SendTextMessageAsync(
+                        chatId: user.ChatId,
+                        text: "Выберите команду",
+                        replyMarkup: GetKeyboard(),
+                        cancellationToken: cancellationToken.Token);
+                }
+                else
+                    await EditMessage(update);
+            }
         }
 
         private static InlineKeyboardMarkup GetKeyboard()

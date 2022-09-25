@@ -36,8 +36,6 @@ namespace DutyBoard_DataAccess.Repository
 #else
             return _conectionString;
 #endif
-
-
         }
 
         internal SqlConnection GetConnection()

@@ -10,7 +10,7 @@
 .register-box {
     position: relative;
     width: 380px;
-    height: 500px;
+    height: 550px;
     background: #fff;
     border-radius: 20px;
     overflow: hidden;
@@ -22,7 +22,7 @@
         top: -50%;
         left: -50%;
         width: 380px;
-        height: 500px;
+        height: 550px;
         background: linear-gradient(0deg, transparent, var(--blue), var(--blue));
         transform-origin: bottom right;
         animation: animate 6s linear infinite;
@@ -35,7 +35,7 @@
     top: -50%;
     left: -50%;
     width: 380px;
-    height: 420px;
+    height: 550px;
     background: linear-gradient(0deg, transparent, var(--blue), var(--blue));
     transform-origin: bottom right;
     animation: animate 6s linear infinite;
@@ -60,17 +60,22 @@
     display: flex;
     flex-direction: column;
 }
-.register-box form h2 {
-    color: dodgerblue;
-    font-weight: 500;
-    text-align: center;
-    letter-spacing: 0.1em;
+    .register-box form h2 {
+        color: dodgerblue;
+        font-weight: 500;
+        text-align: center;
+        letter-spacing: 0.1em;
+        margin-bottom: 35px;
+    }
+    .register-box form .inputField {
+        padding-bottom: 40px;
+        padding-top: 10px;
+    }
 
-}
 .register-box form .inputBox {
     position: relative;
     width: 300px;
-    margin-top: 35px;
+    /*margin-top: 35px;*/
 }
     .register-box form .inputBox input {
         position: relative;
@@ -102,8 +107,15 @@
         transform: translateX(0px) translateY(-34px);
         font-size: 0.85em;
     }
+    .register-box form span.text-danger {
+        position: absolute;
+        /*padding: 20px 10px 10px;*/
+        color: #a52a2a;
+        font-size: 0.85em;
+    }
 
-    .register-box form .inputBox i {
+
+.register-box form .inputBox i {
         position: absolute;
         left: 0;
         bottom: 0;
@@ -146,7 +158,7 @@
         background: var(--blue);
         padding: 11px 25px;
         width: 100%;
-        margin-top: 35px;
+        margin-top: 15px;
         border-radius: 8px;
         font-weight: 600;
         cursor: pointer;

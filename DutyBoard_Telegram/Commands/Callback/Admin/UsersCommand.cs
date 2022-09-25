@@ -7,34 +7,26 @@ using Telegram.Bot.Types.ReplyMarkups;
 using Telegram.Bot.Types;
 using Telegram.Bot;
 using DutyBoard_DataAccess.Repository.IRepository;
+using DutyBoard_Models.Telegram;
 
-namespace DutyBoard_Telegram.Commands.Callback.Users
+namespace DutyBoard_Telegram.Commands.Callback.Admin
 {
     public class UsersCommand : BaseCommand
     {
-        private readonly TelegramBotClient _botClient;
-        private readonly ITelegramUserService _telegramUserService;
+        private readonly ITelegramUserRepository _telegramRepo;
 
-        public UsersCommand(ITelegramUserRepository telegramRepo, ITelegramUserService telegramUserService, TelegramBot telegramBot) : base(telegramRepo)
+        public UsersCommand(ITelegramUserRepository telegramRepo, ITelegramUserService telegramUserService, TelegramBot telegramBot) : base(telegramUserService, telegramBot)
         {
-            _telegramUserService = telegramUserService;
-            _botClient = telegramBot.GetBot().Result;
+            _telegramRepo = telegramRepo;
         }
 
         public override string Name => CommandNames.UsersCallback;
 
-        public override async Task ExecuteAsync(Update update)
-        {
-            var user = _telegramUserService.GetOrCreate(update);
-            if (user.IsAdmin)
-                await SendMessage(update);
-        }
-
-        private async Task SendMessage(Update update)
+        internal override async Task SendMessage(Update update, TelegramUser user)
         {
             var cancellationToken = new CancellationTokenSource();
             var inlineKeyboard = new InlineKeyboardMarkup(GetArrUsers());
-            var sentMessage = await _botClient.EditMessageTextAsync(
+            var sentMessage = await BotClient.EditMessageTextAsync(
                 chatId: update.CallbackQuery.Message.Chat.Id,
                 messageId: update.CallbackQuery.Message.MessageId,
                 text: "Список пользователей бота:",
@@ -45,7 +37,7 @@ namespace DutyBoard_Telegram.Commands.Callback.Users
 
         private IEnumerable<InlineKeyboardButton[]> GetArrUsers()
         {
-            var all = TelegramRepo.GetAll();
+            var all = _telegramRepo.GetAll();
             var result = new InlineKeyboardButton[all.Count() + 1][];
             var i = 0;
             foreach (var userBot in all)
@@ -57,5 +49,6 @@ namespace DutyBoard_Telegram.Commands.Callback.Users
 
             return result;
         }
+
     }
 }

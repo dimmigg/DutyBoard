@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="~/css/pages/home.css" />
     <link rel="stylesheet" href="~/css/pages/login.css" />
     <link rel="stylesheet" href="~/css/pages/register.css" />
+    <link rel="stylesheet" href="~/css/pages/account.css" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
     <link rel="stylesheet" href="~/css/calendar.css" />
@@ -56,11 +57,6 @@
                             <span class="title">Параметры</span>
                         </a>
                     </li>
-                    <li>
-                        <a asp-controller="Account" asp-action="Logout">
-                            <span class="icon"><i class="fa-solid fa-right-from-bracket fa-rotate-180"></i></span>
-                        </a>
-                    </li>
                 </ul>
             </div>
         }
@@ -69,17 +65,18 @@
             @if (User.Identity.IsAuthenticated)
             {
                 <div class="topbar">
+                    
                     <!-- dates -->
                     <form method="post" novalidate="novalidate">
                         <div class="calcPanel">
-                            <ul>
+                            <ul class="ulCalc">
                                 <li style="--i:#fff; --j:#999;">
                                     <span class="icon"><i class="fa-regular fa-calendar text-primary"></i></span>
                                     <div class="title">
                                         <span>с</span>
-                                        <input type="text" placeholder="Дата с" id="fromDate" name="fromDate" />
+                                        <input type="text" placeholder="Дата с" id="fromDate" name="fromDate"/>
                                         <span>по</span>
-                                        <input type="text" placeholder="Дата по" id="toDate" name="toDate" />
+                                        <input type="text" placeholder="Дата по" id="toDate" name="toDate"/>
                                     </div>
                                 </li>
                                 <li style="--i:#FDD835; --j:#999;">
@@ -90,13 +87,28 @@
                                     <span class="icon"><i class="fa-solid fa-file-excel"></i></span>
                                     <span class="title"><a asp-action="Export" asp-controller="Home" type="button">Экспорт</a></span>
                                 </li>
+                                <li style="--i:#add8e6; --j:#999;">
+                                    <span class="icon"><i class="fa-solid fa-user"></i></span>
+                                    <span class="title"><a asp-action="Index" asp-controller="Manage" type="button">Профиль</a></span>
+                                </li>
+                                <li style="--i:#a52a2a; --j:#fff;">
+                                    <span class="icon"><i class="fa-solid fa-right-from-bracket"></i></span>
+                                    <span class="title"><a asp-action="Logout" asp-controller="Account" type="button">Выйти</a></span>
+                                </li>
                             </ul>
+                            
                         </div>
                     </form>
+@*                    
+
+                    <div class="accPanel">
+                        <partial name="_LoginPartial"/>
+                    </div>*@
                 </div>
             }
             <!-- contents -->
             <div class="contents">
+                
                 @RenderBody()
             </div>
 
