@@ -21,6 +21,7 @@ using System;
 using DutyBoard_Models.Account.AccountViewModels;
 using DutyBoard_Utility.Account.Email;
 using DutyBoard_Utility.Extensions;
+using DutyBoard_Telegram.Commands;
 
 namespace DutyBoard.Controllers
 {
@@ -28,6 +29,7 @@ namespace DutyBoard.Controllers
     [Route("[controller]/[action]")]
     public class AccountController : Controller
     {
+        private readonly RequestActivationCommand _requestActivationCommand;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
@@ -37,12 +39,14 @@ namespace DutyBoard.Controllers
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
+            RequestActivationCommand requestActivationCommand,
             ILogger<AccountController> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            _requestActivationCommand = requestActivationCommand;
         }
 
         [TempData]
@@ -238,7 +242,11 @@ namespace DutyBoard.Controllers
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
-                    await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+
+                    await _requestActivationCommand.RequestActiveSiteUser(user);
+                    TempData[WC.Success] = "Пользователь зарегистрирован";
+                    TempData[WC.Error] = "Уч. запись не активирована";
+                    //await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
                     //await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");

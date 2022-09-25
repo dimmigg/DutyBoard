@@ -22,7 +22,7 @@ namespace DutyBoard_Telegram.Commands
         protected BaseCommand(ITelegramUserService telegramUserService, TelegramBot telegramBot)
         {
             TelegramUserService = telegramUserService;
-            BotClient = telegramBot.GetBot().Result;
+            BotClient = telegramBot.GetBot().GetAwaiter().GetResult();
         }
         public abstract string Name { get; }
         internal abstract Task SendMessage(Update update, TelegramUser user);

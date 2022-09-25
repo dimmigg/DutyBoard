@@ -46,6 +46,8 @@ namespace DutyBoard_DataAccess.Account
                     SELECT CAST(SCOPE_IDENTITY() as int)", user);
             }
 
+
+
             return IdentityResult.Success;
         }
 
@@ -70,7 +72,7 @@ namespace DutyBoard_DataAccess.Account
             {
                 await connection.OpenAsync(cancellationToken);
                 return await connection.QuerySingleOrDefaultAsync<ApplicationUser>($@"SELECT * FROM [tool].[ApplicationUser]
-                    WHERE [Id] = @{nameof(userId)} AND [EmailConfirmed] = 1", new { userId });
+                    WHERE [Id] = @{nameof(userId)}", new { userId });
             }
         }
 

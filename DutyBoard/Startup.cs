@@ -54,8 +54,9 @@ namespace DutyBoard
             services.AddScoped<BaseCommand, FileCommand>();
             services.AddScoped<BaseCommand, HelpCommand>();
             services.AddScoped<BaseCommand, ActivateTelegramUserCommand>();
+            services.AddScoped<BaseCommand, ActivateSiteUserCommand>();
             services.AddScoped<ITelegramUserService, TelegramUserService>();
-            services.AddScoped<TelegramBot>();
+            services.AddSingleton<TelegramBot>();
             services.AddScoped<RequestActivationCommand>();
 
             services.AddTransient<IUserStore<ApplicationUser>, UserStore>();
