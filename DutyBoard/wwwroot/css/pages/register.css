@@ -109,7 +109,6 @@
     }
     .register-box form span.text-danger {
         position: absolute;
-        /*padding: 20px 10px 10px;*/
         color: #a52a2a;
         font-size: 0.85em;
     }

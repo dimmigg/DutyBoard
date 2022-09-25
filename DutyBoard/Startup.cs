@@ -40,7 +40,6 @@ namespace DutyBoard
             services.AddScoped<IMappingRepository, MappingRepository>();
             services.AddScoped<IRosterRepository, RosterRepository>();
             services.AddScoped<IExportRepository, ExportRepository>();
-            services.AddScoped<ISiteUserRepository, SiteUserRepository>();
             services.AddScoped<ITelegramUserRepository, TelegramUserRepository>();
 
 
@@ -65,11 +64,9 @@ namespace DutyBoard
             services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddDefaultTokenProviders();
 
-            // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
             WC.Path = env.ContentRootPath;
@@ -80,7 +77,6 @@ namespace DutyBoard
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseHttpsRedirection();

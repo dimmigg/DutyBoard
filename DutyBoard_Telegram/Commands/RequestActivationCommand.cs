@@ -1,16 +1,10 @@
 ﻿using DutyBoard_DataAccess.Repository.IRepository;
-using DutyBoard_Telegram.Interface;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using DutyBoard_Models.Telegram;
 using Telegram.Bot;
-using DutyBoard_Utility;
 using System.Threading.Tasks;
 using System.Threading;
 using Telegram.Bot.Types.Enums;
-using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 using DutyBoard_Models.Account;
 

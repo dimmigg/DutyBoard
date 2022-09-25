@@ -3,7 +3,6 @@ using DutyBoard_Models.Telegram;
 using DutyBoard_Telegram.Interface;
 using System;
 using System.Linq;
-using System.Runtime.ConstrainedExecution;
 using System.Threading;
 using System.Threading.Tasks;
 using Telegram.Bot;

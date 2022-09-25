@@ -1,5 +1,4 @@
 ﻿using DutyBoard_Models.Telegram;
-using System.Collections.Generic;
 
 namespace DutyBoard_DataAccess.Repository.IRepository
 {

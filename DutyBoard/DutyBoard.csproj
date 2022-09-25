@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\lib\calendar\**" />
+    <Content Remove="wwwroot\lib\calendar\**" />
+    <EmbeddedResource Remove="wwwroot\lib\calendar\**" />
+    <None Remove="wwwroot\lib\calendar\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.27" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
     <PackageReference Include="Telegram.Bot" Version="18.0.0" />
@@ -16,10 +23,6 @@
     <ProjectReference Include="..\DutyBoard_Models\DutyBoard_Models.csproj" />
     <ProjectReference Include="..\DutyBoard_Telegram\DutyBoard_Telegram.csproj" />
     <ProjectReference Include="..\DutyBoard_Utility\DutyBoard_Utility.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\lib\calendar\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties wwwroot_4lib_4bootstrap_4dist_4js_4bootstrap_1bundle_1min_1js_1map__JsonSchema="" /></VisualStudio></ProjectExtensions>

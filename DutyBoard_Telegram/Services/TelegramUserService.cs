@@ -1,5 +1,4 @@
 ﻿using DutyBoard_Telegram.Interface;
-using System.Threading.Tasks;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using DutyBoard_DataAccess.Repository.IRepository;

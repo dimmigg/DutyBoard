@@ -1,5 +1,4 @@
-﻿using DutyBoard_DataAccess.Repository.IRepository;
-using DutyBoard_Models.Telegram;
+﻿using DutyBoard_Models.Telegram;
 using DutyBoard_Telegram.Interface;
 using System.Threading;
 using System.Threading.Tasks;

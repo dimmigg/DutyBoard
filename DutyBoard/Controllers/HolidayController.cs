@@ -2,7 +2,6 @@
 using DutyBoard_Models.ViewModels;
 using DutyBoard_Utility;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using DutyBoard_Models.Models;
@@ -15,8 +14,7 @@ namespace DutyBoard.Controllers
     {
         private readonly IEmployeeRepository _empRepo;
         private readonly IHolidayRepository _holidayRepo;
-        [BindProperty]
-        public HolidayVM HolidayVM { get; set; }
+
         [BindProperty]
         public Holiday Holiday { get; set; }
         public HolidayController(IEmployeeRepository empRepo, IHolidayRepository holidayRepo)
