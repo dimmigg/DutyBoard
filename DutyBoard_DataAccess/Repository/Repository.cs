@@ -6,14 +6,11 @@ using DutyBoard_Utility.Extensions;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
 using DutyBoard_Models;
-using static Dapper.SqlMapper;
-using TableAttribute = System.ComponentModel.DataAnnotations.Schema.TableAttribute;
 
 namespace DutyBoard_DataAccess.Repository
 {

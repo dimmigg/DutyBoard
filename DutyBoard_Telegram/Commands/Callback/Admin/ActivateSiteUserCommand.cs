@@ -4,7 +4,6 @@ using System.Threading;
 using DutyBoard_DataAccess.Account;
 using Telegram.Bot.Types;
 using Telegram.Bot;
-using DutyBoard_DataAccess.Repository.IRepository;
 using DutyBoard_Models.Account;
 using DutyBoard_Models.Telegram;
 using Microsoft.AspNetCore.Identity;
@@ -42,7 +41,7 @@ namespace DutyBoard_Telegram.Commands.Callback.Admin
                     var cancellationToken = new CancellationTokenSource();
                     var sentMessage = await BotClient.SendTextMessageAsync(
                         chatId: user.ChatId,
-                        text: "Пользователь активирован",
+                        text: $"Пользователь {newSiteUser.Email} активирован",
                         parseMode: ParseMode.Markdown,
                         cancellationToken: cancellationToken.Token);
 

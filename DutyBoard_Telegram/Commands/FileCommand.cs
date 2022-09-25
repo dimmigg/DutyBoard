@@ -1,5 +1,4 @@
-﻿using DutyBoard_Telegram.Services;
-using System.IO;
+﻿using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using DutyBoard_Utility.Export;
@@ -9,7 +8,6 @@ using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.InputFiles;
 using DutyBoard_DataAccess.Repository.IRepository;
 using DutyBoard_Models.Telegram;
-using DutyBoard_Utility;
 using DutyBoard_Utility.TempFile;
 using DutyBoard_Telegram.Interface;
 

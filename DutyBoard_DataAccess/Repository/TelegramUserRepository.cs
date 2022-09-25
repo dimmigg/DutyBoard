@@ -3,7 +3,6 @@ using DutyBoard_DataAccess.Extensions;
 using DutyBoard_DataAccess.Repository.IRepository;
 using DutyBoard_Models.Telegram;
 using Microsoft.Extensions.Configuration;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace DutyBoard_DataAccess.Repository

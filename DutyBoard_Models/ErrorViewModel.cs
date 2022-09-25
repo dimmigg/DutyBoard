@@ -1,5 +1,3 @@
-using System;
-
 namespace DutyBoard_Models
 {
     public class ErrorViewModel

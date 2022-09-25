@@ -40,7 +40,7 @@ namespace DutyBoard_Telegram.Commands.Callback.Admin
                     var cancellationToken = new CancellationTokenSource();
                     var sentMessage = await BotClient.SendTextMessageAsync(
                         chatId: user.ChatId,
-                        text: "Пользователь активирован",
+                        text: $"Пользователь {newTgUser.Username} активирован",
                         parseMode: ParseMode.Markdown,
                         cancellationToken: cancellationToken.Token);
 

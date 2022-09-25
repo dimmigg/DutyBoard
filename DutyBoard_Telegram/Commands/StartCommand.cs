@@ -1,5 +1,4 @@
-﻿using DutyBoard_DataAccess.Repository.IRepository;
-using DutyBoard_Telegram.Interface;
+﻿using DutyBoard_Telegram.Interface;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Telegram.Bot;

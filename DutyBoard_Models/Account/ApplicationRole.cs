@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace DutyBoard_Models.Account
+﻿namespace DutyBoard_Models.Account
 {
     public class ApplicationRole
     {

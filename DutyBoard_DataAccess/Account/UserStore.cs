@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading;
@@ -8,7 +7,6 @@ using Dapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using DutyBoard_Models.Account;
-using Microsoft.AspNetCore.Hosting.Server;
 
 namespace DutyBoard_DataAccess.Account
 {
