@@ -1,19 +1,9 @@
-﻿using DutyBoard_DataAccess.Repository.IRepository;
-using DutyBoard_Models;
-using DutyBoard_Models.ViewModels;
-using DutyBoard_Utility;
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using DutyBoard_Utility;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using DutyBoard_Models.Account;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Telegram.Bot.Types;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
@@ -69,7 +59,7 @@ namespace DutyBoard.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (!ModelState.IsValid) return View(model);
 
-            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, true, lockoutOnFailure: false);
             if (result.Succeeded)
             {
                 _logger.LogInformation("User logged in.");
