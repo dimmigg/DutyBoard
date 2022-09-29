@@ -89,23 +89,27 @@
         letter-spacing: 0.05em;
         z-index: 10;
     }
+        .login-box form .inputBox input::selection {
+            background-color: #8f8f8f;
+        }
 
-    .login-box form .inputBox span {
-        position: absolute;
-        left: 0;
-        padding: 20px 0px 10px;
-        font-size: 1em;
-        color: #8f8f8f;
-        pointer-events: none;
-        letter-spacing: 0.05em;
-        transition: 0.5s;
-    }
+        .login-box form .inputBox span {
+            position: absolute;
+            left: 0;
+            padding: 20px 0px 10px;
+            font-size: 1em;
+            color: #8f8f8f;
+            pointer-events: none;
+            letter-spacing: 0.05em;
+            transition: 0.5s;
+        }
 
     .login-box form .inputBox input:valid ~ span,
     .login-box form .inputBox input:focus ~ span {
         color: var(--blue);
         transform: translateX(0px) translateY(-34px);
         font-size: 0.85em;
+        z-index: 11;
     }
 
 .login-box form span.text-danger {

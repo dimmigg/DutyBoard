@@ -413,8 +413,21 @@ tr.holiday {
         .list-group li div.row {
             padding-bottom: 5px;
         }
-
-        .list-group li a {
+        .list-group li.addItem {
+            /*align-items: center;*/
+            /*justify-content: center;*/
+            /*display: flex;*/
+            color: #365fa1;
+            background: transparent;
+            border: 2px dashed #365fa1;
+            box-shadow: none;
+        }
+            .list-group li.addItem div {
+                text-align: center !important;
+                /*display: flex;*/
+                /*align-items: center;*/
+            }
+            .list-group li a {
             color: #365fa1;
         }
 

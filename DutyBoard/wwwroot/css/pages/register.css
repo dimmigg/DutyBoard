@@ -89,6 +89,9 @@
         letter-spacing: 0.05em;
         z-index: 10;
     }
+.register-box form .inputBox input::selection {
+            background-color: #8f8f8f;
+        }
 
     .register-box form .inputBox span {
         position: absolute;
@@ -106,6 +109,7 @@
         color: var(--blue);
         transform: translateX(0px) translateY(-34px);
         font-size: 0.85em;
+        z-index: 11;
     }
     .register-box form span.text-danger {
         position: absolute;
