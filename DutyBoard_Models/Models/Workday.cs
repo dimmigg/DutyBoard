@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 
 
 namespace DutyBoard_Models.Models
@@ -27,9 +28,17 @@ namespace DutyBoard_Models.Models
         public Roster Roster { get; set; }
         [Display(Name = "Постоянно")]
         public bool IsAlways { get; set; } = false;
+        
+        public DateTime DateWork { get; set; } = DateTime.Today;
+
+        [NotMapped]
         [Required(ErrorMessage = "Выбери день!")]
         [Display(Name = "День")]
-        public DateTime DateWork { get; set; } = DateTime.Today;
+        public string WorkDt
+        {
+            get => DateWork.ToString("dd.MM.yyyy");
+            set => DateWork = DateTime.ParseExact(value, "dd.MM.yyyy", CultureInfo.InvariantCulture);
+        }
         [NotMapped]
         public DateTime StartDateWork => DateWork + Roster.StartTime;
 

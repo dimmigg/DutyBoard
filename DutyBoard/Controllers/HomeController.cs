@@ -15,6 +15,8 @@ using System.Linq;
 using DutyBoard_Models.Models;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Authorization;
+using DutyBoard_Utility;
+using System.Globalization;
 
 namespace DutyBoard.Controllers
 {
@@ -54,7 +56,7 @@ namespace DutyBoard.Controllers
 
         public IActionResult Index()
         {
-            
+
             var vm = new HomeVM
             {
                 MainTable = _mappRepo.GetAll(),
@@ -96,17 +98,33 @@ namespace DutyBoard.Controllers
 
             return View(vm);
         }
+
         [HttpPost]
         public IActionResult ConfCalc(string fromDate, string toDate)
         {
-            if (!DateTime.TryParse(fromDate, out DateTime fDate) ||
-                !DateTime.TryParse(toDate, out DateTime tDate)) return null;
-            var confVM = new ConfHomeVM()
+
+            //if (DateTime.TryParse(fromDate, out DateTime fDate) &&
+            //    DateTime.TryParse(toDate, out DateTime tDate))
+            //{
+            try
             {
-                FromDate = fDate,
-                ToDate = tDate
-            };
-            return PartialView("_Confirmation", confVM);
+                var confVM = new ConfHomeVM()
+                {
+                    FromDate = DateTime.ParseExact(fromDate, "dd.MM.yyyy", CultureInfo.InvariantCulture),
+                    ToDate = DateTime.ParseExact(toDate, "dd.MM.yyyy", CultureInfo.InvariantCulture)
+                };
+                return PartialView("_Confirmation", confVM);
+            }
+            catch (Exception e)
+            {
+                TempData[WC.Error] = $"Ошибка преобразования {fromDate} и {toDate}\nОшибка: {e.Message}";
+                return PartialView("_Error");
+
+            }
+                
+                
+            //}
+            
         }
 
 
@@ -169,13 +187,13 @@ namespace DutyBoard.Controllers
             });
             var mainTable = _mappRepo.GetAll();
             var vm = (
-                from item in holidays 
-                let workdays = mainTable.Where(x => x.Employee?.EmployeeId == item.Employee?.EmployeeId) 
-                from workday in workdays 
-                where workday.DateStart >= item.Holiday.DateStart && workday.DateStart <= item.Holiday.DateFinish 
+                from item in holidays
+                let workdays = mainTable.Where(x => x.Employee?.EmployeeId == item.Employee?.EmployeeId)
+                from workday in workdays
+                where workday.DateStart >= item.Holiday.DateStart && workday.DateStart <= item.Holiday.DateFinish
                 select new CrossingOfDaysVM()
                 {
-                    FullName = workday.Employee.Name, 
+                    FullName = workday.Employee.Name,
                     DateRoster = workday.DateStart,
                     DateStart = item.Holiday.DateStart,
                     DateFinish = item.Holiday.DateFinish

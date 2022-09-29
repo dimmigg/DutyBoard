@@ -21,22 +21,22 @@
 
         <div class="row form-group py-1">
             <div class="col-sm-5 text-start">
-                <label asp-for="Holiday.DateStart" class="col-form-label"></label>
+                <label asp-for="Holiday.StartDt" class="col-form-label"></label>
             </div>
             <div class="col-sm-7">
-                <input asp-for="Holiday.DateStart" class="form-control" type="text" id="editFromDate" aria-describedby="StartTime-error" aria-invalid="false" />
-                <span asp-validation-for="Holiday.DateStart" class="text-danger"></span>
+                <input asp-for="Holiday.StartDt" class="form-control" type="text" id="editFromDate" aria-describedby="StartTime-error" aria-invalid="false" />
+                <span asp-validation-for="Holiday.StartDt" class="text-danger"></span>
                 <span asp-validation-for="Holiday" class="text-danger"></span>
             </div>
         </div>
 
         <div class="row form-group py-1">
             <div class="col-sm-5 text-start">
-                <label asp-for="Holiday.DateFinish" class="col-form-label"></label>
+                <label asp-for="Holiday.FinishDt" class="col-form-label"></label>
             </div>
             <div class="col-sm-7">
-                <input asp-for="Holiday.DateFinish" class="form-control " type="text" id="editToDate" aria-describedby="StartTime-error" aria-invalid="false" />
-                <span asp-validation-for="Holiday.DateFinish" class="text-danger"></span>
+                <input asp-for="Holiday.FinishDt" class="form-control " type="text" id="editToDate" aria-describedby="StartTime-error" aria-invalid="false" />
+                <span asp-validation-for="Holiday.FinishDt" class="text-danger"></span>
             </div>
         </div>
 

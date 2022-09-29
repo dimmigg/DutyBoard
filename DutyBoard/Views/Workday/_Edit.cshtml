@@ -68,11 +68,11 @@
 
         <div class="row form-group py-1" id="datepicker" hidden=@Model.Workday.IsAlways>
             <div class="col-sm-5 text-start">
-                <label asp-for="Workday.DateWork" class="col-form-label"></label>
+                <label asp-for="Workday.WorkDt" class="col-form-label"></label>
             </div>
             <div class="col-sm-7">
-                <input asp-for="Workday.DateWork" class="form-control " type="text" id="date" aria-describedby="StartTime-error" aria-invalid="false" onChange="getrosterbyid(this)" />
-                <span asp-validation-for="Workday.DateWork" class="text-danger"></span>
+                <input asp-for="Workday.WorkDt" class="form-control " type="text" id="date" aria-describedby="StartTime-error" aria-invalid="false" onChange="getrosterbyid(this)" />
+                <span asp-validation-for="Workday.WorkDt" class="text-danger"></span>
             </div>
         </div>
 

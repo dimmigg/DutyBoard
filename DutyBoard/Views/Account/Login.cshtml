@@ -1,7 +1,9 @@
 ﻿@using System.Linq
 @model LoginViewModel
 @inject SignInManager<ApplicationUser> SignInManager
-
+@{
+    ViewData["Title"] = "Авторизация";
+}
 <div class="login">
     <div class="login-box">
         <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">

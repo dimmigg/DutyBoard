@@ -39,7 +39,7 @@ document.getElementById("toDate").value = getDate(dt)
 getCalendarRange('#fromDate', '#toDate');
 function Calc() {
     let url = '/Home/ConfCalc/';
-    let fromDate = $('#fromDate').val();
-    let toDate = $('#toDate').val();
-    $('#edit-content').load(url, { fromDate: fromDate, toDate: toDate });
+    let fromDt = $('#fromDate').val();
+    let toDt = $('#toDate').val();
+    $('#edit-content').load(url, { fromDate: fromDt, toDate: toDt });
 }

@@ -76,8 +76,9 @@ namespace DutyBoard
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
+                app.UseDeveloperExceptionPage();
+                //app.UseExceptionHandler("/Home/Error");
+                //app.UseHsts();
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -86,6 +87,11 @@ namespace DutyBoard
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+
+            app.UseRequestLocalization(new RequestLocalizationOptions()
+                .AddSupportedCultures(new[] { "ru-RU", "es-CL" })
+                .AddSupportedUICultures(new[] { "ru-RU", "es-CL" }));
 
             serviceProvider.GetRequiredService<TelegramBot>().GetBot().Wait();
 
