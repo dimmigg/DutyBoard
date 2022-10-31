@@ -15,6 +15,7 @@
         public const string TelegramActivateCommand = "telegram-activate";
         public const string SiteActivateCommand = "site-activate";
 
+        public const string UserListDuty = "📋 Дежурства";
         public const string Admin = "Админ панель";
     }
 }

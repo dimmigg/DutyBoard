@@ -8,7 +8,7 @@
         public const string TokenTG0 = "8lZxMPtiF8Xjhk78wbag68hW1hPIUHqFweiIedS4oOE=";
         public const string TokenTG1 = "krf/ZwycKJLE51Yb1iobRw==";
         public const string TokenTG2 = "vPXdGKZnFBx3ObT5q9DwHQ==";
-        public const string UrlTG = "https://fb45-85-174-198-67.eu.ngrok.io/";
+        public const string UrlTG = "https://4ca2-85-174-192-239.eu.ngrok.io/";
 #else
 
         public const string TokenTG0 = "Pt/Dj7+CE9bIPrryLZXD/BM2sopPWmkU5CudWAdwc2c=";

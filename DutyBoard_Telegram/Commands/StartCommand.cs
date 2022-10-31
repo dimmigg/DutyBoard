@@ -38,14 +38,14 @@ namespace DutyBoard_Telegram.Commands
             row1.Add(new KeyboardButton(CommandNames.WhoDutyCommand));
             row1.Add(new KeyboardButton(CommandNames.ListDuty));
             row2.Add(new KeyboardButton(CommandNames.File));
-            row2.Add(new KeyboardButton(CommandNames.Help));
+            row2.Add(new KeyboardButton(CommandNames.UserListDuty));
+            end.Add(new KeyboardButton(CommandNames.Help));
             allButtons.Add(row1);
             allButtons.Add(row2);
-            if (!user.IsAdmin) return allButtons;
+            if (user.IsAdmin) 
+                end.Add(new KeyboardButton(CommandNames.Admin));
 
-            end.Add(new KeyboardButton(CommandNames.Admin));
             allButtons.Add(end);
-
             return allButtons;
         }
     }

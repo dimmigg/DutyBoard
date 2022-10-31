@@ -8,15 +8,21 @@
 
                 data: dataArr,
                 backgroundColor: [
-                    '#F44336',
-                    '#9C27B0',
-                    '#3F51B5',
-                    '#03A9F4',
-                    '#4CAF50',
-                    '#FFEB3B',
+                    '#f44336',
+                    '#9c27b0',
+                    '#3f51b5',
+                    '#03a9f4',
+                    '#009688',
+                    '#8bc34a',
+                    '#ffeb3b',
                     '#FFC107',
+                    '#ff9800',   
                     '#26C6DA',
+                    '#cddc39',
+                    '#4CAF50',
                     '#673AB7',
+                    '#ffc107',
+                    '#795548',
                 ],
                 borderWidth: 1
             }],
@@ -27,6 +33,8 @@
                 legend: {
                     display: true,
                     position: 'bottom',
+                    onHover: handleHover,
+                    onLeave: handleLeave
                 }
             },
             responsive: true,
@@ -96,4 +104,21 @@ function fillBar(labelsArr, dataArrWork, dataArrHoli) {
         }
     });
     return chart;
+}
+
+function handleHover(evt, item, legend) {
+    legend.chart.data.datasets[0].backgroundColor.forEach((color, index, colors) => {
+        colors[index] = index === item.index || color.length === 9 ? color : color + '30';
+    });
+    legend.chart.update();
+}
+// </block:handleHover>
+
+// <block:handleLeave:2>
+// Removes the alpha channel from background colors
+function handleLeave(evt, item, legend) {
+    legend.chart.data.datasets[0].backgroundColor.forEach((color, index, colors) => {
+        colors[index] = color.length === 9 ? color.slice(0, -2) : color;
+    });
+    legend.chart.update();
 }
